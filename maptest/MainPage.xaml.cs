@@ -25,7 +25,7 @@ namespace maptest
 
             GetPosition();
 
-            
+
         }
 
         private async void GetPosition()
@@ -56,51 +56,59 @@ namespace maptest
 
                     Label = "Item",
                     Position = itemloc
-                }); ;
+                });;
             });
-
             Device.StartTimer(new TimeSpan(0), () =>
-            {
-                // do something every 60 seconds
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Find(itemloc);
-                });
-                return true; // runs again, or false to stop
-            });
-        }
+              {
+                  Device.BeginInvokeOnMainThread(() =>
+                  {
+                      Find(itemloc);
+                  });
+                  return true;
+              });
+            
+
+        } 
         public void Find(Position item)
         {
-            double time = DateTime.Now.Ticks;
             var player = new Player();
-            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+            double time = DateTime.Now.Millisecond;
+            double refresh = DateTime.Now.Millisecond + 200;
+            double longitude = item.Longitude;
+            double latitude = item.Latitude; 
+            double blinktime = time;
+            Device.StartTimer(new TimeSpan(200), () =>
             {
-                bool next = true;
                 // do something every 60 seconds
-                Device.BeginInvokeOnMainThread(() =>
+                Task.Run(() =>
                 {
+                    while (true)
+                    {
+                        time = DateTime.Now.Millisecond;
+                        if (blinktime < 0)
+                        {
+                            blinktime = -blinktime;
+                        }
 
-                    
-                    //double blinktime = time + (((item.Latitude + item.Longitude) - (player.PlayerPositon().Result.Longitude + player.PlayerPositon().Result.Latitude)) / 100000);
-                    double blinktime = time + 4500;
-                    if (blinktime < 0)
-                    {
-                        blinktime = -blinktime;
-                    }
-                    {
                         if (time <= blinktime)
                         {
-                            button.BackgroundColor = Color.Red;
+                            button.BackgroundColor = Color.Gold;
                         }
-                        else
+                        else if (time >= blinktime + 1000)
                         {
-                            next = false;
+                            button.BackgroundColor = Color.White;
+                            blinktime = time + (((item.Latitude + item.Longitude) - (longitude + latitude)) / 2);
+                        }
+                        if (refresh <= time)
+                        {
+                            longitude = player.PlayerPositon().Result.Longitude;
+                            latitude = player.PlayerPositon().Result.Latitude;
+                            refresh = DateTime.Now.Millisecond + 200;
                         }
                     }
                 });
-                return next; // runs again, or false to stop
+                return false; // runs again, or false to stop
             });
-                button.BackgroundColor = Color.Gold;
         
         }
     }

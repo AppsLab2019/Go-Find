@@ -34,8 +34,7 @@
         <Button x:Name="button"
             BackgroundColor="gold" Text=""
             HorizontalOptions="Center"
-            VerticalOptions="End">
-            
+            VerticalOptions="End">                           
         </Button>
     </Grid>
 </ContentPage>
