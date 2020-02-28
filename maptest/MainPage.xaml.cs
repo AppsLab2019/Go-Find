@@ -20,6 +20,7 @@ namespace maptest
         public MainPage()
         {
             InitializeComponent();
+            var nv = new Navigation();
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
@@ -58,62 +59,8 @@ namespace maptest
 
                 }); ;
             });
-            Find(itemloc);
+            navigation.Find(itemloc);
         }
-        public double GetTime()
-        {
-            double miliseconds = DateTime.Now.Millisecond;
-            double seconds = DateTime.Now.Second;
-            double minutes = DateTime.Now.Minute;
-            return ((minutes * 60) + seconds) * 100 + miliseconds;
-        }
-        public void Find(Position item)
-        {
-            var player = new Player();
-            double time = GetTime();
-            double refresh = time + 300;
-            double longitude = 0;
-            double latitude = 0;
-            double blinktime = 0;
 
-            Device.StartTimer(new TimeSpan(50), () =>
-            {
-                Task.Run(() =>
-                {
-
-                    time = GetTime();
-
-                    if (blinktime < 0)
-                    {
-                        blinktime = -blinktime;
-                    }
-                    time = GetTime();
-                    if (time <= blinktime)
-                    {
-                        button.BackgroundColor = Color.White;
-                        time = GetTime();
-                    }
-                    time = GetTime();
-                    if (time > blinktime)
-                    {
-                        button.BackgroundColor = Color.Gold;
-                        blinktime = time + ((item.Latitude + item.Longitude) - (longitude + latitude)) * 2;
-                        time = GetTime();
-                    }
-                    if (refresh <= time)
-                    {
-                        longitude = player.PlayerPositon().Result.Longitude;
-                        latitude = player.PlayerPositon().Result.Latitude;
-                        refresh = time + 300;
-                        time = GetTime();
-                    }
-                    time = GetTime();
-
-                });
-                return true; // runs again, or false to stop
-            });
-
-
-        }
     }
 }
