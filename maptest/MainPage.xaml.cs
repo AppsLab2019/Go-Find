@@ -96,6 +96,7 @@ namespace maptest
                         blinktime = time + ((item.Latitude + item.Longitude) - (player.PlayerPosition.Longitude + player.PlayerPosition.Latitude)) * 12;
                     }
 
+
                 });
                 return true; // runs again, or false to stop
             });
