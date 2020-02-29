@@ -20,16 +20,15 @@ namespace maptest
         public MainPage()
         {
             InitializeComponent();
-            var nv = new Navigation();
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
-            GetPosition();
+            GetStartet();
 
 
         }
 
-        private async void GetPosition()
+        private async void GetStartet()
         {
             var navigation = new Navigation();
 
@@ -59,8 +58,47 @@ namespace maptest
 
                 }); ;
             });
-            navigation.Find(itemloc);
+            Find(itemloc);
         }
+        private double GetTime()
+        {
+            double miliseconds = DateTime.Now.Millisecond;
+            double seconds = DateTime.Now.Second;
+            double minutes = DateTime.Now.Minute;
+            return ((minutes * 60) + seconds) * 100 + miliseconds;
+        }
+        public void Find(Position item)
+        {
+            var player = new Player();
+            player.PositionRefresh();
+            double time = GetTime();
+            double blinktime = 0;
 
+            Device.StartTimer(new TimeSpan(200), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+
+                    time = GetTime();
+
+                    if (blinktime < 0)
+                    {
+                        blinktime = -blinktime;
+                    }
+                    time = GetTime();
+                    if (time <= blinktime)
+                    {
+                        button.BackgroundColor = Color.White;
+                    }
+                    if (time > blinktime)
+                    {
+                        button.BackgroundColor = Color.Gold;
+                        blinktime = time + ((item.Latitude + item.Longitude) - (player.PlayerPosition.Longitude + player.PlayerPosition.Latitude)) * 12;
+                    }
+
+                });
+                return true; // runs again, or false to stop
+            });
+        }
     }
 }

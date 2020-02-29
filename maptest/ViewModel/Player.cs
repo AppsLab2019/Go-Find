@@ -4,12 +4,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
+using System.Timers;
 
 namespace maptest.ViewModel
 {
     class Player
     {
-        public async Task<Position> PlayerPositon()
+        private static Timer aTimer;
+
+        public Position PlayerPosition { get; set; }
+        public async Task<Position> GetPlayerPositon()
         {
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 30;
@@ -18,7 +22,27 @@ namespace maptest.ViewModel
 
             var location = task;
 
-            return new Position(location.Latitude,location.Longitude);
+            return new Position(location.Latitude, location.Longitude);
+        }
+        public void PositionRefresh()
+        {
+            aTimer = new Timer();
+            aTimer.Interval = 2000;
+
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+
+            // Have the timer fire repeated events (true is the default)
+            aTimer.AutoReset = true;
+
+            // Start the timer
+            aTimer.Enabled = true;
+
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            PlayerPosition = new Position(GetPlayerPositon().Result.Latitude, GetPlayerPositon().Result.Longitude);
         }
     }
 }
