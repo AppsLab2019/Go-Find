@@ -29,6 +29,6 @@ namespace maptest.NewFolder
             }
             return loot;
         }
-        public Item ItemGet(Position playerposition; Position  )
+        //public Item ItemGet(Position playerposition; Position  )
     }
 }

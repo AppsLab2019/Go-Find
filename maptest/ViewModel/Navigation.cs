@@ -40,39 +40,29 @@ namespace maptest.ViewModel
         {
             var player = new Player();
             player.PositionRefresh();
-            blinktime = 1000;
+            Blinktime = 1000;
             StartBlinking();
-            /*Device.StartTimer(new TimeSpan(200), () =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-
-                    blinktime = Math.Abs((item.Latitude + item.Longitude) - (player.PlayerPosition.Longitude + player.PlayerPosition.Latitude) * 10000);
-      
-                });
-                return true; // runs again, or false to stop
-            });*/
         }
 
-        private double blinktime { get; set; }
+        private double Blinktime { get; set; }
 
         private Position Player { get => new Player().PlayerPosition; }
         private Position ClosestItem { get; set; }
-        
-        private void BlinkRef(Object source, ElapsedEventArgs e)
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + player.PlayerPosition.Latitude) * 10000);
+            Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (Player.Longitude + Player.Latitude));
+            Blinktime = Blinktime * 500;
         }
 
         private static Timer aTimer;
         public void StartBlinking()
         {
             aTimer = new Timer();
-            aTimer.Interval = blinktime;
-
+            aTimer.Interval = 100;
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
-            aTimer.Elapsed += BlinkRef;
+            aTimer.Elapsed += Blink;
             // Have the timer fire repeated events (true is the default)
             aTimer.AutoReset = true;
 
@@ -80,12 +70,12 @@ namespace maptest.ViewModel
             aTimer.Enabled = true;
 
         }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private void Blink(Object source, ElapsedEventArgs e)
         {
-            Color = Color.White;
-            System.Threading.Thread.Sleep(500);
             Color = Color.Gold;
+            System.Threading.Thread.Sleep(500);
+            Color = Color.White;
+            System.Threading.Thread.Sleep(Convert.ToInt32(Blinktime));
         }
     }
 }
