@@ -17,6 +17,18 @@ namespace maptest.NewFolder
             double lan = rlan / 40000;
             return new Position(playerposition.Longitude + lon, playerposition.Latitude + lan);
         }
-        
+
+        public List<Position> Loot(int count, Position playerposition)
+        {
+            var loot = new List<Position>();
+            for (int i = 0; i <= count; i++)
+            {
+                loot.Add(new Position(playerposition.Latitude, playerposition.Longitude));
+
+
+            }
+            return loot;
+        }
+        public Item ItemGet(Position playerposition; Position  )
     }
 }

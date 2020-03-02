@@ -17,9 +17,15 @@ namespace maptest
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        private readonly Navigation viewModel;
+
         public MainPage()
         {
             InitializeComponent();
+            viewModel = new Navigation();
+            BindingContext = viewModel;
+
+
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
@@ -30,8 +36,6 @@ namespace maptest
 
         private async void GetStartet()
         {
-            var navigation = new Navigation();
-
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 5;
 
@@ -58,48 +62,7 @@ namespace maptest
 
                 }); ;
             });
-            Find(itemloc);
-        }
-        private double GetTime()
-        {
-            double miliseconds = DateTime.Now.Millisecond;
-            double seconds = DateTime.Now.Second;
-            double minutes = DateTime.Now.Minute;
-            return ((minutes * 60) + seconds) * 100 + miliseconds;
-        }
-        public void Find(Position item)
-        {
-            var player = new Player();
-            player.PositionRefresh();
-            double time = GetTime();
-            double blinktime = 0;
-
-            Device.StartTimer(new TimeSpan(200), () =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-
-                    time = GetTime();
-
-                    if (blinktime < 0)
-                    {
-                        blinktime = -blinktime;
-                    }
-                    time = GetTime();
-                    if (time <= blinktime)
-                    {
-                        button.BackgroundColor = Color.White;
-                    }
-                    if (time > blinktime)
-                    {
-                        button.BackgroundColor = Color.Gold;
-                        blinktime = time + ((item.Latitude + item.Longitude) - (player.PlayerPosition.Longitude + player.PlayerPosition.Latitude)) * 12;
-                    }
-
-
-                });
-                return true; // runs again, or false to stop
-            });
+            viewModel.Find(itemloc);
         }
     }
 }

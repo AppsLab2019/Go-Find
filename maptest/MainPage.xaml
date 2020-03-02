@@ -8,10 +8,6 @@
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              xmlns:vm="clr-namespace:maptest.ViewModel">
 
-    <ContentPage.BindingContext>
-        <vm:Navigation />
-    </ContentPage.BindingContext>
-    
     <Grid>
 
         <maps:Map x:Name="map">
@@ -32,9 +28,12 @@
         </x:Arguments>
         </maps:Map>
         <Button x:Name="button"
-            BackgroundColor="Gold" Text=""
+            BackgroundColor="{Binding Color}" Text=""
             HorizontalOptions="Center"
-            VerticalOptions="End">                           
+            VerticalOptions="End"
+            WidthRequest="80"
+            HeightRequest="80"
+            CornerRadius="40">                           
         </Button>
     </Grid>
 </ContentPage>
