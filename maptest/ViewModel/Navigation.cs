@@ -40,26 +40,27 @@ namespace maptest.ViewModel
         {
             var player = new Player();
             player.PositionRefresh();
-            Blinktime = 1000;
+            ClosestItem = item;  
+            Blinktime = 500;
             StartBlinking();
         }
 
         private double Blinktime { get; set; }
 
-        private Position Player { get => new Player().PlayerPosition; }
         private Position ClosestItem { get; set; }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (Player.Longitude + Player.Latitude));
-            Blinktime = Blinktime * 500;
+            var player = new Player();
+            Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude)- (player.PlayerPosition.Longitude + player.PlayerPosition.Latitude));
+            Blinktime = Blinktime * 50;
         }
 
         private static Timer aTimer;
         public void StartBlinking()
         {
             aTimer = new Timer();
-            aTimer.Interval = 100;
+            aTimer.Interval = Blinktime;
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
             aTimer.Elapsed += Blink;
@@ -70,12 +71,12 @@ namespace maptest.ViewModel
             aTimer.Enabled = true;
 
         }
-        private void Blink(Object source, ElapsedEventArgs e)
+        private void Blink(Object source, ElapsedEventArgs e) 
         {
             Color = Color.Gold;
             System.Threading.Thread.Sleep(500);
             Color = Color.White;
-            System.Threading.Thread.Sleep(Convert.ToInt32(Blinktime));
+            aTimer.Interval = Blinktime;
         }
     }
 }
