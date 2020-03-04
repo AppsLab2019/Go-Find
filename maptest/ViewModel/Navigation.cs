@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Geolocator;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -38,23 +39,55 @@ namespace maptest.ViewModel
 
         public void Find(Position item)
         {
-            var player = new Player();
-            player.PositionRefresh();
             ClosestItem = item;  
-            Blinktime = 500;
+            PositionRefresh();
+            System.Threading.Thread.Sleep(4000);
+            Blinktime = 0.000001;
             StartBlinking();
         }
 
         private double Blinktime { get; set; }
 
+
         private Position ClosestItem { get; set; }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        private static Timer bTimer;
+
+        public Position PlayerPosition { get; set; }
+
+        public async Task<Position> GetPlayerPositon()
         {
-            var player = new Player();
-            Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude)- (player.PlayerPosition.Longitude + player.PlayerPosition.Latitude));
-            Blinktime = Blinktime * 50;
+            var locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 30;
+
+            var task = await locator.GetPositionAsync(new TimeSpan(0, 0, 1));
+
+            var location = task;
+
+            return new Position(location.Latitude, location.Longitude);
         }
+        public void PositionRefresh()
+        {
+            bTimer = new Timer();
+            bTimer.Interval = 2000;
+
+            // Hook up the Elapsed event for the timer. 
+            bTimer.Elapsed += OnBTime;
+
+            // Have the timer fire repeated events (true is the default)
+            bTimer.AutoReset = true;
+
+            // Start the timer
+            bTimer.Enabled = true;
+
+        }
+
+
+        private void OnBTime(Object source, ElapsedEventArgs e)
+        {
+            PlayerPosition = new Position(GetPlayerPositon().Result.Latitude, GetPlayerPositon().Result.Longitude);
+        }
+
 
         private static Timer aTimer;
         public void StartBlinking()
@@ -78,6 +111,14 @@ namespace maptest.ViewModel
             Color = Color.White;
             aTimer.Interval = Blinktime;
         }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + PlayerPosition.Latitude));
+            Blinktime = Blinktime * 1000000;
+
+        }
     }
 }
+
 

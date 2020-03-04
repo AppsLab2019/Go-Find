@@ -10,7 +10,7 @@ namespace maptest.ViewModel
 {
     class Player
     {
-        private static Timer aTimer;
+        private static Timer bTimer;
 
         public Position PlayerPosition { get; set; }
         public async Task<Position> GetPlayerPositon()
@@ -26,17 +26,17 @@ namespace maptest.ViewModel
         }
         public void PositionRefresh()
         {
-            aTimer = new Timer();
-            aTimer.Interval = 2000;
+            bTimer = new Timer();
+            bTimer.Interval = 2000;
 
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
+            bTimer.Elapsed += OnTimedEvent;
 
             // Have the timer fire repeated events (true is the default)
-            aTimer.AutoReset = true;
+            bTimer.AutoReset = true;
 
             // Start the timer
-            aTimer.Enabled = true;
+            bTimer.Enabled = true;
 
         }
 
