@@ -10,39 +10,5 @@ namespace maptest.ViewModel
 {
     class Player
     {
-        private static Timer bTimer;
-
-        public Position PlayerPosition { get; set; }
-        public async Task<Position> GetPlayerPositon()
-        {
-            var locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 30;
-
-            var task = await locator.GetPositionAsync(new TimeSpan(0, 0, 1));
-
-            var location = task;
-
-            return new Position(location.Latitude, location.Longitude);
-        }
-        public void PositionRefresh()
-        {
-            bTimer = new Timer();
-            bTimer.Interval = 2000;
-
-            // Hook up the Elapsed event for the timer. 
-            bTimer.Elapsed += OnTimedEvent;
-
-            // Have the timer fire repeated events (true is the default)
-            bTimer.AutoReset = true;
-
-            // Start the timer
-            bTimer.Enabled = true;
-
-        }
-
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
-        {
-            PlayerPosition = new Position(GetPlayerPositon().Result.Latitude, GetPlayerPositon().Result.Longitude);
-        }
     }
 }
