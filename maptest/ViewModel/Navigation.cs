@@ -45,7 +45,7 @@ namespace maptest.ViewModel
             Blinktime = 0.000001;
             StartBlinking();
         }
-
+        
         private double Blinktime { get; set; }
 
 
@@ -115,8 +115,15 @@ namespace maptest.ViewModel
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + PlayerPosition.Latitude));
-            Blinktime = Blinktime * 1000000;
-
+            if(Blinktime < 1)
+                Blinktime = Blinktime * 1500000;
+        }
+        private void ItemGTFO(Position ClosestItem, Position PlayerPosition)
+        {
+            if(ClosestItem.Longitude + ClosestItem.Latitude == PlayerPosition.Longitude + PlayerPosition.Latitude)
+            {
+               
+            }
         }
     }
 }
