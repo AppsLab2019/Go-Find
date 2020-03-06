@@ -115,8 +115,12 @@ namespace maptest.ViewModel
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + PlayerPosition.Latitude));
-            if(Blinktime < 1)
-                Blinktime = Blinktime * 1500000;
+            if(Blinktime != ClosestItem.Latitude + ClosestItem.Longitude)
+                Blinktime = Blinktime * 1000000;
+            else
+            {
+                Blinktime = Blinktime * 100;
+            }
         }
         private void ItemGTFO(Position ClosestItem, Position PlayerPosition)
         {
