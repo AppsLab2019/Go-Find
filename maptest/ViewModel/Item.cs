@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
+using Xamarin.Forms.Maps;
 
 namespace maptest.NewFolder
 {
@@ -10,6 +10,7 @@ namespace maptest.NewFolder
     {
         public Position ItemSpawn(Position playerposition)
         {
+
             var rnd = new Random();
             double rlon = rnd.Next(-100, 100);
             double lon = rlon / 40000;
@@ -20,14 +21,19 @@ namespace maptest.NewFolder
 
         public List<Position> Loot(int count, Position playerposition)
         {
-            var loot = new List<Position>();
-            for (int i = 0; i <= count; i++)
+            var loot = new Position();
+            var itemlist = new List<Position>();
+            for (int i = 0; i <= 1; i++)
             {
-                loot.Add(new Position(playerposition.Latitude, playerposition.Longitude));
-
-
+                loot = (new Position(playerposition.Latitude, playerposition.Longitude));
+                for (int c = 0; c <= count; c++)
+                {
+                    var lastitem = new Position(ItemSpawn(loot).Latitude,ItemSpawn(loot).Longitude);
+                    itemlist.Add(lastitem);
+                    loot = lastitem;
+                }             
             }
-            return loot;
+            return itemlist;
         }
 
         //public Item ItemGet(Position playerposition; Position  )

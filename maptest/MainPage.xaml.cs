@@ -50,19 +50,24 @@ namespace maptest
             var item = new Item();
 
 
-            var itemloc = new Position(item.ItemSpawn(location).Longitude, item.ItemSpawn(location).Latitude);
+            var items = new List<Position>();
+            items = item.Loot(20, new Position(location.Latitude,location.Longitude));
 
-
-            Device.BeginInvokeOnMainThread(() =>
+            foreach (var loot in items)
             {
-                map.Pins.Add(new Pin
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    Label = "Item",
-                    Position = itemloc
+                    map.Pins.Add(new Pin
+                    {
 
-                }); ;
-            });
-            viewModel.Find(itemloc);
+                        Label = "Item",
+                        Position = new Position(loot.Latitude,loot.Longitude),
+
+                    }); ;
+                });
+            }
+            viewModel.Find(items);
         }
+
     }
 }
