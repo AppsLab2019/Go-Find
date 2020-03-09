@@ -137,7 +137,7 @@ namespace maptest.ViewModel
         {
             Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + PlayerPosition.Latitude));
             if (Blinktime != ClosestItem.Latitude + ClosestItem.Longitude || Blinktime != PlayerPosition.Longitude + PlayerPosition.Latitude)
-                Blinktime = Blinktime * 1000000;
+                Blinktime = Blinktime * 100000;
             else
             {
                 Blinktime = Blinktime * 100;
