@@ -85,10 +85,11 @@ namespace maptest.ViewModel
         public void PositionRefresh()
         {
             bTimer = new Timer();
-            bTimer.Interval = 2000;
+            bTimer.Interval = 1000;
 
             // Hook up the Elapsed event for the timer. 
             bTimer.Elapsed += OnBTime;
+            bTimer.Elapsed += CloseRef;
 
             // Have the timer fire repeated events (true is the default)
             bTimer.AutoReset = true;
@@ -98,7 +99,10 @@ namespace maptest.ViewModel
 
         }
 
-
+        private void CloseRef(Object source, ElapsedEventArgs e)
+        {
+            FindClosest();
+        }
         private void OnBTime(Object source, ElapsedEventArgs e)
         {
             PlayerPosition = new Position(GetPlayerPositon().Result.Latitude, GetPlayerPositon().Result.Longitude);
@@ -113,7 +117,6 @@ namespace maptest.ViewModel
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
             aTimer.Elapsed += Blink;
-            aTimer.Elapsed += CloseRef;
             // Have the timer fire repeated events (true is the default)
             aTimer.AutoReset = true;
 
@@ -121,14 +124,10 @@ namespace maptest.ViewModel
             aTimer.Enabled = true;
 
         }
-        private void CloseRef(Object source, ElapsedEventArgs e)
-        {
-            FindClosest();
-        }
         private void Blink(Object source, ElapsedEventArgs e)
         {
             Color = Color.Gold;
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
             Color = Color.White;
             aTimer.Interval = Blinktime;
         }
@@ -137,7 +136,7 @@ namespace maptest.ViewModel
         {
             Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + PlayerPosition.Latitude));
             if (Blinktime != ClosestItem.Latitude + ClosestItem.Longitude || Blinktime != PlayerPosition.Longitude + PlayerPosition.Latitude)
-                Blinktime = Blinktime * 100000;
+                Blinktime = Blinktime * 200000;
             else
             {
                 Blinktime = Blinktime * 100;
