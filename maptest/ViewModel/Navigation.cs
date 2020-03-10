@@ -125,14 +125,14 @@ namespace maptest.ViewModel
         {
             Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) + Math.Abs(ClosestItem.Longitude)) - (Math.Abs(PlayerPosition.Longitude) + Math.Abs(PlayerPosition.Latitude)));
             if (Blinktime != Math.Abs( ClosestItem.Latitude) + Math.Abs(ClosestItem.Longitude) || Blinktime != Math.Abs(PlayerPosition.Longitude) + Math.Abs(PlayerPosition.Latitude))
-                Blinktime = Blinktime * 170000;
+                Blinktime = Blinktime * 200000;
             else
             {
                 Blinktime = Blinktime * 100;
             }
             aTimer.Interval = Blinktime;
         }
-        private bool CollectItem(Object source, ElapsedEventArgs e)
+        /*private bool CollectItem(Object source, ElapsedEventArgs e)
         {
             if(PlayerPosition.Latitude + PlayerPosition.Longitude + 0.0005 >  ClosestItem.Latitude + ClosestItem.Longitude | ClosestItem.Latitude + ClosestItem.Longitude > PlayerPosition.Latitude + PlayerPosition.Longitude - 0.0005 )
             {
@@ -142,7 +142,7 @@ namespace maptest.ViewModel
             {
                 return false;
             }
-        }
+        }*/
     }
 }
 

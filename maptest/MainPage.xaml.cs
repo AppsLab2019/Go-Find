@@ -51,7 +51,7 @@ namespace maptest
 
 
             var items = new List<Position>();
-            items = item.Loot(20, new Position(location.Latitude, location.Longitude));
+            items = item.Loot(5, new Position(location.Latitude, location.Longitude));
 
             foreach (var loot in items)
             {
