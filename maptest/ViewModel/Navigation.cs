@@ -51,14 +51,8 @@ namespace maptest.ViewModel
             Position closest = Items[1];
             foreach (var item in Items)
             {
-                foreach (var item2 in Items)
-                {
-                    if (item.Latitude + item.Longitude - PlayerPosition.Latitude + PlayerPosition.Longitude > item2.Longitude + item2.Latitude - PlayerPosition.Latitude + PlayerPosition.Longitude)
-                    {
-                        if (closest.Latitude + closest.Longitude - PlayerPosition.Latitude + PlayerPosition.Longitude > item2.Longitude + item2.Latitude - PlayerPosition.Latitude + PlayerPosition.Longitude)
-                            closest = item2;
-                    }
-                }
+                if (Math.Abs(closest.Latitude) + Math.Abs(closest.Longitude) - Math.Abs(PlayerPosition.Latitude) + Math.Abs(PlayerPosition.Longitude) > Math.Abs(item.Longitude) + Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude) + Math.Abs(PlayerPosition.Longitude))
+                    closest = item;
             }
             ClosestItem = closest;
         }
@@ -85,7 +79,7 @@ namespace maptest.ViewModel
         public void PositionRefresh()
         {
             bTimer = new Timer();
-            bTimer.Interval = 1000;
+            bTimer.Interval = 1500;
 
             // Hook up the Elapsed event for the timer. 
             bTimer.Elapsed += OnBTime;
@@ -96,9 +90,7 @@ namespace maptest.ViewModel
 
             // Start the timer
             bTimer.Enabled = true;
-
         }
-
         private void CloseRef(Object source, ElapsedEventArgs e)
         {
             FindClosest();
@@ -107,8 +99,6 @@ namespace maptest.ViewModel
         {
             PlayerPosition = new Position(GetPlayerPositon().Result.Latitude, GetPlayerPositon().Result.Longitude);
         }
-
-
         private static Timer aTimer;
         public void StartBlinking()
         {
@@ -128,19 +118,19 @@ namespace maptest.ViewModel
         {
             Color = Color.Gold;
             System.Threading.Thread.Sleep(300);
-            Color = Color.White;
-            aTimer.Interval = Blinktime;
+            Color = Color.White;    
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            Blinktime = Math.Abs((ClosestItem.Latitude + ClosestItem.Longitude) - (PlayerPosition.Longitude + PlayerPosition.Latitude));
-            if (Blinktime != ClosestItem.Latitude + ClosestItem.Longitude || Blinktime != PlayerPosition.Longitude + PlayerPosition.Latitude)
-                Blinktime = Blinktime * 200000;
+            Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) + Math.Abs(ClosestItem.Longitude)) - (Math.Abs(PlayerPosition.Longitude) + Math.Abs(PlayerPosition.Latitude)));
+            if (Blinktime != Math.Abs( ClosestItem.Latitude) + Math.Abs(ClosestItem.Longitude) || Blinktime != Math.Abs(PlayerPosition.Longitude) + Math.Abs(PlayerPosition.Latitude))
+                Blinktime = Blinktime * 170000;
             else
             {
                 Blinktime = Blinktime * 100;
             }
+            aTimer.Interval = Blinktime;
         }
         private bool CollectItem(Object source, ElapsedEventArgs e)
         {
