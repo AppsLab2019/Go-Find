@@ -60,6 +60,7 @@ namespace maptest.ViewModel
 
         public List<Position> Items { get; set; }
         private Position ClosestItem { get; set; }
+        public bool ItemIsClose { get; set; }
 
         private static Timer bTimer;
 
@@ -107,6 +108,7 @@ namespace maptest.ViewModel
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
             aTimer.Elapsed += Blink;
+            aTimer.Elapsed += ItemControl;
             // Have the timer fire repeated events (true is the default)
             aTimer.AutoReset = true;
 
@@ -116,9 +118,14 @@ namespace maptest.ViewModel
         }
         private void Blink(Object source, ElapsedEventArgs e)
         {
-            Color = Color.Gold;
-            System.Threading.Thread.Sleep(300);
-            Color = Color.White;    
+            if (ItemIsClose)
+                Color = Color.Red;
+            else
+            {
+                Color = Color.Gold;
+                System.Threading.Thread.Sleep(300);
+                Color = Color.White;
+            }
         }
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
@@ -132,17 +139,17 @@ namespace maptest.ViewModel
             }
             aTimer.Interval = Blinktime;
         }
-        /*private bool CollectItem(Object source, ElapsedEventArgs e)
+        private void ItemControl(Object source, ElapsedEventArgs e)
         {
-            if(PlayerPosition.Latitude + PlayerPosition.Longitude + 0.0005 >  ClosestItem.Latitude + ClosestItem.Longitude | ClosestItem.Latitude + ClosestItem.Longitude > PlayerPosition.Latitude + PlayerPosition.Longitude - 0.0005 )
+            if (Blinktime < 300)
             {
-                return true;
+                ItemIsClose = true;
             }
             else
             {
-                return false;
+                ItemIsClose = false;
             }
-        }*/
+        }
     }
 }
 
