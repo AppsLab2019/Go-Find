@@ -33,7 +33,7 @@ namespace maptest
 
 
         }
-
+        private List<Position> Items { get; set; }
         private async void GetStartet()
         {
             var locator = CrossGeolocator.Current;
@@ -49,11 +49,10 @@ namespace maptest
 
             var item = new Item();
 
+            Items = new List<Position>();
+            Items = item.Loot(5, new Position(location.Latitude, location.Longitude));
 
-            var items = new List<Position>();
-            items = item.Loot(5, new Position(location.Latitude, location.Longitude));
-
-            foreach (var loot in items)
+            foreach (var loot in Items)
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -66,9 +65,15 @@ namespace maptest
                     }); ;
                 });
             }
-            viewModel.Find(items);
-            
+            viewModel.Find(Items);
         }
-
+        public void ButtonOnClicked(object sender, EventArgs e)
+        {
+            if (viewModel.ItemIsClose)
+            {
+                Items.Remove(viewModel.ClosestItem);
+                DisplayAlert("Alert", "You have collected item", "OK");
+            }
+        }
     }
 }

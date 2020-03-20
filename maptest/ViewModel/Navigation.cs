@@ -59,7 +59,7 @@ namespace maptest.ViewModel
         private double Blinktime { get; set; }
 
         public List<Position> Items { get; set; }
-        private Position ClosestItem { get; set; }
+        public Position ClosestItem { get; set; }
         public bool ItemIsClose { get; set; }
 
         private static Timer bTimer;
@@ -141,14 +141,10 @@ namespace maptest.ViewModel
         }
         private void ItemControl(Object source, ElapsedEventArgs e)
         {
-            if (Blinktime < 300)
-            {
+            if (Blinktime < 200)
                 ItemIsClose = true;
-            }
             else
-            {
                 ItemIsClose = false;
-            }
         }
     }
 }
