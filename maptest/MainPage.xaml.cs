@@ -18,6 +18,7 @@ namespace maptest
     public partial class MainPage : ContentPage
     {
         private readonly Navigation viewModel;
+        private readonly Item item;
 
         public MainPage()
         {
@@ -47,31 +48,34 @@ namespace maptest
             map.MoveToRegion(mapSpan);
 
 
-            var item = new Item();
+            SpawnItems(new Position (location.Latitude, location.Longitude));
 
-            Items = new List<Position>();
-            Items = item.Loot(5, new Position(location.Latitude, location.Longitude));
+            viewModel.Find(Items);
+        }
+        public void SpawnItems(Position location)
+        {
+            var items = item.Loot(5, new Position(location.Latitude, location.Longitude));
 
-            foreach (var loot in Items)
+            foreach (var loot in items)
             {
+                Items.Add(loot);
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     map.Pins.Add(new Pin
                     {
-
                         Label = "Item",
                         Position = new Position(loot.Latitude, loot.Longitude),
-
                     }); ;
                 });
             }
-            viewModel.Find(Items);
         }
         public void ButtonOnClicked(object sender, EventArgs e)
         {
             if (viewModel.ItemIsClose)
             {
                 Items.Remove(viewModel.ClosestItem);
+                viewModel.Items.Remove(viewModel.ClosestItem);
+                viewModel.FindClosest();
                 DisplayAlert("Alert", "You have collected item", "OK");
             }
         }

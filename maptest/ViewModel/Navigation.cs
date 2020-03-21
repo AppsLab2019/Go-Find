@@ -46,7 +46,7 @@ namespace maptest.ViewModel
             StartBlinking();
             FindClosest();
         }
-        private void FindClosest()
+        public void FindClosest()
         {
             Position closest = Items[1];
             foreach (var item in Items)
@@ -141,7 +141,7 @@ namespace maptest.ViewModel
         }
         private void ItemControl(Object source, ElapsedEventArgs e)
         {
-            if (Blinktime < 200)
+            if (Blinktime < 300)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;

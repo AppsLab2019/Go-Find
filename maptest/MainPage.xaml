@@ -30,7 +30,7 @@
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
             HorizontalOptions="Center"
-            ClassId="ButtonOnClicked"
+            Clicked="ButtonOnClicked"
             VerticalOptions="End"
             WidthRequest="80"
             HeightRequest="80"
