@@ -70,6 +70,7 @@ namespace maptest
                     }); ;
                 });
             }
+            viewModel.Refreshlists()
             viewModel.Find();
         }
         public void ButtonOnClicked(object sender, EventArgs e)
