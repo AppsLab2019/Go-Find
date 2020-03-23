@@ -16,13 +16,12 @@ namespace maptest.ViewModel
     public class Navigation : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        public Game game;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
+        
         private Color _color;
         public Color Color
         {
@@ -37,19 +36,18 @@ namespace maptest.ViewModel
             }
         }
 
-        public void Find(List<Position> items)
+        public void Find()
         {
-            Items = items;
             PositionRefresh();
             System.Threading.Thread.Sleep(4000);
+            FindClosest();
             Blinktime = 0.000001;
             StartBlinking();
-            FindClosest();
         }
         public void FindClosest()
         {
-            Position closest = Items[1];
-            foreach (var item in Items)
+            Position closest = game.Items[1];
+            foreach (var item in game.Items)
             {
                 if (Math.Abs(closest.Latitude) + Math.Abs(closest.Longitude) - Math.Abs(PlayerPosition.Latitude) + Math.Abs(PlayerPosition.Longitude) > Math.Abs(item.Longitude) + Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude) + Math.Abs(PlayerPosition.Longitude))
                     closest = item;
@@ -58,7 +56,6 @@ namespace maptest.ViewModel
         }
         private double Blinktime { get; set; }
 
-        public List<Position> Items { get; set; }
         public Position ClosestItem { get; set; }
         public bool ItemIsClose { get; set; }
 

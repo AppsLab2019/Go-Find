@@ -10,5 +10,10 @@ namespace maptest.ViewModel
 {
     class Player
     {
+        public int Health { get; set; }
+        public Player()
+        {
+
+        }
     }
 }

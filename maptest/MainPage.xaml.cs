@@ -18,8 +18,7 @@ namespace maptest
     public partial class MainPage : ContentPage
     {
         private readonly Navigation viewModel;
-        private readonly Item item;
-
+        public Game game;
         public MainPage()
         {
             InitializeComponent();
@@ -31,12 +30,11 @@ namespace maptest
             map.IsShowingUser = true;
 
             GetStartet();
-
-
         }
         private List<Position> Items { get; set; }
         private async void GetStartet()
         {
+            game = new Game();
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 5;
 
@@ -47,18 +45,11 @@ namespace maptest
             MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(0.444));
             map.MoveToRegion(mapSpan);
 
+            game.SpawnItems(new Position(location.Latitude, location.Longitude));
 
-            SpawnItems(new Position (location.Latitude, location.Longitude));
-
-            viewModel.Find(Items);
-        }
-        public void SpawnItems(Position location)
-        {
-            var items = item.Loot(5, new Position(location.Latitude, location.Longitude));
-
-            foreach (var loot in items)
+            game.MakeBandits();
+            foreach (var loot in game.Items)
             {
-                Items.Add(loot);
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     map.Pins.Add(new Pin
@@ -68,15 +59,31 @@ namespace maptest
                     }); ;
                 });
             }
+            foreach (var loot in game.Bandits)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    map.Pins.Add(new Pin
+                    {
+                        Label = "Bandit",
+                        Position = new Position(loot.Latitude, loot.Longitude),
+                    }); ;
+                });
+            }
+            viewModel.Find();
         }
         public void ButtonOnClicked(object sender, EventArgs e)
         {
             if (viewModel.ItemIsClose)
             {
+                var image = new Image { Source = "heart.png" };
+
                 Items.Remove(viewModel.ClosestItem);
-                viewModel.Items.Remove(viewModel.ClosestItem);
                 viewModel.FindClosest();
-                DisplayAlert("Alert", "You have collected item", "OK");
+                if(game.Items.Contains(viewModel.ClosestItem))
+                    DisplayAlert("Alert", "You have collected item", "OK");
+                if(game.Bandits.Contains(viewModel.ClosestItem))
+                    DisplayAlert("Alert", "You have been ambushed", "OK");
             }
         }
     }

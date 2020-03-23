@@ -27,6 +27,7 @@
             </maps:MapSpan>
         </x:Arguments>
         </maps:Map>
+        <Image Source="heart.png" />
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
             HorizontalOptions="Center"
@@ -34,7 +35,7 @@
             VerticalOptions="End"
             WidthRequest="80"
             HeightRequest="80"
-            CornerRadius="40">                           
+            CornerRadius="40">
         </Button>
     </Grid>
 </ContentPage>
