@@ -65,7 +65,7 @@ namespace maptest.ViewModel
 
         private static Timer bTimer;
 
-        public Position PlayerPosition { get; set; }
+        private Position PlayerPosition { get; set; }
 
         public async Task<Position> GetPlayerPositon()
         {

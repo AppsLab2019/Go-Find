@@ -18,23 +18,50 @@ namespace maptest
     public partial class MainPage : ContentPage
     {
         private readonly Navigation viewModel;
-        public Game game;
+        private List<Position> Items { get; set; }
+        private List<Position> Bandits { get; set; }
+        private List<Position> All { get; set; }
         public MainPage()
         {
             InitializeComponent();
             viewModel = new Navigation();
+            All = new List<Position>();
+            Items = new List<Position>();
+            Bandits = new List<Position>();
             BindingContext = viewModel;
-
-
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
             GetStartet();
         }
-        private List<Position> Items { get; set; }
+
+        public void SpawnItems(Position location)
+        {
+            var item = new Item();
+            var items = item.Loot(5, new Position(location.Latitude, location.Longitude));
+
+            foreach (var loot in items)
+            {
+                Items.Add(loot);
+                All.Add(loot);
+            }
+        }
+        public void MakeBandits()
+        {
+            int a = 0;
+            foreach (var h in Items.ToList())
+            {
+                a++;
+                if (a == 3)
+                {
+                    a = 0;
+                    Bandits.Add(h);
+                    Items.Remove(h);
+                }
+            }
+        }
         private async void GetStartet()
         {
-            game = new Game();
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 5;
 
@@ -45,10 +72,10 @@ namespace maptest
             MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(0.444));
             map.MoveToRegion(mapSpan);
 
-            game.SpawnItems(new Position(location.Latitude, location.Longitude));
+            SpawnItems(new Position(location.Latitude, location.Longitude));
 
-            game.MakeBandits();
-            foreach (var loot in game.Items)
+            MakeBandits();
+            foreach (var loot in Items.ToList())
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -59,7 +86,7 @@ namespace maptest
                     }); ;
                 });
             }
-            foreach (var loot in game.Bandits)
+            foreach (var loot in Bandits.ToList())
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -70,20 +97,19 @@ namespace maptest
                     }); ;
                 });
             }
-            viewModel.Refreshlists()
+            viewModel.Refreshlists(All);
             viewModel.Find();
         }
         public void ButtonOnClicked(object sender, EventArgs e)
         {
             if (viewModel.ItemIsClose)
             {
-                var image = new Image { Source = "heart.png" };
-
-                Items.Remove(viewModel.ClosestItem);
+                All.Remove(viewModel.ClosestItem);
+                viewModel.Refreshlists(All);
                 viewModel.FindClosest();
-                if(game.Items.Contains(viewModel.ClosestItem))
+                if(Items.Contains(viewModel.ClosestItem))
                     DisplayAlert("Alert", "You have collected item", "OK");
-                if(game.Bandits.Contains(viewModel.ClosestItem))
+                if(Bandits.Contains(viewModel.ClosestItem))
                     DisplayAlert("Alert", "You have been ambushed", "OK");
             }
         }

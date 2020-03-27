@@ -27,7 +27,9 @@
             </maps:MapSpan>
         </x:Arguments>
         </maps:Map>
-        <Image Source="heart.png" />
+        <Image Source="heart.png" 
+               HorizontalOptions="Start"
+               VerticalOptions="Start"/>
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
             HorizontalOptions="Center"
