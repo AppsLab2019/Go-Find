@@ -109,7 +109,6 @@ namespace maptest.ViewModel
             // Hook up the Elapsed event for the timer. 
             aTimer.Elapsed += OnTimedEvent;
             aTimer.Elapsed += Blink;
-            aTimer.Elapsed += ItemControl;
             // Have the timer fire repeated events (true is the default)
             aTimer.AutoReset = true;
 
@@ -131,16 +130,13 @@ namespace maptest.ViewModel
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) + Math.Abs(ClosestItem.Longitude)) - (Math.Abs(PlayerPosition.Longitude) + Math.Abs(PlayerPosition.Latitude)));
-            if (Blinktime != Math.Abs( ClosestItem.Latitude) + Math.Abs(ClosestItem.Longitude) || Blinktime != Math.Abs(PlayerPosition.Longitude) + Math.Abs(PlayerPosition.Latitude))
-                Blinktime = Blinktime * 200000;
-            else
-            {
-                Blinktime = Blinktime * 100;
-            }
+            Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) * (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
+            if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
+                Blinktime = Blinktime * 200000000;
             aTimer.Interval = Blinktime;
+            ItemControl();
         }
-        private void ItemControl(Object source, ElapsedEventArgs e)
+        private void ItemControl()
         {
             if (Blinktime < 300)
                 ItemIsClose = true;

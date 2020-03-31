@@ -14,9 +14,9 @@ namespace maptest.NewFolder
             var rnd = new Random();
             double rlon = rnd.Next(-100, 100);
             double lon = rlon / 40000;
-            double rlan = rnd.Next(-100, 100);
-            double lan = rlan / 40000;
-            return new Position(playerposition.Longitude + lon, playerposition.Latitude + lan);
+            double rlat = rnd.Next(-100, 100);
+            double lat = rlat / 40000;
+            return new Position(playerposition.Latitude + lat, playerposition.Longitude + lon);
         }
 
         public List<Position> Loot(int count, Position playerposition)
