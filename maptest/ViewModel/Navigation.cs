@@ -53,7 +53,7 @@ namespace maptest.ViewModel
             Position closest = Items[1];
             foreach (var item in Items)
             {
-                if (Math.Abs(closest.Latitude) + Math.Abs(closest.Longitude) - Math.Abs(PlayerPosition.Latitude) + Math.Abs(PlayerPosition.Longitude) > Math.Abs(item.Longitude) + Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude) + Math.Abs(PlayerPosition.Longitude))
+                if (Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude))) > Math.Abs((Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(item.Longitude))))
                     closest = item;
             }
             ClosestItem = closest;
@@ -130,9 +130,9 @@ namespace maptest.ViewModel
 
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) * (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
+            Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
-                Blinktime = Blinktime * 200000000;
+                Blinktime = Blinktime * 1000000;
             aTimer.Interval = Blinktime;
             ItemControl();
         }
