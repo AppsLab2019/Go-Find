@@ -58,14 +58,15 @@ namespace maptest.ViewModel
             }
             ClosestItem = closest;
         }
-        private double Blinktime { get; set; }
+        public double Blinktime { get; set; }
 
         public Position ClosestItem { get; set; }
         public bool ItemIsClose { get; set; }
+        public bool ItemIsFar { get; set; }
 
         private static Timer bTimer;
 
-        private Position PlayerPosition { get; set; }
+        public Position PlayerPosition { get; set; }
 
         public async Task<Position> GetPlayerPositon()
         {
@@ -142,7 +143,16 @@ namespace maptest.ViewModel
                 ItemIsClose = true;
             else
                 ItemIsClose = false;
+            if (Blinktime > 1800 || Items.Count < 3)
+            New();
         }
+        public delegate void SpawnNewEventHandler();
+
+        public event SpawnNewEventHandler Spawnew;
+        public void New()
+        {
+            Spawnew();
+        } 
     }
 }
 

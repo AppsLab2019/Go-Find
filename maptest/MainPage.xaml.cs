@@ -9,6 +9,7 @@ using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
 using maptest.NewFolder;
 using maptest.ViewModel;
+using System.Threading;
 
 namespace maptest
 {
@@ -75,30 +76,39 @@ namespace maptest
             SpawnItems(new Position(location.Latitude, location.Longitude));
 
             MakeBandits();
-            foreach (var loot in Items.ToList())
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    map.Pins.Add(new Pin
-                    {
-                        Label = "Item",
-                        Position = new Position(loot.Latitude, loot.Longitude),
-                    }); ;
-                });
-            }
-            foreach (var loot in Bandits.ToList())
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    map.Pins.Add(new Pin
-                    {
-                        Label = "Bandit",
-                        Position = new Position(loot.Latitude, loot.Longitude),
-                    }); ;
-                });
-            }
+            MarkItems(All);
             viewModel.Refreshlists(All);
             viewModel.Find();
+            AutoSpawn(viewModel);
+        }
+        public void MarkItems(List<Position> locations)
+        {
+            string item;
+            foreach (var loot in locations.ToList())
+            {
+                if (Items.Contains(loot))
+                {
+                    item = "Item";
+                }
+                else
+                {
+                    item = "Bandit";
+                }
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (Items.Contains(loot))
+                        map.Pins.Add(new Pin
+                        {
+                            Label = item,
+                            Position = new Position(loot.Latitude, loot.Longitude),
+                        }); ;
+                });
+            }
+        }
+        public void AutoSpawn(Navigation nav)
+        {
+            nav.Spawnew += () => SpawnItems(nav.PlayerPosition);
+            nav.Spawnew += () => MarkItems(All);
         }
         public void ButtonOnClicked(object sender, EventArgs e)
         {
