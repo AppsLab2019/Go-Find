@@ -11,9 +11,10 @@ namespace maptest.ViewModel
     class Player
     {
         public int Health { get; set; }
-        public Player()
+        public List<string> invetory {get; set;}
+        public Player(int health)
         {
-            
+            Health = health;
         }
     }
 }

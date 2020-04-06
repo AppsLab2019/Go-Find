@@ -20,7 +20,7 @@ namespace maptest
     public partial class MainPage : ContentPage
     {
         private readonly Navigation viewModel;
-        private readonly Item item;
+        private Player player;
         private List<Position> Items { get; set; }
         private List<Position> Bandits { get; set; }
         private List<Position> All { get; set; }
@@ -30,14 +30,17 @@ namespace maptest
             InitializeComponent();
 
             viewModel = new Navigation();
-            item = new Item();
             All = new List<Position>();
             Items = new List<Position>();
             Bandits = new List<Position>();
+            player = new Player(3);
+
             BindingContext = viewModel;
+
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
+            health.Text = player.Health.ToString();
             GetStartet();
         }
 
@@ -103,25 +106,26 @@ namespace maptest
         {
             if (viewModel.ItemIsClose)
             {
-                All.Remove(viewModel.ClosestItem);
-                viewModel.Refreshlists(All);
-                viewModel.FindClosest();
                 if(Items.Contains(viewModel.ClosestItem))
                     DisplayAlert("Alert", "You have collected item", "OK");
                 if(Bandits.Contains(viewModel.ClosestItem))
                     DisplayAlert("Alert", "You have been ambushed", "OK");
+                    player.Health--;
+                All.Remove(viewModel.ClosestItem);
+                viewModel.Refreshlists(All);
+                viewModel.FindClosest();
             }
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Item", "Twitter", "Facebook");
+            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "First aid", "Twitter", "Facebook");
             Debug.WriteLine("Action: " + action);
             bool answer = await DisplayAlert("Question?", "Are you sure to use the item", "Yes", "No");
             if (answer)
             {
-                if (action == "Item")
+                if (action == "First aid")
                 {
-                    //Health++;
+                    player.Health++;
                 }
             }
         }

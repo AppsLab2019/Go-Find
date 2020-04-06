@@ -143,7 +143,6 @@ namespace maptest.ViewModel
                 ItemIsClose = true;
             else
                 ItemIsClose = false;
-            if (Blinktime > 2000 || Items.Count < 3)
             New();
         }
         public delegate void SpawnNewEventHandler();
@@ -151,9 +150,9 @@ namespace maptest.ViewModel
         public event SpawnNewEventHandler Spawnew;
         public void New()
         {
-            Spawnew();
+            if (Blinktime > 2000 || Items.Count < 3)
+                Spawnew();
         } 
-        
     }
 }
 
