@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
@@ -35,9 +36,22 @@ namespace maptest.NewFolder
             }
             return itemlist;
         }
-
-        //public Item ItemGet(Position playerposition; Position  )
-
+        public List<Position> MakeBandits(List<Position> Items)
+        {
+            var Bandits = new List<Position>();
+            int a = 0;
+            foreach (var h in Items.ToList())
+            {
+                a++;
+                if (a == 3)
+                {
+                    a = 0;
+                    Bandits.Add(h);
+                    Items.Remove(h);
+                }
+            }
+            return Bandits;
+        }   
     }
 }
 

@@ -13,7 +13,7 @@ namespace maptest.ViewModel
         public int Health { get; set; }
         public Player()
         {
-
+            
         }
     }
 }

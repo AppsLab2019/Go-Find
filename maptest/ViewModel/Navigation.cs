@@ -153,6 +153,7 @@ namespace maptest.ViewModel
         {
             Spawnew();
         } 
+        
     }
 }
 

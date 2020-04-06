@@ -10,6 +10,7 @@ using Plugin.Geolocator;
 using maptest.NewFolder;
 using maptest.ViewModel;
 using System.Threading;
+using System.Diagnostics;
 
 namespace maptest
 {
@@ -19,13 +20,17 @@ namespace maptest
     public partial class MainPage : ContentPage
     {
         private readonly Navigation viewModel;
+        private readonly Item item;
         private List<Position> Items { get; set; }
         private List<Position> Bandits { get; set; }
         private List<Position> All { get; set; }
+
         public MainPage()
         {
             InitializeComponent();
+
             viewModel = new Navigation();
+            item = new Item();
             All = new List<Position>();
             Items = new List<Position>();
             Bandits = new List<Position>();
@@ -40,25 +45,13 @@ namespace maptest
         {
             var item = new Item();
             var items = item.Loot(5, new Position(location.Latitude, location.Longitude));
-
+            Bandits = item.MakeBandits(items);
             foreach (var loot in items)
             {
-                Items.Add(loot);
                 All.Add(loot);
-            }
-        }
-        public void MakeBandits()
-        {
-            int a = 0;
-            foreach (var h in Items.ToList())
-            {
-                a++;
-                if (a == 3)
-                {
-                    a = 0;
-                    Bandits.Add(h);
-                    Items.Remove(h);
-                }
+                if(Bandits.Contains(loot))
+                    items.Remove(loot);
+                Items.Add(loot);
             }
         }
         private async void GetStartet()
@@ -75,7 +68,7 @@ namespace maptest
 
             SpawnItems(new Position(location.Latitude, location.Longitude));
 
-            MakeBandits();
+
             MarkItems(All);
             viewModel.Refreshlists(All);
             viewModel.Find();
@@ -87,13 +80,9 @@ namespace maptest
             foreach (var loot in locations.ToList())
             {
                 if (Items.Contains(loot))
-                {
                     item = "Item";
-                }
                 else
-                {
                     item = "Bandit";
-                }
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (Items.Contains(loot))
@@ -121,6 +110,19 @@ namespace maptest
                     DisplayAlert("Alert", "You have collected item", "OK");
                 if(Bandits.Contains(viewModel.ClosestItem))
                     DisplayAlert("Alert", "You have been ambushed", "OK");
+            }
+        }
+        public async void InventoryClicked(object sender, EventArgs e)
+        {
+            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "Item", "Twitter", "Facebook");
+            Debug.WriteLine("Action: " + action);
+            bool answer = await DisplayAlert("Question?", "Are you sure to use the item", "Yes", "No");
+            if (answer)
+            {
+                if (action == "Item")
+                {
+                    //Health++;
+                }
             }
         }
     }

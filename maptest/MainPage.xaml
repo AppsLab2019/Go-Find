@@ -27,9 +27,11 @@
             </maps:MapSpan>
         </x:Arguments>
         </maps:Map>
-        <Image Source="heart.png" 
+        <Image x:name="chances"
+               Source="heart.png" 
                HorizontalOptions="Start"
                VerticalOptions="Start"/>
+        
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
             HorizontalOptions="Center"
@@ -39,6 +41,12 @@
             HeightRequest="80"
             CornerRadius="40">
         </Button>
+        <Button x:Name ="inventory"
+                BackgroundColor ="white" Text=""
+                Clicked="InventoryClicked"
+                HorizontalOptions="Start"
+                VerticalOptions ="End">
+        </Button>       
     </Grid>
 </ContentPage>
     
