@@ -40,7 +40,7 @@ namespace maptest
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
-            health.Text = player.Health.ToString();
+            //health.Text = player.Health.ToString();
             GetStartet();
         }
 
@@ -121,7 +121,7 @@ namespace maptest
             string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, "First aid", "Twitter", "Facebook");
             Debug.WriteLine("Action: " + action);
             bool answer = await DisplayAlert("Question?", "Are you sure to use the item", "Yes", "No");
-            if (answer)
+            if (answer && action != "Cancel")
             {
                 if (action == "First aid")
                 {

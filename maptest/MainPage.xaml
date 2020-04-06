@@ -27,9 +27,14 @@
             </maps:MapSpan>
         </x:Arguments>
         </maps:Map>
-        <Image Source="heart.png"
+        <Grid >
+            <Grid.RowDefinitions Heigh ="auto"></Grid.RowDefinitions>
+            <Image Source="heart.png"
                HorizontalOptions="Start"
-               VerticalOptions="Start"/>
+               VerticalOptions="Start"
+               Grid.Row="0"
+               />
+        </Grid>
 
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
