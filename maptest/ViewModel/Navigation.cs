@@ -53,7 +53,7 @@ namespace maptest.ViewModel
             Position closest = Items[1];
             foreach (var item in Items)
             {
-                if (Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude))) > Math.Abs((Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(item.Longitude))))
+                if (Math.Abs((Math.Abs(closest.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(closest.Longitude))) > Math.Abs((Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(item.Longitude))))
                     closest = item;
             }
             ClosestItem = closest;

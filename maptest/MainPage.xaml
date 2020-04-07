@@ -13,28 +13,25 @@
         <maps:Map x:Name="map">
 
             <x:Arguments>
-            <maps:MapSpan>
-                <x:Arguments>
-                    <maps:Position>
-                        <x:Arguments>
-                            <x:Double>location.latitude</x:Double>
+                <maps:MapSpan>
+                    <x:Arguments>
+                        <maps:Position>
+                            <x:Arguments>
+                                <x:Double>location.latitude</x:Double>
                                 <x:Double>location.longtitude</x:Double>
                             </x:Arguments>
-                    </maps:Position>
-                    <x:Double>0.01</x:Double>
-                    <x:Double>0.01</x:Double>
-                </x:Arguments>
-            </maps:MapSpan>
-        </x:Arguments>
+                        </maps:Position>
+                        <x:Double>0.01</x:Double>
+                        <x:Double>0.01</x:Double>
+                    </x:Arguments>
+                </maps:MapSpan>
+            </x:Arguments>
         </maps:Map>
-        <Grid >
-            <Grid.RowDefinitions Heigh ="auto"></Grid.RowDefinitions>
-            <Image Source="heart.png"
+        <Image Source="heart.png"
                HorizontalOptions="Start"
                VerticalOptions="Start"
-               Grid.Row="0"
                />
-        </Grid>
+       
 
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
