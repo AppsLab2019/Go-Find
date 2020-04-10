@@ -1,58 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
 
-namespace maptest.NewFolder
+namespace maptest.ViewModel
 {
     class Item
     {
-        public Position ItemSpawn(Position playerposition)
+        public Position Position { get; set; }
+        public string Type;
+    }
+    class Bandit : Item
+    {
+        public Bandit(Position position)
         {
-
-            var rnd = new Random();
-            double rlon = rnd.Next(-100, 100);
-            double lon = rlon / 40000;
-            double rlat = rnd.Next(-100, 100);
-            double lat = rlat / 40000;
-            return new Position(playerposition.Latitude + lat, playerposition.Longitude + lon);
+            Position = position;
+            Type = "Bandit";
         }
-
-        public List<Position> Loot(int count, Position playerposition)
+    }
+    class Frndžalica : Item
+    {
+        public Frndžalica(Position position)
         {
-            var loot = new Position();
-            var itemlist = new List<Position>();
-            for (int i = 0; i <= 1; i++)
-            {
-                loot = (new Position(playerposition.Latitude, playerposition.Longitude));
-                for (int c = 0; c <= count; c++)
-                {
-                    var lastitem = new Position(ItemSpawn(loot).Latitude,ItemSpawn(loot).Longitude);
-                    itemlist.Add(lastitem);
-                    loot = lastitem;
-                }             
-            }
-            return itemlist;
+            Position = position;
+            Type = "Frndžalica";
         }
-        public List<Position> MakeBandits(List<Position> Items)
+    }
+    class OXYDŽEM : Item
+    {
+        public OXYDŽEM(Position position)
         {
-            var Bandits = new List<Position>();
-            int a = 0;
-            foreach (var h in Items.ToList())
-            {
-                a++;
-                if (a == 3)
-                {
-                    a = 0;
-                    Bandits.Add(h);
-                    Items.Remove(h);
-                }
-            }
-            return Bandits;
-        }   
+            Position = position;
+            Type = "OXYDŽEM";
+        }
+    }
+    class BAŠTASMASLEM : Item
+    {
+        public BAŠTASMASLEM(Position position) 
+        {
+            Position = position;
+            Type = "BAŠTASMASLEM";
+        }
     }
 }
-
-

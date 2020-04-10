@@ -133,7 +133,10 @@ namespace maptest.ViewModel
         {
             Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
-                Blinktime = Blinktime * 1000000;
+            {
+                Blinktime = Blinktime * 600000;
+                Blinktime += Blinktime;
+            }
             aTimer.Interval = Blinktime;
             ItemControl();
         }
