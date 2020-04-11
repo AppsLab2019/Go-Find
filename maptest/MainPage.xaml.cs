@@ -21,8 +21,7 @@ namespace maptest
     {
         private readonly Navigation viewModel;
         private Player Player;
-        private List<Position> Items { get; set; }
-        private List<Position> Bandits { get; set; }
+        private List<Item> Items { get; set; }
         private List<Position> All { get; set; }
 
         public MainPage()
@@ -31,12 +30,10 @@ namespace maptest
 
             viewModel = new Navigation();
             All = new List<Position>();
-            Items = new List<Position>();
-            Bandits = new List<Position>();
+            Items = new List<Item>();
             Player = new Player(3);
 
             BindingContext = viewModel;
-
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
 
@@ -44,18 +41,11 @@ namespace maptest
             GetStartet();
         }
 
-        public void SpawnItems(Position location)
+        public void SpawnAll(Position location)
         {
-            var item = new Spawn();
-            var items = item.Loot(5, new Position(location.Latitude, location.Longitude));
-            Bandits = item.MakeBandits(items);
-            foreach (var loot in items)
-            {
-                All.Add(loot);
-                if(Bandits.Contains(loot))
-                    items.Remove(loot);
-                Items.Add(loot);
-            }
+            var spawn = new Spawn();
+            All = spawn.PositionsSpawn(5, new Position(location.Latitude, location.Longitude));
+            Items = spawn.SpawnItems(All);
         }
         private async void GetStartet()
         {
@@ -69,21 +59,21 @@ namespace maptest
             MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(0.444));
             map.MoveToRegion(mapSpan);
 
-            SpawnItems(new Position(location.Latitude, location.Longitude));
+            SpawnAll(new Position(location.Latitude, location.Longitude));
 
 
-            MarkItems(All);
+            MarkItems(Items);
             viewModel.Refreshlists(All);
             viewModel.Find();
             AutoSpawn(viewModel);
         }
-        public void MarkItems(List<Position> locations)
+        public void MarkItems(List<Item> items)
         {
             string item;
-            foreach (var loot in locations.ToList())
+            foreach (var loot in items.ToList())
             {
-                if (Items.Contains(loot))
-                    item = "Item";
+                if (loot.Type == "Frndžalica")
+                    item = "Frndžalica";
                 else
                     item = "Bandit";
                 Device.BeginInvokeOnMainThread(() =>
@@ -92,25 +82,39 @@ namespace maptest
                         map.Pins.Add(new Pin
                         {
                             Label = item,
-                            Position = new Position(loot.Latitude, loot.Longitude),
+                            Position = new Position(loot.Position.Latitude, loot.Position.Longitude),
                         }); ;
                 });
             }
         }
+        public string ItemIs(Position position, List<Item> items)
+        {
+            string itemis = "";
+            foreach (var item in items)
+            {               
+                if (item.Position == position)
+                    itemis = item.Type;
+            }
+            return itemis;
+        }
         public void AutoSpawn(Navigation nav)
         {
-            nav.Spawnew += () => SpawnItems(nav.PlayerPosition);
-            nav.Spawnew += () => MarkItems(All);
+            nav.Spawnew += () => SpawnAll(nav.PlayerPosition);
+            nav.Spawnew += () => MarkItems(Items);
         }
         public void ButtonOnClicked(object sender, EventArgs e)
         {
+            string item;
             if (viewModel.ItemIsClose)
             {
-                if(Items.Contains(viewModel.ClosestItem))
-                    DisplayAlert("Alert", "You have collected item", "OK");
-                if(Bandits.Contains(viewModel.ClosestItem))
+                item = ItemIs(viewModel.ClosestItem, Items);
+                if (item == "Bandit")
+                {
                     DisplayAlert("Alert", "You have been ambushed", "OK");
                     Player.Health--;
+                }
+                else
+                    DisplayAlert("Alert", "You have collected " + item, "OK");
                 All.Remove(viewModel.ClosestItem);
                 viewModel.Refreshlists(All);
                 viewModel.FindClosest();
@@ -118,7 +122,6 @@ namespace maptest
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            
             
             string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, Player.Inventory.ToArray());
             Debug.WriteLine("Action: " + action);

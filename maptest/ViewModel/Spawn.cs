@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using maptest.ViewModel;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
 
@@ -9,7 +10,7 @@ namespace maptest.NewFolder
 {
     class Spawn
     {
-        public Position ItemSpawn(Position playerposition)
+        public Position PositionSpawn(Position playerposition)
         {
 
             var rnd = new Random();
@@ -20,7 +21,7 @@ namespace maptest.NewFolder
             return new Position(playerposition.Latitude + lat, playerposition.Longitude + lon);
         }
 
-        public List<Position> Loot(int count, Position playerposition)
+        public List<Position> PositionsSpawn(int count, Position playerposition)
         {
             var loot = new Position();
             var itemlist = new List<Position>();
@@ -29,27 +30,29 @@ namespace maptest.NewFolder
                 loot = (new Position(playerposition.Latitude, playerposition.Longitude));
                 for (int c = 0; c <= count; c++)
                 {
-                    var lastitem = new Position(ItemSpawn(loot).Latitude,ItemSpawn(loot).Longitude);
+                    var lastitem = new Position(PositionSpawn(loot).Latitude,PositionSpawn(loot).Longitude);
                     itemlist.Add(lastitem);
                     loot = lastitem;
                 }             
             }
             return itemlist;
         }
-        public List<Position> MakeBandits(List<Position> Items)
+        public List<Item> SpawnItems(List<Position> Items)
         {
-            var Bandits = new List<Position>();
+            var items = new List<Item>();
             int a = 0;
             foreach (var h in Items.ToList())
             {
+                a++;
                 if (a == 3)
                 {
+                    items.Add(new Item(h, "Bandit"));
                     a = 0;
-                    Bandits.Add(h);
-                    Items.Remove(h);
                 }
+                else
+                    items.Add(new Item(h, "Frndžalica"));
             }
-            return Bandits;
+            return items;
         }
         
     }

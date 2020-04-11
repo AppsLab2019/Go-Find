@@ -5,41 +5,14 @@ using Xamarin.Forms.Maps;
 
 namespace maptest.ViewModel
 {
-    class Item
+    public class Item
     {
         public Position Position { get; set; }
         public string Type;
-    }
-    class Bandit : Item
-    {
-        public Bandit(Position position)
+        public Item(Position position, string type)
         {
             Position = position;
-            Type = "Bandit";
-        }
-    }
-    class Frndžalica : Item
-    {
-        public Frndžalica(Position position)
-        {
-            Position = position;
-            Type = "Frndžalica";
-        }
-    }
-    class OXYDŽEM : Item
-    {
-        public OXYDŽEM(Position position)
-        {
-            Position = position;
-            Type = "OXYDŽEM";
-        }
-    }
-    class BAŠTASMASLEM : Item
-    {
-        public BAŠTASMASLEM(Position position) 
-        {
-            Position = position;
-            Type = "BAŠTASMASLEM";
+            Type = type;
         }
     }
 }
