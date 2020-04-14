@@ -39,18 +39,18 @@ namespace maptest.NewFolder
         }
         public List<Item> SpawnItems(List<Position> Items)
         {
-            var items = new List<Item>();
-            int a = 0;
+            var items = new List<Item>();        
+            double a = 0;
+            double b = Items.Count;          
             foreach (var h in Items.ToList())
             {
-                a++;
-                if (a == 3)
-                {
+                a++;                  
+                if((a / b)* 100 <= 50 )  
                     items.Add(new Item(h, "Bandit"));
-                    a = 0;
-                }
-                else
+                else if ((a / b)* 100 > 50 && (a / b) * 100 <= 80)
                     items.Add(new Item(h, "Frndžalica"));
+                else
+                    items.Add(new Item(h, "QuestItem"));
             }
             return items;
         }

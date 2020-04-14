@@ -8,8 +8,9 @@ using System.Timers;
 
 namespace maptest.ViewModel
 {
-    class Player
+    public class Player
     {
+        public int MaxHealth { get; set; }
         public int Health { get; set; }
         public List<string> Inventory;
         public Player(int health)
@@ -17,6 +18,43 @@ namespace maptest.ViewModel
             Inventory = new List<string>();
             Health = health;
         }
+        public void Hurt(int damage)
+        {
+            HealthChange(damage, false);
+            if (Health <= 0)
+                Inventory.Clear();
+        }
+        public void Heal(string item)
+        {
+            if (item == "Frndžalica")
+            {
+                if (Health >= MaxHealth)
+                    Health = MaxHealth;
+                else
+                {
+                    HealthChange(1, true);
+                    Inventory.Remove(item);
+                }
+            }
+        }
+        public void HealthChange(int ammount, bool heal)
+        {
+            if (heal)
+                Health=+ ammount;
+            else
+                Health = -ammount;
+            Change();
+        }
+        public delegate void HealthChanged();
+        public event HealthChanged Change;
 
+        public void HealthAdd(string item)
+        {           
+            if (item == "QuestItem")
+            {
+                Inventory.Remove(item);
+                MaxHealth++;
+            }                  
+        }
     }
 }

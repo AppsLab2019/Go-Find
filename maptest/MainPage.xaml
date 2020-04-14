@@ -31,8 +31,14 @@
                HorizontalOptions="Start"
                VerticalOptions="Start"
                />
-       
-
+        <Label Text=""
+              x:Name="Healthammount"
+              VerticalOptions="Start"
+              HorizontalOptions="Start"
+              FontSize="60"
+              TextColor="Black"
+              Margin="50, 0, 0, 0">
+        </Label>
         <Button x:Name="button"
             BackgroundColor="{Binding Color}" Text=""
             HorizontalOptions="Center"

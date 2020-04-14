@@ -32,19 +32,29 @@ namespace maptest
             All = new List<Position>();
             Items = new List<Item>();
             Player = new Player(3);
-
+            Healthammount.Text = Player.Health.ToString();
             BindingContext = viewModel;
             map.MapType = MapType.Street;
             map.IsShowingUser = true;
+            ChangeHealthammount(Player);
 
             //health.Text = player.Health.ToString();
             GetStartet();
+        }
+        public void ChangeHealthammount(Player player)
+        {
+            player.Change += Player_Change;
+        }
+
+        private void Player_Change()
+        {
+            Healthammount.Text = Player.Health.ToString();
         }
 
         public void SpawnAll(Position location)
         {
             var spawn = new Spawn();
-            All = spawn.PositionsSpawn(5, new Position(location.Latitude, location.Longitude));
+            All = spawn.PositionsSpawn(8, new Position(location.Latitude, location.Longitude));
             Items = spawn.SpawnItems(All);
         }
         private async void GetStartet()
@@ -69,13 +79,15 @@ namespace maptest
         }
         public void MarkItems(List<Item> items)
         {
-            string item;
+            string item = "Item";
             foreach (var loot in items.ToList())
             {
                 if (loot.Type == "Frndžalica")
                     item = "Frndžalica";
-                else
+                if (loot.Type == "Bandit")
                     item = "Bandit";
+                if (loot.Type == "QuestItem")
+                    item = "QuestItem";
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (Items.Contains(loot))
@@ -101,6 +113,7 @@ namespace maptest
         {
             nav.Spawnew += () => SpawnAll(nav.PlayerPosition);
             nav.Spawnew += () => MarkItems(Items);
+            nav.Spawnew += () => viewModel.Refreshlists(All);
         }
         public void ButtonOnClicked(object sender, EventArgs e)
         {
@@ -111,10 +124,13 @@ namespace maptest
                 if (item == "Bandit")
                 {
                     DisplayAlert("Alert", "You have been ambushed", "OK");
-                    Player.Health--;
+                    Player.Hurt(1);
                 }
                 else
+                {
                     DisplayAlert("Alert", "You have collected " + item, "OK");
+                    Player.Inventory.Add(item);
+                }
                 All.Remove(viewModel.ClosestItem);
                 viewModel.Refreshlists(All);
                 viewModel.FindClosest();
@@ -122,15 +138,15 @@ namespace maptest
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            
-            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null, Player.Inventory.ToArray());
+            var invenroty = new List<string>();
+            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null,Player.Inventory.ToArray());
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the item", "Yes", "No");
-                if (action == "First aid")
+                if (action == "Frndžalica" && answer)
                 {
-                    Player.Health++;
+                    Player.Heal(action);
                 }
             }
         }
