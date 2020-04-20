@@ -26,35 +26,42 @@ namespace maptest.ViewModel
         }
         public void Heal(string item)
         {
-            if (item == "Frndžalica")
+            if (Health >= MaxHealth)
+                Health = MaxHealth;
+            else
             {
-                if (Health >= MaxHealth)
-                    Health = MaxHealth;
-                else
+                if (item == "Frndžalica")
                 {
-                    HealthChange(1, true);
-                    Inventory.Remove(item);
+                    if (Health >= MaxHealth)
+                        Health = MaxHealth;
+                    else
+                    {
+                        HealthChange(1, true);
+                        Inventory.Remove(item);
+                    }
                 }
             }
         }
+
         public void HealthChange(int ammount, bool heal)
         {
             if (heal)
-                Health=+ ammount;
+                Health += ammount;
             else
-                Health = -ammount;
+                Health += -ammount;
             Change();
         }
         public delegate void HealthChanged();
         public event HealthChanged Change;
 
-        public void HealthAdd(string item)
-        {           
-            if (item == "QuestItem")
+        public void PlayerUpgrade(string item)
+        {
+            if (item == "Armour")
             {
-                Inventory.Remove(item);
                 MaxHealth++;
-            }                  
+            }
+            Inventory.Remove(item);
         }
     }
 }
+

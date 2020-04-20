@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -84,10 +85,12 @@ namespace maptest
             {
                 if (loot.Type == "Frndžalica")
                     item = "Frndžalica";
-                if (loot.Type == "Bandit")
-                    item = "Bandit";
-                if (loot.Type == "QuestItem")
-                    item = "QuestItem";
+                else if (loot.Type == "EasyBandit")
+                    item = "EasyBandit";
+                else if (loot.Type == "MediumBandit")
+                    item = "MediumBandit";
+                else if (loot.Type == "Armour")
+                    item = "Armour";
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (Items.Contains(loot))
@@ -115,20 +118,26 @@ namespace maptest
             nav.Spawnew += () => MarkItems(Items);
             nav.Spawnew += () => viewModel.Refreshlists(All);
         }
-        public void ButtonOnClicked(object sender, EventArgs e)
+        public async void ButtonOnClicked(object sender, EventArgs e)
         {
             string item;
+            bool fight = true;
             if (viewModel.ItemIsClose)
             {
                 item = ItemIs(viewModel.ClosestItem, Items);
-                if (item == "Bandit")
+                if (item.Contains("Bandit"))
                 {
-                    DisplayAlert("Alert", "You have been ambushed", "OK");
+                    await DisplayAlert("Alert", "You've been ambushed", "OK");
+                    if (Player.Inventory.Contains("Frndžalica") && item.Contains("Easy"))
+                    {
+                        fight = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer Frndžalica?", "Fight");
+                    }
+                    if(fight)
                     Player.Hurt(1);
                 }
                 else
                 {
-                    DisplayAlert("Alert", "You have collected " + item, "OK");
+                    await DisplayAlert("Alert", "You've collected " + item, "OK");
                     Player.Inventory.Add(item);
                 }
                 All.Remove(viewModel.ClosestItem);
@@ -138,17 +147,36 @@ namespace maptest
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            var invenroty = new List<string>();
-            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null,Player.Inventory.ToArray());
+            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null,ShowInventory(Player));
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {
-                bool answer = await DisplayAlert("Question?", "Are you sure to use the item", "Yes", "No");
+                bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
                 if (action == "Frndžalica" && answer)
                 {
                     Player.Heal(action);
                 }
+                if (action == "Armour")
+                {
+                    Player.PlayerUpgrade(action);
+                }
+
             }
+        }
+        public string[] ShowInventory(Player player)
+        {
+            string[] items;
+            var Frndzalica = 0;
+            var Armour = 0;
+            foreach(var item in player.Inventory)
+            {
+                if (item == "Frndžalica")
+                    Frndzalica++;
+                if (item == "Armour")
+                    Armour++;
+            }
+            items = new string[] { Frndzalica.ToString() + " Frndžalica" , Armour.ToString() + " Armour" };
+            return items;
         }
     }
 }

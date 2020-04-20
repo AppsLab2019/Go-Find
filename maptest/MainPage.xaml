@@ -31,7 +31,7 @@
                HorizontalOptions="Start"
                VerticalOptions="Start"
                />
-        <Label Text=""
+        <Label Text="{Binding Health}"
               x:Name="Healthammount"
               VerticalOptions="Start"
               HorizontalOptions="Start"
@@ -48,12 +48,18 @@
             HeightRequest="80"
             CornerRadius="40">
         </Button>
-        <Button x:Name ="inventory"
-                BackgroundColor ="white" Text=""
+        <ImageButton x:Name ="inventory"
+                     Source="Inventory_icon"
+                BorderColor="Transparent"
+                BackgroundColor="Transparent"
                 Clicked="InventoryClicked"
                 HorizontalOptions="Start"
-                VerticalOptions ="End">
-        </Button>       
+                VerticalOptions ="End"
+                WidthRequest="100"
+                HeightRequest="100"
+                CornerRadius="40">
+            
+        </ImageButton>
     </Grid>
 </ContentPage>
     
