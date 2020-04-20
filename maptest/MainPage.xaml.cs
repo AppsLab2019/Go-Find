@@ -39,7 +39,10 @@ namespace maptest
             map.IsShowingUser = true;
             ChangeHealthammount(Player);
 
-            //health.Text = player.Health.ToString();
+            Player.Inventory.Add("Frndžalica");
+            Player.Inventory.Add("Frndžalica");
+            Player.Inventory.Add("Frndžalica");
+         
             GetStartet();
         }
         public void ChangeHealthammount(Player player)
