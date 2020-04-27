@@ -155,7 +155,7 @@ namespace maptest
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {
-                bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
+                bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action.Remove(0,2), "Yes", "No");
                 if (action == "Frndžalica" && answer)
                 {
                     Player.Heal(action);
@@ -164,7 +164,6 @@ namespace maptest
                 {
                     Player.PlayerUpgrade(action);
                 }
-
             }
         }
         public string[] ShowInventory(Player player)
@@ -178,7 +177,7 @@ namespace maptest
                     if (sameitem == item)
                         a++;
                 }
-                if(a != 0)
+                if(a != 0 && !items.Contains(a + " " + item))
                     items.Add(a + " " + item);
             }
             return items.ToArray();
