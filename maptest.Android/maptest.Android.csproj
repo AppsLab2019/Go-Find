@@ -107,9 +107,6 @@
     <AndroidResource Include="Resources\drawable\NewFile1.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\heart.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\NewFile1.txt" />
   </ItemGroup>
   <ItemGroup>

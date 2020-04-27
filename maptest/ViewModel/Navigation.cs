@@ -120,7 +120,7 @@ namespace maptest.ViewModel
         private void Blink(Object source, ElapsedEventArgs e)
         {
             if (ItemIsClose)
-                Color = Color.Red;
+                Color = Color.Gold;
             else
             {
                 Color = Color.Gold;
@@ -142,7 +142,7 @@ namespace maptest.ViewModel
         }
         private void ItemControl()
         {
-            if (Blinktime < 200)
+            if (Blinktime < 100)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;

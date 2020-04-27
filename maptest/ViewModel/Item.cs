@@ -9,7 +9,7 @@ namespace maptest.ViewModel
     {
         public Position Position { get; set; }
         public string Type;
-        public Item(Position position, string type)
+        public Item(Position position, string type,string name)
         {
             Position = position;
             Type = type;

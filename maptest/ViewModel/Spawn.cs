@@ -39,24 +39,51 @@ namespace maptest.NewFolder
         }
         public List<Item> SpawnItems(List<Position> Items)
         {
+            var rnd = new Random();
             var items = new List<Item>();        
             double a = 0;
-            double b = Items.Count;          
+            double b = Items.Count;
             foreach (var h in Items.ToList())
             {
+                var chance = rnd.Next(0, 100);
                 a++;
-                if ((a / b) * 100 <= 30)
-                    items.Add(new Item(h, "EasyBandit"));
-                else if ((a / b) * 100 <= 50)
-                    items.Add(new Item(h, "MediumBandit"));
-                else if ((a / b) * 100 > 50 && (a / b) * 100 <= 80)
-                    items.Add(new Item(h, "Frndžalica"));
-                else
-                    items.Add(new Item(h, "Armour"));
+
+                //Bandits
+                if (chance <= 35)
+                {
+                    if (chance < 20)
+                        items.Add(new Item(h, "Bandit" , "NewBandit"));
+                    else if (chance < 35)
+                        items.Add(new Item(h, "Bandit" , "Veteran"));
+                }
+
+                //Frndzalica
+                else if (chance < 60)
+                    items.Add(new Item(h,"Healing", "Frndžalica"));
+
+                //Armour
+                else if (chance < 99)
+                    items.Add(new Item(h,"upgrade" , "Armour"));
+
+                //Legendary
+                else if (chance == 100)
+                {
+                    items.Add(new Item(h, "Legendary" , SpawnLegendaryItem()));
+                }
+                    
             }
+            
             return items;
         }
-        
+        public string SpawnLegendaryItem() 
+        {
+            var rand = new Random();
+            var Legendary = new List<string>();
+            Legendary.Add("Meč hrdlorez");
+            Legendary.Add("Kniha múdrostí");
+            Legendary.Add("Palička nádeje");
+            return Legendary[(rand.Next(1, Legendary.Count))];
+        }  
     }
 }
 

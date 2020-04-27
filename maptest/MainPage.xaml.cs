@@ -94,6 +94,7 @@ namespace maptest
                     item = "MediumBandit";
                 else if (loot.Type == "Armour")
                     item = "Armour";
+
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (Items.Contains(loot))
@@ -168,18 +169,19 @@ namespace maptest
         }
         public string[] ShowInventory(Player player)
         {
-            string[] items;
-            var Frndzalica = 0;
-            var Armour = 0;
-            foreach(var item in player.Inventory)
+            var items = new List<string>();
+            foreach (var item in player.Inventory)
             {
-                if (item == "Frndžalica")
-                    Frndzalica++;
-                if (item == "Armour")
-                    Armour++;
+                int a = 0;
+                foreach (var sameitem in player.Inventory)
+                {
+                    if (sameitem == item)
+                        a++;
+                }
+                if(a != 0)
+                    items.Add(a + " " + item);
             }
-            items = new string[] { Frndzalica.ToString() + " Frndžalica" , Armour.ToString() + " Armour" };
-            return items;
+            return items.ToArray();
         }
     }
 }

@@ -27,7 +27,7 @@
                 </maps:MapSpan>
             </x:Arguments>
         </maps:Map>
-        <Image Source="heart.png"
+        <Image Source="heart.jpg"
                HorizontalOptions="Start"
                VerticalOptions="Start"
                />
