@@ -106,13 +106,13 @@ namespace maptest
                 });
             }
         }
-        public string ItemIs(Position position, List<Item> items)
+        public Item ItemIs(Position position, List<Item> items)
         {
-            string itemis = "";
+            Item itemis = null;
             foreach (var item in items)
             {               
                 if (item.Position == position)
-                    itemis = item.Type;
+                    itemis = item;
             }
             return itemis;
         }
@@ -124,25 +124,30 @@ namespace maptest
         }
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
-            string item;
+            Item item;
             bool fight = true;
             if (viewModel.ItemIsClose)
             {
                 item = ItemIs(viewModel.ClosestItem, Items);
-                if (item.Contains("Bandit"))
+                if (item.Type.Contains("Bandit"))
                 {
-                    await DisplayAlert("Alert", "You've been ambushed", "OK");
-                    if (Player.Inventory.Contains("Frndžalica") && item.Contains("Easy"))
+                    await DisplayAlert("Alert", "You've been ambushed by " + item.Ammount + item.Name, "OK");
+                    if (Player.Inventory.Contains("Frndžalica") && item.Name.Contains("Causual"))
                     {
                         fight = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer Frndžalica?", "Fight");
                     }
                     if(fight)
-                    Player.Hurt(1);
+                    {
+                        if (item.Name.Contains("Veteran"))
+                            Player.Hurt(item.Ammount * 2);
+                        else
+                            Player.Hurt(item.Ammount);
+                    }
                 }
                 else
                 {
                     await DisplayAlert("Alert", "You've collected " + item, "OK");
-                    Player.Inventory.Add(item);
+                    Player.Inventory.Add(item.Name);
                 }
                 All.Remove(viewModel.ClosestItem);
                 viewModel.Refreshlists(All);

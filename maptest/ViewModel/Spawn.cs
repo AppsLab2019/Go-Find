@@ -52,23 +52,23 @@ namespace maptest.NewFolder
                 if (chance <= 35)
                 {
                     if (chance < 20)
-                        items.Add(new Item(h, "Bandit" , "NewBandit"));
+                        items.Add(new Item(h, "Bandit" , "Causual Bandit",rnd.Next(0,3)));
                     else if (chance < 35)
-                        items.Add(new Item(h, "Bandit" , "Veteran"));
+                        items.Add(new Item(h, "Bandit" , "Veteran Bandit",rnd.Next(0,2)));
                 }
-
+                
                 //Frndzalica
                 else if (chance < 60)
-                    items.Add(new Item(h,"Healing", "Frndžalica"));
+                    items.Add(new Item(h,"Healing", "Frndžalica",rnd.Next(0,2)));
 
                 //Armour
                 else if (chance < 99)
-                    items.Add(new Item(h,"upgrade" , "Armour"));
+                    items.Add(new Item(h,"upgrade" , "Armour",1));
 
                 //Legendary
                 else if (chance == 100)
                 {
-                    items.Add(new Item(h, "Legendary" , SpawnLegendaryItem()));
+                    items.Add(new Item(h, "Legendary" , SpawnLegendaryItem() , 1));
                 }
                     
             }
