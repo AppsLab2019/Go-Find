@@ -134,7 +134,7 @@ namespace maptest.ViewModel
             Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
             {
-                Blinktime = Blinktime * 800000;
+                Blinktime = Blinktime * 1400000;
                 Blinktime += Blinktime;
             }
             aTimer.Interval = Blinktime;
@@ -142,7 +142,7 @@ namespace maptest.ViewModel
         }
         private void ItemControl()
         {
-            if (Blinktime < 10000)
+            if (Blinktime < 300)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;

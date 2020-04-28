@@ -159,7 +159,7 @@ namespace maptest
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("ActionSheet: Send to?", "Cancel", null,ShowInventory(Player));
+            string action = await DisplayActionSheet("Inventory", "Cancel", null,ShowInventory(Player));
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {

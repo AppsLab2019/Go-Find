@@ -59,7 +59,7 @@ namespace maptest.ViewModel
         {
             if (item == "Armour")
             {
-                MaxHealth =+ 1;
+                MaxHealth++;
             }
             Inventory.Remove(item);
         }
