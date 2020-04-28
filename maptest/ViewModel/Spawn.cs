@@ -52,9 +52,9 @@ namespace maptest.NewFolder
                 if (chance <= 35)
                 {
                     if (chance < 20)
-                        items.Add(new Item(h, "Bandit" , "Causual Bandit",rnd.Next(0,3)));
+                        items.Add(new Item(h, "Bandit" , "Causual Bandit",rnd.Next(1,3)));
                     else if (chance < 35)
-                        items.Add(new Item(h, "Bandit" , "Veteran Bandit",rnd.Next(0,2)));
+                        items.Add(new Item(h, "Bandit" , "Veteran Bandit",rnd.Next(1,2)));
                 }
                 
                 //Frndzalica

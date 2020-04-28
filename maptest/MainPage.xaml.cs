@@ -125,7 +125,7 @@ namespace maptest
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
             Item item;
-            bool fight = true;
+            bool fight = false;
             if (viewModel.ItemIsClose)
             {
                 item = ItemIs(viewModel.ClosestItem, Items);
@@ -146,7 +146,7 @@ namespace maptest
                 }
                 else
                 {
-                    await DisplayAlert("Alert", "You've collected " + item, "OK");
+                    await DisplayAlert("Alert", "You've collected " + item.Name, "OK");
                     Player.Inventory.Add(item.Name);
                 }
                 All.Remove(viewModel.ClosestItem);
@@ -160,7 +160,8 @@ namespace maptest
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {
-                bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action.Remove(0,2), "Yes", "No");
+                action = action.Remove(0, 2);
+                bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
                 if (action == "Frndžalica" && answer)
                 {
                     Player.Heal(action);

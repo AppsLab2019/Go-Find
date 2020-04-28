@@ -142,7 +142,7 @@ namespace maptest.ViewModel
         }
         private void ItemControl()
         {
-            if (Blinktime < 100)
+            if (Blinktime < 10000)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;
