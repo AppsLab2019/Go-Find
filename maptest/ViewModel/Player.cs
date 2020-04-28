@@ -17,6 +17,7 @@ namespace maptest.ViewModel
         {
             Inventory = new List<string>();
             Health = health;
+            MaxHealth = health;
         }
         public void Hurt(int damage)
         {
@@ -58,7 +59,7 @@ namespace maptest.ViewModel
         {
             if (item == "Armour")
             {
-                MaxHealth++;
+                MaxHealth =+ 1;
             }
             Inventory.Remove(item);
         }

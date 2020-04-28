@@ -42,6 +42,7 @@ namespace maptest
             Player.Inventory.Add("Frndžalica");
             Player.Inventory.Add("Frndžalica");
             Player.Inventory.Add("Frndžalica");
+            Player.Inventory.Add("Armour");
          
             GetStartet();
         }
@@ -136,13 +137,15 @@ namespace maptest
                     {
                         fight = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer Frndžalica?", "Fight");
                     }
-                    if(fight)
+                    if (!fight)
                     {
                         if (item.Name.Contains("Veteran"))
                             Player.Hurt(item.Ammount * 2);
                         else
                             Player.Hurt(item.Ammount);
                     }
+                    else
+                        Player.Inventory.Remove(item.Name);
                 }
                 else
                 {

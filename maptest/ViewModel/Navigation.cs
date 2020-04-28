@@ -153,7 +153,7 @@ namespace maptest.ViewModel
         public event SpawnNewEventHandler Spawnew;
         public void New()
         {
-            if (Blinktime > 2800 || Items.Count < 3)
+            if (Blinktime > 2800 || Items.Count < 4)
             {
                 Spawnew();
             }
