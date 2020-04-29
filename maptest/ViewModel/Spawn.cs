@@ -52,24 +52,29 @@ namespace maptest.NewFolder
                 if (chance <= 35)
                 {
                     if (chance < 20)
-                        items.Add(new Item(h, "Bandit" , "Causual Bandit",rnd.Next(1,3)));
+                        items.Add(new Item(h, "Bandit", "Causual Bandit", rnd.Next(1, 3)));
                     else if (chance < 35)
-                        items.Add(new Item(h, "Bandit" , "Veteran Bandit",rnd.Next(1,2)));
+                        items.Add(new Item(h, "Bandit", "Veteran Bandit", rnd.Next(1, 2)));
                 }
-                
+
                 //Frndzalica
                 else if (chance < 60)
-                    items.Add(new Item(h,"Healing", "Frndžalica",rnd.Next(0,2)));
+                    items.Add(new Item(h, "Healing", "Firewater", rnd.Next(0, 2)));
 
                 //Armour
-                else if (chance < 99)
-                    items.Add(new Item(h,"upgrade" , "Armour",1));
+                else if (chance < 98)
+                    items.Add(new Item(h, "upgrade", "Armour", 1));
 
                 //Legendary
-                else if (chance == 100)
+                else if (chance == 99)
                 {
-                    items.Add(new Item(h, "Legendary" , SpawnLegendaryItem() , 1));
+                    items.Add(new Item(h, "Legendary", SpawnLegendaryItem(), 1));
+
                 }
+                else if (chance == 100 && GameUpgrade == true)
+                { 
+                    //items.Add(new Item(h, "Master", SpawnNewItems(), 1));
+                }                    
                     
             }
             
@@ -83,7 +88,14 @@ namespace maptest.NewFolder
             Legendary.Add("Kniha múdrostí");
             Legendary.Add("Palička nádeje");
             return Legendary[(rand.Next(1, Legendary.Count))];
-        }  
+        }
+        public void SpawnNewItems()
+        {
+            var rand = new Random();
+            var Master = new List<string>();
+            Master.Add("Shield Of The Hero");
+        }
+        public bool GameUpgrade = false;
     }
 }
 

@@ -12,6 +12,7 @@ using maptest.NewFolder;
 using maptest.ViewModel;
 using System.Threading;
 using System.Diagnostics;
+using System.IO;
 
 namespace maptest
 {
@@ -39,13 +40,26 @@ namespace maptest
             map.IsShowingUser = true;
             ChangeHealthammount(Player);
 
-            Player.Inventory.Add("Frndžalica");
-            Player.Inventory.Add("Frndžalica");
-            Player.Inventory.Add("Frndžalica");
+            Player.Inventory.Add("Firewater");
+            Player.Inventory.Add("Firewater");
+            Player.Inventory.Add("Firewater");
             Player.Inventory.Add("Armour");
-         
+
+
             GetStartet();
         }
+        /*public void SaveInventory()
+        {
+            File.WriteAllLines("Inventory", Player.Inventory.ToArray());
+        }
+        public void LoadInventory()
+        {
+            string[] inventory = File.ReadAllLines("Inventory");
+            foreach (var item in inventory)
+            {
+                Player.Inventory.Add(item);
+            }
+        }*/
         public void ChangeHealthammount(Player player)
         {
             player.Change += Player_Change;
@@ -87,15 +101,7 @@ namespace maptest
             string item = "Item";
             foreach (var loot in items.ToList())
             {
-                if (loot.Type == "Frndžalica")
-                    item = "Frndžalica";
-                else if (loot.Type == "EasyBandit")
-                    item = "EasyBandit";
-                else if (loot.Type == "MediumBandit")
-                    item = "MediumBandit";
-                else if (loot.Type == "Armour")
-                    item = "Armour";
-
+                item = loot.Name;
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     if (Items.Contains(loot))
@@ -133,9 +139,9 @@ namespace maptest
                 if (item.Type.Contains("Bandit"))
                 {
                     await DisplayAlert("Alert", "You've been ambushed by " + item.Ammount + item.Name, "OK");
-                    if (Player.Inventory.Contains("Frndžalica") && item.Name.Contains("Causual"))
+                    if (Player.Inventory.Contains("Firewater") && item.Name.Contains("Causual"))
                     {
-                        fight = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer Frndžalica?", "Fight");
+                        fight = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer Firewater?", "Fight");
                     }
                     if (!fight)
                     {
@@ -165,7 +171,7 @@ namespace maptest
             {
                 action = action.Remove(0, 2);
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
-                if (action == "Frndžalica" && answer)
+                if (action == "Firewater" && answer)
                 {
                     Player.Heal(action);
                 }
@@ -190,6 +196,20 @@ namespace maptest
                     items.Add(a + " " + item);
             }
             return items.ToArray();
+        }
+        public void GameUpgrade()
+        {
+            if(Player.Inventory.Contains("Meč hrdlorez"))
+            {
+                if(Player.Inventory.Contains("Palička nádeje"))
+                {
+                    if (Player.Inventory.Contains("Kniha múdrostí"))
+                    {
+                        DisplayAlert("Alert","You've collected all legendary items, now let the game upgrade" , "ok");
+                        //SpawnNewItems
+                    }
+                }
+            }
         }
     }
 }

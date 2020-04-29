@@ -31,7 +31,7 @@ namespace maptest.ViewModel
                 Health = MaxHealth;
             else
             {
-                if (item == "Frndžalica")
+                if (item == "Firewater")
                 {
                     if (Health >= MaxHealth)
                         Health = MaxHealth;
