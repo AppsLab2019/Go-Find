@@ -10,9 +10,9 @@ using Android;
 using Android.Gms.Maps.Model;
 using Xamarin.Forms.Maps;
 
-namespace maptest.Droid
+namespace GoAndFind.Droid
 {
-    [Activity(Label = "maptest", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "GoAndFind", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

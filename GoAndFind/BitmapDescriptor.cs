@@ -1,4 +1,4 @@
-﻿namespace maptest
+﻿namespace GoAndFind
 {
     internal class BitmapDescriptor
     {

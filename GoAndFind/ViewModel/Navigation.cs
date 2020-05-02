@@ -10,7 +10,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace maptest.ViewModel
+namespace GoAndFind.ViewModel
 {
 
     public class Navigation : INotifyPropertyChanged

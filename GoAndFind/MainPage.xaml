@@ -4,9 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="maptest.MainPage"
+             x:Class="GoAndFind.MainPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             xmlns:vm="clr-namespace:maptest.ViewModel">
+             xmlns:vm="clr-namespace:GoAndFind.ViewModel">
 
     <Grid>
 

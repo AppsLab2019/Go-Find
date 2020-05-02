@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace maptest
+namespace GoAndFind
 {
     public partial class App : Application
     {

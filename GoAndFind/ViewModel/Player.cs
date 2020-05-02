@@ -6,7 +6,7 @@ using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
 using System.Timers;
 
-namespace maptest.ViewModel
+namespace GoAndFind.ViewModel
 {
     public class Player
     {

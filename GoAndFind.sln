@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "maptest.Android", "maptest.Android\maptest.Android.csproj", "{04E85EB5-25C3-4252-A31C-05DA33C9544B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoAndFind.Android", "GoAndFind.Android\GoAndFind.Android.csproj", "{04E85EB5-25C3-4252-A31C-05DA33C9544B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maptest", "maptest\maptest.csproj", "{3142C083-AD51-4AA9-91CB-8E68E66F5EAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoAndFind", "GoAndFind\GoAndFind.csproj", "{3142C083-AD51-4AA9-91CB-8E68E66F5EAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

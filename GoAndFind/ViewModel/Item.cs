@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms.Maps;
 
-namespace maptest.ViewModel
+namespace GoAndFind.ViewModel
 {
     public class Item
     {

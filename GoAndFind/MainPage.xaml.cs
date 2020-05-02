@@ -3,18 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
-using maptest.NewFolder;
-using maptest.ViewModel;
-using System.Threading;
+using GoAndFind.NewFolder;
+using GoAndFind.ViewModel;
 using System.Diagnostics;
 using System.IO;
 
-namespace maptest
+namespace GoAndFind
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer

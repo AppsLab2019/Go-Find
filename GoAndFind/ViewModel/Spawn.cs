@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using maptest.ViewModel;
+using GoAndFind.ViewModel;
 using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
 
-namespace maptest.NewFolder
+namespace GoAndFind.NewFolder
 {
     class Spawn
     {
