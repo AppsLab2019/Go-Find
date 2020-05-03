@@ -1,5 +1,6 @@
 ﻿using Android.Content.Res;
 using Android.Views;
+using GoAndFind.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,13 +12,22 @@ namespace GoAndFind
     class MiniGame
     {
         public bool Win;
-        public async void Fight(MainPage page, string bandit)
+        public async void Fight(MainPage page, string bandit, Player player)
         {
             Win = false;
             var rand = new Random();
             var RockETC = new List<string> { "sword", "shield", "net" };
             string BanditAction = RockETC[rand.Next(1, RockETC.Count)];
 
+            if (player.Inventory.Contains("Erasing wand"))
+            {
+                bool decision = await page.DisplayAlert(null, "You can remove this bandit by using Erasing wand", "Remove Bandit", "Fight");
+                if (decision)
+                {
+                    Win = true;
+                    return;
+                }
+            } 
             int b = 1;
             for (int a = 0; a < b; a++)
             {
@@ -57,11 +67,11 @@ namespace GoAndFind
                 }
                 if (Win == true)
                 {
-                    page.DisplayAlert(null, "Ho, Ho, Ho ... You've won this fight, now let's continue ", "ok");
+                    await page.DisplayAlert(null, "Ho, Ho, Ho ... You've won this fight, now let's continue ", "ok");
                 }
                 else
                 {
-                    page.DisplayAlert(null, "Bandit has beaten you", "ouch");
+                    await page.DisplayAlert(null, "Bandit has beaten you", "ouch");
                 }
             }
         }

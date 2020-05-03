@@ -41,8 +41,6 @@ namespace GoAndFind.NewFolder
         {
             var rnd = new Random();
             var items = new List<Item>();        
-            double a = 0;
-            double b = Items.Count;
             foreach (var h in Items.ToList())
             {
                 while (true)
@@ -73,7 +71,10 @@ namespace GoAndFind.NewFolder
                         items.Add(new Item(h, "Upgrade", "armour", 1));
                         break;
                     }
-
+                    else if (Chance(30))
+                    {
+                        items.Add(new Item(h, "Changer", "Hopefull stick of gloominess", 1));
+                    }
                     //Legendary
                     else if (Chance(10))
                     {
@@ -94,7 +95,7 @@ namespace GoAndFind.NewFolder
             var rand = new Random();
             var Legendary = new List<string>();
             Legendary.Add("Reaper's knife");
-            Legendary.Add("Book of knowledge");
+            Legendary.Add("Erasing wand");
             Legendary.Add("Hopefull stick of gloominess");
             return Legendary[(rand.Next(1, Legendary.Count))];
         }

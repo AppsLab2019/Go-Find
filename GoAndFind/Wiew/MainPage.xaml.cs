@@ -41,7 +41,7 @@ namespace GoAndFind
             Player.Inventory.Add("liquor");
             Player.Inventory.Add("liquor");
             Player.Inventory.Add("armour");
-
+            Player.Inventory.Add("Erasing wand");
 
             GetStartet();
         }
@@ -143,7 +143,7 @@ namespace GoAndFind
             {
                 for (int a = 0; a < item.Ammount; a++)
                 {
-                    fight.Fight(this, item.Name);
+                    fight.Fight(this, item.Name,Player);
                     if (!fight.Win)
                         Player.Hurt(1);
                 }
@@ -187,6 +187,11 @@ namespace GoAndFind
                 if (action == "armour")
                 {
                     Player.PlayerUpgrade(action);
+                }
+                if(action == "Hopefull stick of gloominess")
+                {
+                    SpawnNewItems(viewModel);
+                    Player.Inventory.Remove(action);
                 }
             }
         }
