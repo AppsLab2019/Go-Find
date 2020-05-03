@@ -42,6 +42,7 @@ namespace GoAndFind
             Player.Inventory.Add("liquor");
             Player.Inventory.Add("armour");
             Player.Inventory.Add("Erasing wand");
+            Player.Inventory.Add("Hopefull stick of gloominess");
 
             GetStartet();
         }
