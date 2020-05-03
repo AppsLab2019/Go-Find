@@ -37,13 +37,14 @@ namespace GoAndFind
             map.IsShowingUser = true;
             ChangeHealthammount(Player);
 
-            Player.Inventory.Add("Firewater");
-            Player.Inventory.Add("Firewater");
-            Player.Inventory.Add("Firewater");
-            Player.Inventory.Add("Armour");
+            Player.Inventory.Add("liquor");
+            Player.Inventory.Add("liquor");
+            Player.Inventory.Add("liquor");
+            Player.Inventory.Add("armour");
 
 
             GetStartet();
+            var min = new MiniGame();
         }
         /*public void SaveInventory()
         {
@@ -122,38 +123,50 @@ namespace GoAndFind
         }
         public void AutoSpawn(Navigation nav)
         {
-            nav.Spawnew += () => SpawnAll(nav.PlayerPosition);
-            nav.Spawnew += () => MarkItems(Items);
-            nav.Spawnew += () => viewModel.Refreshlists(All);
+            nav.Spawnew += () => SpawnNewItems(nav);
+        }
+        public void SpawnNewItems(Navigation nav)
+        {
+            SpawnAll(nav.PlayerPosition);
+            viewModel.Refreshlists(All);
+            MarkItems(Items);
+        }
+        public async void Ambush(Item item)
+        {
+            bool friend = false;
+            var fight = new MiniGame();
+            await DisplayAlert("Alert", "You've been ambushed by " + item.Ammount + " " + item.Name, "OK");
+            if (Player.Inventory.Contains("liquor") && item.Name.Contains("Causual"))
+            {
+                friend = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer liquor", "Fight");
+            }
+            if (!friend)
+            {
+                for (int a = 0; a < item.Ammount; a++)
+                {
+                    fight.Fight(this, item.Name);
+                    if (!fight.Win)
+                        Player.Hurt(1);
+                }
+            }
+            else
+                Player.Inventory.Remove(item.Name);
         }
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
             Item item;
-            bool fight = false;
             if (viewModel.ItemIsClose)
             {
                 item = ItemIs(viewModel.ClosestItem, Items);
                 if (item.Type.Contains("Bandit"))
                 {
-                    await DisplayAlert("Alert", "You've been ambushed by " + item.Ammount + item.Name, "OK");
-                    if (Player.Inventory.Contains("Firewater") && item.Name.Contains("Causual"))
-                    {
-                        fight = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer Firewater?", "Fight");
-                    }
-                    if (!fight)
-                    {
-                        if (item.Name.Contains("Veteran"))
-                            Player.Hurt(item.Ammount * 2);
-                        else
-                            Player.Hurt(item.Ammount);
-                    }
-                    else
-                        Player.Inventory.Remove(item.Name);
+                    Ambush(item);
                 }
                 else
                 {
-                    await DisplayAlert("Alert", "You've collected " + item.Name, "OK");
-                    Player.Inventory.Add(item.Name);
+                    await DisplayAlert("Alert", "You've collected " + item.Ammount + " " + item.Name, "OK");
+                    for(int a = 0; a >= item.Ammount; a++)  
+                        Player.Inventory.Add(item.Name);
                 }
                 All.Remove(viewModel.ClosestItem);
                 viewModel.Refreshlists(All);
@@ -168,11 +181,11 @@ namespace GoAndFind
             {
                 action = action.Remove(0, 2);
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
-                if (action == "Firewater" && answer)
+                if (action == "liquor" && answer)
                 {
                     Player.Heal(action);
                 }
-                if (action == "Armour")
+                if (action == "armour")
                 {
                     Player.PlayerUpgrade(action);
                 }

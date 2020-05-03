@@ -31,7 +31,7 @@ namespace GoAndFind.ViewModel
                 Health = MaxHealth;
             else
             {
-                if (item == "Firewater")
+                if (item == "liquor")
                 {
                     if (Health >= MaxHealth)
                         Health = MaxHealth;
@@ -57,11 +57,11 @@ namespace GoAndFind.ViewModel
 
         public void PlayerUpgrade(string item)
         {
-            if (item == "Armour")
+            if (item == "armour")
             {
                 MaxHealth++;
+                Health++;
             }
-            Inventory.Remove(item);
         }
     }
 }

@@ -49,21 +49,20 @@ namespace GoAndFind.NewFolder
                 a++;
 
                 //Bandits
-                if (chance <= 35)
+                if (chance <= 45)
                 {
-                    if (chance < 20)
+                    if (chance < 30)
                         items.Add(new Item(h, "Bandit", "Causual Bandit", rnd.Next(1, 3)));
-                    else if (chance < 35)
-                        items.Add(new Item(h, "Bandit", "Veteran Bandit", rnd.Next(1, 2)));
+                    else if (chance < 45)
+                        items.Add(new Item(h, "Bandit", "veteran Bandit", rnd.Next(1, 2)));
                 }
-
                 //Frndzalica
-                else if (chance < 60)
-                    items.Add(new Item(h, "Healing", "Firewater", rnd.Next(0, 2)));
+                else if (chance < 75)
+                    items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
 
-                //Armour
+                //armour
                 else if (chance < 98)
-                    items.Add(new Item(h, "upgrade", "Armour", 1));
+                    items.Add(new Item(h, "Upgrade", "armour", 1));
 
                 //Legendary
                 else if (chance == 99)
@@ -74,10 +73,8 @@ namespace GoAndFind.NewFolder
                 else if (chance == 100 && GameUpgrade == true)
                 { 
                     //items.Add(new Item(h, "Master", SpawnNewItems(), 1));
-                }                    
-                    
+                }                           
             }
-            
             return items;
         }
         public string SpawnLegendaryItem() 
