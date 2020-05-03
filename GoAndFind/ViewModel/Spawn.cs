@@ -45,45 +45,57 @@ namespace GoAndFind.NewFolder
             double b = Items.Count;
             foreach (var h in Items.ToList())
             {
-                var chance = rnd.Next(0, 100);
-                a++;
-
-                //Bandits
-                if (chance <= 45)
+                while (true)
                 {
-                    if (chance < 30)
-                        items.Add(new Item(h, "Bandit", "Causual Bandit", rnd.Next(1, 3)));
-                    else if (chance < 45)
-                        items.Add(new Item(h, "Bandit", "veteran Bandit", rnd.Next(1, 2)));
+                    //Bandits
+                    if (Chance(30))
+                    {
+                        if (Chance(70))
+                        {
+                            items.Add(new Item(h, "Bandit", "Causual Bandit", rnd.Next(1, 3)));
+                            break;
+                        }
+                        else
+                        {
+                            items.Add(new Item(h, "Bandit", "veteran Bandit", rnd.Next(1, 2)));
+                            break;
+                        }
+                    }
+                    //Frndzalica
+                    else if (Chance(40))
+                    {
+                        items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
+                        break;
+                    }
+                    //armour
+                    else if (Chance(30))
+                    {
+                        items.Add(new Item(h, "Upgrade", "armour", 1));
+                        break;
+                    }
+
+                    //Legendary
+                    else if (Chance(10))
+                    {
+                        items.Add(new Item(h, "Legendary", SpawnLegendaryItem(), 1));
+                        break;
+                    }
                 }
-                //Frndzalica
-                else if (chance < 75)
-                    items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
-
-                //armour
-                else if (chance < 98)
-                    items.Add(new Item(h, "Upgrade", "armour", 1));
-
-                //Legendary
-                else if (chance == 99)
-                {
-                    items.Add(new Item(h, "Legendary", SpawnLegendaryItem(), 1));
-
-                }
-                else if (chance == 100 && GameUpgrade == true)
-                { 
-                    //items.Add(new Item(h, "Master", SpawnNewItems(), 1));
-                }                           
             }
             return items;
         }
-        public string SpawnLegendaryItem() 
+        private bool Chance(int chance)
+        {
+            var rnd = new Random();
+            return chance > rnd.Next(0, 100);
+        }
+        private string SpawnLegendaryItem() 
         {
             var rand = new Random();
             var Legendary = new List<string>();
-            Legendary.Add("Meč hrdlorez");
-            Legendary.Add("Kniha múdrostí");
-            Legendary.Add("Palička nádeje");
+            Legendary.Add("Reaper's knife");
+            Legendary.Add("Book of knowledge");
+            Legendary.Add("Hopefull stick of gloominess");
             return Legendary[(rand.Next(1, Legendary.Count))];
         }
         public void SpawnNewItems()

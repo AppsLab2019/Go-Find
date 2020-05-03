@@ -44,7 +44,6 @@ namespace GoAndFind
 
 
             GetStartet();
-            var min = new MiniGame();
         }
         /*public void SaveInventory()
         {
@@ -150,7 +149,7 @@ namespace GoAndFind
                 }
             }
             else
-                Player.Inventory.Remove(item.Name);
+                Player.Inventory.Remove("liquor");
         }
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
@@ -165,7 +164,7 @@ namespace GoAndFind
                 else
                 {
                     await DisplayAlert("Alert", "You've collected " + item.Ammount + " " + item.Name, "OK");
-                    for(int a = 0; a >= item.Ammount; a++)  
+                    for(int a = 0; a < item.Ammount; a++)  
                         Player.Inventory.Add(item.Name);
                 }
                 All.Remove(viewModel.ClosestItem);

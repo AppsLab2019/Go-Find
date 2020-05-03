@@ -12,7 +12,7 @@ namespace GoAndFind.ViewModel
     {
         public int MaxHealth { get; set; }
         public int Health { get; set; }
-        public List<string> Inventory;
+        public List<string> Inventory { get; set; }
         public Player(int health)
         {
             Inventory = new List<string>();
@@ -60,7 +60,8 @@ namespace GoAndFind.ViewModel
             if (item == "armour")
             {
                 MaxHealth++;
-                Health++;
+                HealthChange(1, true);
+                Inventory.Remove(item);
             }
         }
     }
