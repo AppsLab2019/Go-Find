@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GoAndFind
@@ -12,7 +13,7 @@ namespace GoAndFind
     class MiniGame
     {
         public bool Win;
-        public async void Fight(MainPage page, string bandit, Player player)
+        public async Task<bool> Fight(MainPage page, string bandit, Player player)
         {
             Win = false;
             var rand = new Random();
@@ -24,8 +25,7 @@ namespace GoAndFind
                 bool decision = await page.DisplayAlert(null, "You can remove this bandit by using Erasing wand", "Remove Bandit", "Fight");
                 if (decision)
                 {
-                    Win = true;
-                    return;
+                    return true;
                 }
             } 
             int b = 1;
@@ -74,6 +74,7 @@ namespace GoAndFind
                     await page.DisplayAlert(null, "Bandit has beaten you", "ouch");
                 }
             }
+            return Win;
         }
     }
 }

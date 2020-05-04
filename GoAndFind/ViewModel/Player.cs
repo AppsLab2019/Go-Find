@@ -27,19 +27,14 @@ namespace GoAndFind.ViewModel
         }
         public void Heal(string item)
         {
-            if (Health >= MaxHealth)
-                Health = MaxHealth;
-            else
+            if (item == "liquor")
             {
-                if (item == "liquor")
+                if (Health >= MaxHealth)
+                    Health = MaxHealth;
+                else
                 {
-                    if (Health >= MaxHealth)
-                        Health = MaxHealth;
-                    else
-                    {
-                        HealthChange(1, true);
-                        Inventory.Remove(item);
-                    }
+                    HealthChange(1, true);
+                    Inventory.Remove(item);
                 }
             }
         }

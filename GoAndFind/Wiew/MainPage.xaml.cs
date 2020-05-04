@@ -144,9 +144,11 @@ namespace GoAndFind
             {
                 for (int a = 0; a < item.Ammount; a++)
                 {
-                    fight.Fight(this, item.Name,Player);
+                    await fight.Fight(this, item.Name, Player);
                     if (!fight.Win)
+                    {
                         Player.Hurt(1);
+                    }
                 }
             }
             else
