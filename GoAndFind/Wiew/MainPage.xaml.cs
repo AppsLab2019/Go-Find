@@ -31,20 +31,24 @@ namespace GoAndFind
             All = new List<Position>();
             Items = new List<Item>();
             Player = new Player(3);
+            SettMap();
             Healthammount.Text = Player.Health.ToString();
             BindingContext = viewModel;
-            map.MapType = MapType.Street;
-            map.IsShowingUser = true;
             ChangeHealthammount(Player);
 
             Player.Inventory.Add("liquor");
             Player.Inventory.Add("liquor");
             Player.Inventory.Add("liquor");
-            Player.Inventory.Add("armour");
+            Player.Inventory.Add("Dead man's macaroni");
             Player.Inventory.Add("Erasing wand");
             Player.Inventory.Add("Hopefull stick of gloominess");
 
             GetStartet();
+        }
+        private void SettMap()
+        {
+            map.MapType = MapType.Street;
+            map.IsShowingUser = true;
         }
         /*public void SaveInventory()
         {
@@ -185,7 +189,7 @@ namespace GoAndFind
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
                 if (action == "liquor" && answer)
                 {
-                    Player.Heal(action);
+                    Player.Heal(action,1);
                 }
                 if (action == "armour")
                 {
@@ -194,6 +198,11 @@ namespace GoAndFind
                 if(action == "Hopefull stick of gloominess")
                 {
                     SpawnNewItems(viewModel);
+                    Player.Inventory.Remove(action);
+                }
+                if(action == "Dead man's macaroni")
+                {
+                    Player.Heal(action,Player.MaxHealth - Player.Health);
                     Player.Inventory.Remove(action);
                 }
             }

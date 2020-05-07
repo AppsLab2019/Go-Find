@@ -94,7 +94,7 @@ namespace GoAndFind.NewFolder
         {
             var rand = new Random();
             var Legendary = new List<string>();
-            Legendary.Add("Reaper's knife");
+            Legendary.Add("Dead man's macaroni");
             Legendary.Add("Erasing wand");
             Legendary.Add("Hopefull stick of gloominess");
             return Legendary[(rand.Next(1, Legendary.Count))];
@@ -103,7 +103,7 @@ namespace GoAndFind.NewFolder
         {
             var rand = new Random();
             var Master = new List<string>();
-            Master.Add("Shield Of The Hero");
+            Master.Add("Life bringer");
         }
         public bool GameUpgrade = false;
     }

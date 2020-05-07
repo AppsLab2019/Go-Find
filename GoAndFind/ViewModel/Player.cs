@@ -22,10 +22,22 @@ namespace GoAndFind.ViewModel
         public void Hurt(int damage)
         {
             HealthChange(damage, false);
-            if (Health <= 0)
+            if (Health <= 0 && Inventory.Contains("Life bringer"))
+            {
+                App.Current.MainPage.DisplayAlert(null, "You are going to die, but there's a light of hope, you can use Life bringer to stay alive.", "use it");
+                if (true)
+                {
+                    Health = MaxHealth;
+                    Inventory.Remove("Life bringer");
+                }
+            }
+            else
+            {
+                App.Current.MainPage.DisplayAlert(null, "You have died, your inventory is now clear, good luck next time", "ok");
                 Inventory.Clear();
+            }
         }
-        public void Heal(string item)
+        public void Heal(string item,int ammount)
         {
             if (item == "liquor")
             {
@@ -33,7 +45,7 @@ namespace GoAndFind.ViewModel
                     Health = MaxHealth;
                 else
                 {
-                    HealthChange(1, true);
+                    HealthChange(ammount, true);
                     Inventory.Remove(item);
                 }
             }
