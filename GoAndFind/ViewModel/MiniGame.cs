@@ -62,16 +62,16 @@ namespace GoAndFind
                 }
                 if (bandit == "veteran" && rand.Next(0, 100) < 30 && Win == true)
                 {
-                    await page.DisplayAlert(null, "Veteran has gone even more angry, try to beat him again", "ok");
+                    await page.DisplayAlert(null, "Veteran gone even more angry, try to beat him again", "ok");
                     b++;
                 }
                 if (Win == true)
                 {
-                    await page.DisplayAlert(null, "Ho, Ho, Ho ... You've won this fight, now let's continue ", "ok");
+                    await page.DisplayAlert(null, "Ho, Ho, Ho ... You won this fight, now let's continue ", "ok");
                 }
                 else
                 {
-                    await page.DisplayAlert(null, "Bandit has beaten you", "ouch");
+                    await page.DisplayAlert(null, "Bandit beaten you", "ouch");
                 }
             }
             return Win;

@@ -139,7 +139,7 @@ namespace GoAndFind
         {
             bool friend = false;
             var fight = new MiniGame();
-            await DisplayAlert("Alert", "You've been ambushed by " + item.Ammount + " " + item.Name, "OK");
+            await DisplayAlert("Watchout!", "You are ambushed by " + item.Ammount + " " + item.Name, "OK");
             if (Player.Inventory.Contains("liquor") && item.Name.Contains("Causual"))
             {
                 friend = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer liquor", "Fight");
@@ -170,7 +170,7 @@ namespace GoAndFind
                 }
                 else
                 {
-                    await DisplayAlert("Alert", "You've collected " + item.Ammount + " " + item.Name, "OK");
+                    await DisplayAlert("Alert", "You collected " + item.Ammount + " " + item.Name, "OK");
                     for(int a = 0; a < item.Ammount; a++)  
                         Player.Inventory.Add(item.Name);
                 }

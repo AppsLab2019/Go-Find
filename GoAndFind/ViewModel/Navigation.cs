@@ -142,7 +142,7 @@ namespace GoAndFind.ViewModel
         }
         private void ItemControl()
         {
-            if (Blinktime < 3000)
+            if (Blinktime < 300)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;
