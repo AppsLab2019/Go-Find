@@ -71,7 +71,7 @@ namespace GoAndFind
                 }
                 else
                 {
-                    await page.DisplayAlert(null, "Bandit beaten you", "ouch");
+                    await page.DisplayAlert(null, "The bandit beat you", "ouch");
                 }
             }
             return Win;
