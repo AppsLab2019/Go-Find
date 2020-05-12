@@ -12,7 +12,8 @@ namespace GoAndFind
 {
     class MiniGame
     {
-        public bool Win;
+        public bool Win { get; private set; }
+        public bool ErasingWandUsed { get; private set; }
         public async Task<bool> Fight(MainPage page, string bandit, Player player)
         {
             Win = false;
@@ -25,7 +26,8 @@ namespace GoAndFind
                 bool decision = await page.DisplayAlert(null, "You can remove this bandit by using Erasing wand", "Remove Bandit", "Fight");
                 if (decision)
                 {
-                    return true;
+                    ErasingWandUsed = true;
+                    return ErasingWandUsed;
                 }
             } 
             int b = 1;

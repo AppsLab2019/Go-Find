@@ -65,6 +65,12 @@ namespace GoAndFind.NewFolder
                         items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
                         break;
                     }
+                    //Ňuchač
+                    else if (Chance(30))
+                    {
+                        items.Add(new Item(h, "Finder", "compass", 1));
+                        break;
+                    }
                     //armour
                     else if (Chance(30))
                     {

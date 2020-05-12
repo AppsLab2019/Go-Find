@@ -60,5 +60,29 @@
             
         </ImageButton>
     </Grid>
+    <maps:Map x:name="Circle">
+          <maps:Map.MapElements>
+              <maps:Circle StrokeColor="#88FF0000"
+                           StrokeWidth="8"
+                           FillColor="#88FFC0CB">
+                  <maps:Circle.Center>
+                      <maps:Position>
+                          <x:Arguments>
+                              <x:Double></x:Double>
+                              <x:Double></x:Double>
+                          </x:Arguments>
+                      </maps:Position>
+                  </maps:Circle.Center>
+                  <maps:Circle.Radius>
+                      <maps:Distance>
+                          <x:Arguments>
+                              <x:Double></x:Double>
+                          </x:Arguments>
+                      </maps:Distance>
+                  </maps:Circle.Radius>
+              </maps:Circle>             
+          </maps:Map.MapElements>
+          ...
+      </maps:Map>
 </ContentPage>
     

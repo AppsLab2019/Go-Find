@@ -2,14 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Plugin.Geolocator;
 using GoAndFind.NewFolder;
 using GoAndFind.ViewModel;
 using System.Diagnostics;
-using System.IO;
 
 namespace GoAndFind
 {
@@ -93,33 +91,15 @@ namespace GoAndFind
             SpawnAll(new Position(location.Latitude, location.Longitude));
 
 
-            MarkItems(Items);
             viewModel.Refreshlists(All);
             viewModel.Find();
             AutoSpawn(viewModel);
-        }
-        public void MarkItems(List<Item> items)
-        {
-            string item = "Item";
-            foreach (var loot in items.ToList())
-            {
-                item = loot.Name;
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    if (Items.Contains(loot))
-                        map.Pins.Add(new Pin
-                        {
-                            Label = item,
-                            Position = new Position(loot.Position.Latitude, loot.Position.Longitude),
-                        }); ;
-                });
-            }
         }
         public Item ItemIs(Position position, List<Item> items)
         {
             Item itemis = null;
             foreach (var item in items)
-            {               
+            {
                 if (item.Position == position)
                     itemis = item;
             }
@@ -133,7 +113,6 @@ namespace GoAndFind
         {
             SpawnAll(nav.PlayerPosition);
             viewModel.Refreshlists(All);
-            MarkItems(Items);
         }
         public async void Ambush(Item item)
         {
@@ -149,6 +128,8 @@ namespace GoAndFind
                 for (int a = 0; a < item.Ammount; a++)
                 {
                     await fight.Fight(this, item.Name, Player);
+                    if (fight.ErasingWandUsed)
+                        Player.Inventory.Remove("Erasing wand");
                     if (!fight.Win)
                     {
                         Player.Hurt(1);
@@ -171,7 +152,7 @@ namespace GoAndFind
                 else
                 {
                     await DisplayAlert("Alert", "You collected " + item.Ammount + " " + item.Name, "OK");
-                    for(int a = 0; a < item.Ammount; a++)  
+                    for (int a = 0; a < item.Ammount; a++)
                         Player.Inventory.Add(item.Name);
                 }
                 All.Remove(viewModel.ClosestItem);
@@ -181,7 +162,7 @@ namespace GoAndFind
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("Inventory", "Cancel", null,ShowInventory(Player));
+            string action = await DisplayActionSheet("Inventory", "Cancel", null, ShowInventory(Player));
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {
@@ -189,20 +170,25 @@ namespace GoAndFind
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
                 if (action == "liquor" && answer)
                 {
-                    Player.Heal(action,1);
+                    Player.Heal(action, 1);
                 }
                 if (action == "armour")
                 {
                     Player.PlayerUpgrade(action);
                 }
-                if(action == "Hopefull stick of gloominess")
+                if (action == "Hopefull stick of gloominess")
                 {
                     SpawnNewItems(viewModel);
                     Player.Inventory.Remove(action);
                 }
-                if(action == "Dead man's macaroni")
+                if (action == "Dead man's macaroni")
                 {
-                    Player.Heal(action,Player.MaxHealth - Player.Health);
+                    Player.Heal(action, Player.MaxHealth - Player.Health);
+                    Player.Inventory.Remove(action);
+                }
+                if (action == "compass")
+                {
+
                     Player.Inventory.Remove(action);
                 }
             }
@@ -218,24 +204,24 @@ namespace GoAndFind
                     if (sameitem == item)
                         a++;
                 }
-                if(a != 0 && !items.Contains(a + " " + item))
+                if (a != 0 && !items.Contains(a + " " + item))
                     items.Add(a + " " + item);
             }
             return items.ToArray();
         }
         public void GameUpgrade()
         {
-            if(Player.Inventory.Contains("Meč hrdlorez"))
+            if (Player.Inventory.Contains("Meč hrdlorez"))
             {
-                if(Player.Inventory.Contains("Palička nádeje"))
+                if (Player.Inventory.Contains("Palička nádeje"))
                 {
                     if (Player.Inventory.Contains("Kniha múdrostí"))
                     {
-                        DisplayAlert("Alert","You've collected all legendary items, now let the game upgrade" , "ok");
+                        DisplayAlert("Alert", "You collected all legendary items, now let the game upgrade", "ok");
                         //SpawnNewItems
                     }
                 }
             }
         }
-    }
+    } 
 }
