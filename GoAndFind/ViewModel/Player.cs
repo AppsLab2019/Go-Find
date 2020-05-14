@@ -22,7 +22,7 @@ namespace GoAndFind.ViewModel
         public void Hurt(int damage)
         {
             HealthChange(damage, false);
-            if (Health <= 0 )
+            if (Health <= 0)
             {
                 if (Inventory.Contains("Life bringer"))
                 {
@@ -37,7 +37,7 @@ namespace GoAndFind.ViewModel
                 }
             }
         }
-        public void Heal(string item,int ammount)
+        public void Heal(string item, int ammount)
         {
             if (item == "liquor")
             {
@@ -71,6 +71,22 @@ namespace GoAndFind.ViewModel
                 Inventory.Remove(item);
             }
         }
+        public string[] ShowInventory(Player player)
+        {
+            var items = new List<string>();
+            foreach (var item in player.Inventory)
+            {
+                int a = 0;
+                foreach (var sameitem in player.Inventory)
+                {
+                    if (sameitem == item)
+                        a++;
+                }
+                if (a != 0 && !items.Contains(a + " " + item))
+                    items.Add(a + " " + item);
+            }
+            return items.ToArray();
+        } 
     }
 }
 
