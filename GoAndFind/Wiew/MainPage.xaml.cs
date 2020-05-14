@@ -162,7 +162,7 @@ namespace GoAndFind
         }
         public async void InventoryClicked(object sender, EventArgs e)
         {
-            string action = await DisplayActionSheet("Inventory", "Cancel", null, ShowInventory(Player));
+            string action = await DisplayActionSheet("Inventory", "Cancel", null, Player.ShowInventory(Player));
             Debug.WriteLine("Action: " + action);
             if (action != "Cancel")
             {
@@ -192,22 +192,6 @@ namespace GoAndFind
                     Player.Inventory.Remove(action);
                 }
             }
-        }
-        public string[] ShowInventory(Player player)
-        {
-            var items = new List<string>();
-            foreach (var item in player.Inventory)
-            {
-                int a = 0;
-                foreach (var sameitem in player.Inventory)
-                {
-                    if (sameitem == item)
-                        a++;
-                }
-                if (a != 0 && !items.Contains(a + " " + item))
-                    items.Add(a + " " + item);
-            }
-            return items.ToArray();
         }
         public void GameUpgrade()
         {
