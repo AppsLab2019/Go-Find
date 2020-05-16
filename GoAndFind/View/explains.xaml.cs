@@ -28,8 +28,8 @@ namespace GoAndFind.Wiew
                 new ItemExplain("Armour","Armour is an item which regenerates 1 health and also increases your maximal health ammount by 1"),
                 new ItemExplain("Veteran Bandit","Veteran Bandit is a creature which can damage you by 2 after losing a minigame (if you win a minigame there is a chance to play again if bandit wants)"),
                 new ItemExplain("Causual Bandit","Causual Bandit is a creature which can damage you by 1 after losing a minigame"),
-                new ItemExplain("Piece of the world","Piece of the world is an item which creates a circular area in which legendary ItemExplain can be found, if there are not any legendary ItemExplain, it will generate it"),
-                new ItemExplain("Hopefull stick of gloominess","Hopefull stick of gloominess is an item which completly regenerates all ItemExplain"),
+                new ItemExplain("Piece of the world","Piece of the world is an item which creates a circular area in which legendary item can be found, if there are not any legendary item, it will generate it"),
+                new ItemExplain("Hopefull stick of gloominess","Hopefull stick of gloominess is an item which completly regenerates all item"),
                 new ItemExplain("Dead man's macaroni","Dead man's macaroni is an item which completely regenerates your health and it can also save you from death"),
                 new ItemExplain("Erasing wand","If you met a bandit, you can easily erase him by using Erasing wand"),
             };
