@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
+using Xamarin.Forms.GoogleMaps;
 using Plugin.Geolocator;
 using GoAndFind.NewFolder;
 using GoAndFind.ViewModel;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace GoAndFind
 {
@@ -29,10 +30,10 @@ namespace GoAndFind
             All = new List<Position>();
             Items = new List<Item>();
             Player = new Player(3);
-            SettMap();
             Healthammount.Text = Player.Health.ToString();
             BindingContext = viewModel;
             ChangeHealthammount(Player);
+            SetMap();
 
             Player.Inventory.Add("liquor");
             Player.Inventory.Add("liquor");
@@ -43,10 +44,12 @@ namespace GoAndFind
 
             GetStartet();
         }
-        private void SettMap()
+
+        private void SetMap()
         {
-            map.MapType = MapType.Street;
-            map.IsShowingUser = true;
+            Map.MapType = MapType.Street;
+            Map.MyLocationEnabled = true;
+            
         }
         /*public void SaveInventory()
         {
@@ -81,12 +84,10 @@ namespace GoAndFind
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 5;
 
-            var task = await locator.GetPositionAsync(new TimeSpan(0, 0, 1));
-
-            var location = task;
+            var location = await locator.GetPositionAsync(new TimeSpan(0, 0, 1));
 
             MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(0.444));
-            map.MoveToRegion(mapSpan);
+            Map.MoveToRegion(mapSpan);
 
             SpawnAll(new Position(location.Latitude, location.Longitude));
 
@@ -94,16 +95,6 @@ namespace GoAndFind
             viewModel.Refreshlists(All);
             viewModel.Find();
             AutoSpawn(viewModel);
-        }
-        public Item ItemIs(Position position, List<Item> items)
-        {
-            Item itemis = null;
-            foreach (var item in items)
-            {
-                if (item.Position == position)
-                    itemis = item;
-            }
-            return itemis;
         }
         public void AutoSpawn(Navigation nav)
         {
@@ -138,6 +129,16 @@ namespace GoAndFind
             }
             else
                 Player.Inventory.Remove("liquor");
+        }
+        public Item ItemIs(Position position, List<Item> items)
+        {
+            Item itemis = null;
+            foreach (var item in items)
+            {
+                if (item.Position == position)
+                    itemis = item;
+            }
+            return itemis;
         }
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
@@ -186,24 +187,10 @@ namespace GoAndFind
                     Player.Heal(action, Player.MaxHealth - Player.Health);
                     Player.Inventory.Remove(action);
                 }
-                if (action == "compass")
+                if (action == "piece of map")
                 {
 
                     Player.Inventory.Remove(action);
-                }
-            }
-        }
-        public void GameUpgrade()
-        {
-            if (Player.Inventory.Contains("Meč hrdlorez"))
-            {
-                if (Player.Inventory.Contains("Palička nádeje"))
-                {
-                    if (Player.Inventory.Contains("Kniha múdrostí"))
-                    {
-                        DisplayAlert("Alert", "You collected all legendary items, now let the game upgrade", "ok");
-                        //SpawnNewItems
-                    }
                 }
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
-using Xamarin.Forms.Maps;
+using Xamarin.Forms.GoogleMaps;
 using System.Timers;
 
 namespace GoAndFind.ViewModel
@@ -24,11 +24,11 @@ namespace GoAndFind.ViewModel
             HealthChange(damage, false);
             if (Health <= 0)
             {
-                if (Inventory.Contains("Life bringer"))
+                if (Inventory.Contains("Dead man's macaroni"))
                 {
-                    App.Current.MainPage.DisplayAlert(null, "You are going to die, but there's a light of hope, you can use Life bringer to stay alive.", "use it");
+                    App.Current.MainPage.DisplayAlert(null, "You are going to die, but there's a light of hope, you can use Dead man's macaroni to stay alive.", "use it");
                     Health = MaxHealth;
-                    Inventory.Remove("Life bringer");
+                    Inventory.Remove("Dead man's macaroni");
                 }
                 else
                 {

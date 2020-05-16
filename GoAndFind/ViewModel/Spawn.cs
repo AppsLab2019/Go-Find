@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using GoAndFind.ViewModel;
 using Plugin.Geolocator;
-using Xamarin.Forms.Maps;
+using Xamarin.Forms.GoogleMaps;
 
 namespace GoAndFind.NewFolder
 {
@@ -60,10 +60,14 @@ namespace GoAndFind.NewFolder
                         }
                     }
                     //Frndzalica
-                    else if (Chance(40))
+                    else if (Chance(30))
                     {
                         items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
                         break;
+                    }
+                    else if (Chance(20))
+                    {
+
                     }
                     //Ňuchač
                     else if (Chance(30))
@@ -103,7 +107,7 @@ namespace GoAndFind.NewFolder
             Legendary.Add("Dead man's macaroni");
             Legendary.Add("Erasing wand");
             Legendary.Add("Hopefull stick of gloominess");
-            return Legendary[(rand.Next(1, Legendary.Count))];
+            return Legendary[(rand.Next(0, Legendary.Count))];
         }
         public void SpawnNewItems()
         {
