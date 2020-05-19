@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Android;
+using Android.Gms.Maps;
 
 namespace GoAndFind.Droid
 {
@@ -51,6 +52,9 @@ namespace GoAndFind.Droid
                     // Permissions already granted - display a message.
                 }
             }
+        }
+        public void OnMapReady(GoogleMap map)
+        {
         }
     }
 }

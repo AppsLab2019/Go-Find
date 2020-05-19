@@ -9,6 +9,7 @@ using GoAndFind.NewFolder;
 using GoAndFind.ViewModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.IO;
 
 namespace GoAndFind
 {
@@ -17,7 +18,7 @@ namespace GoAndFind
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        private readonly Navigation viewModel;
+        private readonly Navigation navigator;
         private Player Player;
         private List<Item> Items { get; set; }
         private List<Position> All { get; set; }
@@ -26,12 +27,13 @@ namespace GoAndFind
         {
             InitializeComponent();
 
-            viewModel = new Navigation();
+
+            navigator = new Navigation();
             All = new List<Position>();
             Items = new List<Item>();
             Player = new Player(3);
             Healthammount.Text = Player.Health.ToString();
-            BindingContext = viewModel;
+            BindingContext = navigator;
             ChangeHealthammount(Player);
             SetMap();
 
@@ -49,7 +51,17 @@ namespace GoAndFind
         {
             Map.MapType = MapType.Street;
             Map.MyLocationEnabled = true;
-            
+
+            var assembly = Assembly.GetExecutingAssembly();
+            using var resource = assembly.GetManifestResourceStream("GoAndFind.mapstyle.json");
+            using var reader = new StreamReader(resource);
+            Map.UiSettings.ZoomControlsEnabled = false;
+            Map.UiSettings.ZoomGesturesEnabled = false;
+
+            var json = reader.ReadToEnd();
+            Map.MapStyle = MapStyle.FromJson(json);
+
+           
         }
         /*public void SaveInventory()
         {
@@ -86,15 +98,14 @@ namespace GoAndFind
 
             var location = await locator.GetPositionAsync(new TimeSpan(0, 0, 1));
 
-            MapSpan mapSpan = MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(0.444));
-            Map.MoveToRegion(mapSpan);
+            Map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromKilometers(0.1)));
 
             SpawnAll(new Position(location.Latitude, location.Longitude));
 
 
-            viewModel.Refreshlists(All);
-            viewModel.Find();
-            AutoSpawn(viewModel);
+            navigator.Refreshlists(All);
+            navigator.Find();
+            AutoSpawn(navigator);
         }
         public void AutoSpawn(Navigation nav)
         {
@@ -103,7 +114,7 @@ namespace GoAndFind
         public void SpawnNewItems(Navigation nav)
         {
             SpawnAll(nav.PlayerPosition);
-            viewModel.Refreshlists(All);
+            navigator.Refreshlists(All);
         }
         public async void Ambush(Item item)
         {
@@ -143,9 +154,9 @@ namespace GoAndFind
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
             Item item;
-            if (viewModel.ItemIsClose)
+            if (navigator.ItemIsClose)
             {
-                item = ItemIs(viewModel.ClosestItem, Items);
+                item = ItemIs(navigator.ClosestItem, Items);
                 if (item.Type.Contains("Bandit"))
                 {
                     Ambush(item);
@@ -156,9 +167,9 @@ namespace GoAndFind
                     for (int a = 0; a < item.Ammount; a++)
                         Player.Inventory.Add(item.Name);
                 }
-                All.Remove(viewModel.ClosestItem);
-                viewModel.Refreshlists(All);
-                viewModel.FindClosest();
+                All.Remove(navigator.ClosestItem);
+                navigator.Refreshlists(All);
+                navigator.FindClosest();
             }
         }
         public async void InventoryClicked(object sender, EventArgs e)
@@ -179,7 +190,7 @@ namespace GoAndFind
                 }
                 if (action == "Hopefull stick of gloominess")
                 {
-                    SpawnNewItems(viewModel);
+                    SpawnNewItems(navigator);
                     Player.Inventory.Remove(action);
                 }
                 if (action == "Dead man's macaroni")
