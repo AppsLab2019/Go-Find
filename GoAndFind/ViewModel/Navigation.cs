@@ -124,7 +124,7 @@ namespace GoAndFind.ViewModel
             else
             {
                 Color = Color.Gold;
-                System.Threading.Thread.Sleep(300);
+                System.Threading.Thread.Sleep(200);
                 Color = Color.White;
             }
         }
@@ -142,7 +142,7 @@ namespace GoAndFind.ViewModel
         }
         private void ItemControl()
         {
-            if (Blinktime < 300)
+            if (Blinktime < 200)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;

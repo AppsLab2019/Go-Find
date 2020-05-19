@@ -14,9 +14,9 @@ namespace GoAndFind.NewFolder
         {
 
             var rnd = new Random();
-            double rlon = rnd.Next(-100, 100);
+            double rlon = rnd.Next(-150, 150);
             double lon = rlon / 40000;
-            double rlat = rnd.Next(-100, 100);
+            double rlat = rnd.Next(-150, 150);
             double lat = rlat / 40000;
             return new Position(playerposition.Latitude + lat, playerposition.Longitude + lon);
         }
