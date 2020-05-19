@@ -35,9 +35,10 @@ namespace GoAndFind
             {
                 var PLayerAction = await page.DisplayActionSheet("Choose ", null, null, "sword", "shield", "net");
                 await page.DisplayAlert(null, "Bandit used " + BanditAction, "ok");
-                if (BanditAction == PLayerAction.ToString())
+                if (BanditAction == PLayerAction)
                 {
                     b++;
+                    await page.DisplayAlert(null, "You both used " + PLayerAction, "continue fight");
                 }
                 if (BanditAction == "sword")
                 {
@@ -71,7 +72,7 @@ namespace GoAndFind
                 {
                     await page.DisplayAlert(null, "Ho, Ho, Ho ... You won this fight, now let's continue ", "ok");
                 }
-                else
+                else if(BanditAction != PLayerAction)
                 {
                     await page.DisplayAlert(null, "The bandit beat you", "ouch");
                 }
