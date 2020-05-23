@@ -72,7 +72,7 @@ namespace GoAndFind.NewFolder
                     //Ňuchač
                     else if (Chance(30))
                     {
-                        items.Add(new Item(h, "Finder", "compass", 1));
+                        items.Add(new Item(h, "Hint", "piece of map", 1));
                         break;
                     }
                     //armour
@@ -88,7 +88,7 @@ namespace GoAndFind.NewFolder
                     //Legendary
                     else if (Chance(10))
                     {
-                        items.Add(new Item(h, "Legendary", SpawnLegendaryItem(), 1));
+                        items.Add(SpawnLegendaryItem(h));
                         break;
                     }
                 }
@@ -100,14 +100,14 @@ namespace GoAndFind.NewFolder
             var rnd = new Random();
             return chance > rnd.Next(0, 100);
         }
-        private string SpawnLegendaryItem() 
+        public Item SpawnLegendaryItem(Position position) 
         {
             var rand = new Random();
             var Legendary = new List<string>();
             Legendary.Add("Dead man's macaroni");
             Legendary.Add("Erasing wand");
             Legendary.Add("Hopefull stick of gloominess");
-            return Legendary[(rand.Next(0, Legendary.Count))];
+            return new Item(position,"Legendary",Legendary[(rand.Next(0, Legendary.Count))],1);
         }
         public void SpawnNewItems()
         {

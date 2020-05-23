@@ -18,22 +18,24 @@ namespace GoAndFind
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        private readonly Navigation navigator;
+        private readonly Navigation Navigator;
         private Player Player;
         private List<Item> Items { get; set; }
         private List<Position> All { get; set; }
+        private Hint hint;
 
         public MainPage()
         {
             InitializeComponent();
 
 
-            navigator = new Navigation();
+            Navigator = new Navigation();
             All = new List<Position>();
             Items = new List<Item>();
             Player = new Player(3);
+            hint = new Hint();
             Healthammount.Text = Player.Health.ToString();
-            BindingContext = navigator;
+            BindingContext = Navigator;
             ChangeHealthammount(Player);
             SetMap();
 
@@ -43,6 +45,7 @@ namespace GoAndFind
             Player.Inventory.Add("Dead man's macaroni");
             Player.Inventory.Add("Erasing wand");
             Player.Inventory.Add("Hopefull stick of gloominess");
+            Player.Inventory.Add("piece of map");
 
             GetStartet();
         }
@@ -56,7 +59,7 @@ namespace GoAndFind
             using var resource = assembly.GetManifestResourceStream("GoAndFind.mapstyle.json");
             using var reader = new StreamReader(resource);
             Map.UiSettings.ZoomControlsEnabled = false;
-            Map.UiSettings.ZoomGesturesEnabled = false;
+            //Map.UiSettings.ZoomGesturesEnabled = false;
 
             var json = reader.ReadToEnd();
             Map.MapStyle = MapStyle.FromJson(json);
@@ -103,9 +106,9 @@ namespace GoAndFind
             SpawnAll(new Position(location.Latitude, location.Longitude));
 
 
-            navigator.Refreshlists(All);
-            navigator.Find();
-            AutoSpawn(navigator);
+            Navigator.Refreshlists(All);
+            Navigator.Find();
+            AutoSpawn(Navigator);
         }
         public void AutoSpawn(Navigation nav)
         {
@@ -114,7 +117,7 @@ namespace GoAndFind
         public void SpawnNewItems(Navigation nav)
         {
             SpawnAll(nav.PlayerPosition);
-            navigator.Refreshlists(All);
+            Navigator.Refreshlists(All);
         }
         public async void Ambush(Item item)
         {
@@ -154,9 +157,9 @@ namespace GoAndFind
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
             Item item;
-            if (navigator.ItemIsClose)
+            if (Navigator.ItemIsClose)
             {
-                item = ItemIs(navigator.ClosestItem, Items);
+                item = ItemIs(Navigator.ClosestItem, Items);
                 if (item.Type.Contains("Bandit"))
                 {
                     Ambush(item);
@@ -167,9 +170,9 @@ namespace GoAndFind
                     for (int a = 0; a < item.Ammount; a++)
                         Player.Inventory.Add(item.Name);
                 }
-                All.Remove(navigator.ClosestItem);
-                navigator.Refreshlists(All);
-                navigator.FindClosest();
+                All.Remove(Navigator.ClosestItem);
+                Navigator.Refreshlists(All);
+                Navigator.FindClosest();
             }
         }
         public async void InventoryClicked(object sender, EventArgs e)
@@ -190,8 +193,12 @@ namespace GoAndFind
                 }
                 if (action == "Hopefull stick of gloominess")
                 {
-                    SpawnNewItems(navigator);
+                    SpawnNewItems(Navigator);
                     Player.Inventory.Remove(action);
+                    if (hint.HintExist)
+                    {
+                        
+                    }
                 }
                 if (action == "Dead man's macaroni")
                 {
@@ -201,8 +208,22 @@ namespace GoAndFind
                 if (action == "piece of map")
                 {
 
-                    Player.Inventory.Remove(action);
+                    //Player.Inventory.Remove(action);
+                    Hint();
                 }
+            }
+        }
+        public void Hint()
+        {
+            if (hint.LegendaryExist(Items))
+            {
+                hint.CreateHint(Map);
+            }
+            else
+            {
+                var spawn = new Spawn();
+                var position = spawn.PositionSpawn(Navigator.PlayerPosition);
+                Items.Add(spawn.SpawnLegendaryItem(position));
             }
         }
     } 
