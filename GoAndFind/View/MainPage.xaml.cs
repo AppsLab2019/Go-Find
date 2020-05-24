@@ -91,8 +91,13 @@ namespace GoAndFind
         public void SpawnAll(Position location)
         {
             var spawn = new Spawn();
-            All = spawn.PositionsSpawn(8, new Position(location.Latitude, location.Longitude));
-            Items = spawn.SpawnItems(All);
+            var all = new List<Position>();
+            all = spawn.PositionsSpawn(8, new Position(location.Latitude, location.Longitude));
+            foreach (var pos in all)
+                All.Add(pos);
+            var items = spawn.SpawnItems(All);
+            foreach (var item in items)
+                Items.Add(item);
         }
         private async void GetStartet()
         {

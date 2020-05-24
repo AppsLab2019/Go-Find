@@ -58,10 +58,6 @@ namespace GoAndFind.ViewModel
         {
             if(Span != 20)
                 Span = Span - 20;
-            else
-            {
-
-            }
             if (map.Circles.Count > 0)
                 map.Circles.Clear();
             
