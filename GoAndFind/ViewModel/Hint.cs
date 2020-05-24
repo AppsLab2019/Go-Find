@@ -1,4 +1,5 @@
 ﻿using Android.Graphics;
+using GoAndFind.NewFolder;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,8 +12,21 @@ namespace GoAndFind.ViewModel
     class Hint
     {
         private Item LegendaryItem;
-        private int Span = 80;
+        private int Span { get; set; } = 100;
         public bool HintExist { get; set; }
+        public void CreateHint(List<Item> items, Map map, Position PlayerPosition)
+        {
+            if (LegendaryExist(items))
+            {
+                CreateCircle(map);
+            }
+            else
+            {
+                var spawn = new Spawn();
+                var position = spawn.PositionSpawn(PlayerPosition);
+                items.Add(spawn.SpawnLegendaryItem(position));
+            }
+        }
         public bool LegendaryExist(List<Item> items)
         {
             foreach(var item in items)
@@ -39,13 +53,21 @@ namespace GoAndFind.ViewModel
             double lat = rlat / 40000;
             return new Position(LegendaryItem.Position.Latitude + lat, LegendaryItem.Position.Longitude + lon);
         }
-        public void CreateHint(Map map)
+        
+        public void CreateCircle(Map map)
         {
+            if(Span != 20)
+                Span = Span - 20;
+            else
+            {
+
+            }
             if (map.Circles.Count > 0)
                 map.Circles.Clear();
+            
             var Circle = new Circle()
             {
-                Radius = Distance.FromMeters(Span * 3),
+                Radius = Distance.FromMeters(Span * 4),
                 Center = CreateCenterPosition(),
                 StrokeColor = Color.FromHex("#88FF0000"),
                 StrokeWidth = 8,

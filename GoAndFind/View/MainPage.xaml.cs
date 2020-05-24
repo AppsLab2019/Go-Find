@@ -197,7 +197,7 @@ namespace GoAndFind
                     Player.Inventory.Remove(action);
                     if (hint.HintExist)
                     {
-                        
+                        hint.CreateHint(Items, Map, Navigator.PlayerPosition);
                     }
                 }
                 if (action == "Dead man's macaroni")
@@ -209,22 +209,10 @@ namespace GoAndFind
                 {
 
                     //Player.Inventory.Remove(action);
-                    Hint();
+                    hint.CreateHint(Items, Map, Navigator.PlayerPosition);
                 }
             }
         }
-        public void Hint()
-        {
-            if (hint.LegendaryExist(Items))
-            {
-                hint.CreateHint(Map);
-            }
-            else
-            {
-                var spawn = new Spawn();
-                var position = spawn.PositionSpawn(Navigator.PlayerPosition);
-                Items.Add(spawn.SpawnLegendaryItem(position));
-            }
-        }
+        
     } 
 }
