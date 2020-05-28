@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoAndFind.ViewModel;
+using GoAndFind.hint;
 using Plugin.Geolocator;
 using Xamarin.Forms.GoogleMaps;
 
@@ -46,28 +46,24 @@ namespace GoAndFind.NewFolder
                 while (true)
                 {
                     //Bandits
-                    if (Chance(30))
+                    if (Chance(20))
                     {
                         if (Chance(70))
                         {
-                            items.Add(new Item(h, "Bandit", "Causual Bandit", rnd.Next(1, 3)));
+                            items.Add(new Item(h, "Bandit", "Causual Bandit", rnd.Next(1, 4)));
                             break;
                         }
                         else
                         {
-                            items.Add(new Item(h, "Bandit", "veteran Bandit", rnd.Next(1, 2)));
+                            items.Add(new Item(h, "Bandit", "veteran Bandit", rnd.Next(1, 3)));
                             break;
                         }
                     }
                     //Frndzalica
-                    else if (Chance(30))
+                    else if (Chance(20))
                     {
                         items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
                         break;
-                    }
-                    else if (Chance(20))
-                    {
-
                     }
                     //Ňuchač
                     else if (Chance(30))
@@ -81,12 +77,12 @@ namespace GoAndFind.NewFolder
                         items.Add(new Item(h, "Upgrade", "armour", 1));
                         break;
                     }
-                    else if (Chance(30))
+                    else if (Chance(15))
                     {
                         items.Add(new Item(h, "Changer", "Hopefull stick of gloominess", 1));
                     }
                     //Legendary
-                    else if (Chance(10))
+                    else if (Chance(80))
                     {
                         items.Add(SpawnLegendaryItem(h));
                         break;
@@ -106,16 +102,9 @@ namespace GoAndFind.NewFolder
             var Legendary = new List<string>();
             Legendary.Add("Dead man's macaroni");
             Legendary.Add("Erasing wand");
-            Legendary.Add("Hopefull stick of gloominess");
+            Legendary.Add("Dead man's Sword");
             return new Item(position,"Legendary",Legendary[(rand.Next(0, Legendary.Count))],1);
         }
-        public void SpawnNewItems()
-        {
-            var rand = new Random();
-            var Master = new List<string>();
-            Master.Add("Life bringer");
-        }
-        public bool GameUpgrade = false;
     }
 }
 

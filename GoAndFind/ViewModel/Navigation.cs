@@ -10,7 +10,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
-namespace GoAndFind.ViewModel
+namespace GoAndFind.hint
 {
 
     public class Navigation : INotifyPropertyChanged

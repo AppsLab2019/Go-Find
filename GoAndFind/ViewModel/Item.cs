@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms.GoogleMaps;
 
-namespace GoAndFind.ViewModel
+namespace GoAndFind.hint
 {
     public class Item
     {

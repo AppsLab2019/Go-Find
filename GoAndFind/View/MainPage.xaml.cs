@@ -6,7 +6,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Plugin.Geolocator;
 using GoAndFind.NewFolder;
-using GoAndFind.ViewModel;
+using GoAndFind.hint;
 using System.Diagnostics;
 using System.Reflection;
 using System.IO;
@@ -21,8 +21,9 @@ namespace GoAndFind
         private readonly Navigation Navigator;
         private Player Player;
         private List<Item> Items { get; set; }
+        private List<Item> LegendaryItems { get; set; }
         private List<Position> All { get; set; }
-        private Hint hint;
+        private Hint hint = new Hint();
 
         public MainPage()
         {
@@ -32,6 +33,8 @@ namespace GoAndFind
             Navigator = new Navigation();
             All = new List<Position>();
             Items = new List<Item>();
+            LegendaryItems = new List<Item>();
+            LegendaryItemHints = new List<LegendaryItemHint>();
             Player = new Player(3);
             hint = new Hint();
             Healthammount.Text = Player.Health.ToString();
@@ -98,6 +101,26 @@ namespace GoAndFind
             var items = spawn.SpawnItems(All);
             foreach (var item in items)
                 Items.Add(item);
+            LegendaryControl();
+        }
+        public void SpawnLegendaryItem()
+        {
+            var spawn = new Spawn();
+            var position = spawn.PositionSpawn(Navigator.PlayerPosition);
+            var legendaryItem = spawn.SpawnLegendaryItem(position);
+            Items.Add(legendaryItem);
+            All.Add(legendaryItem.Position);
+            LegendaryControl();
+        }
+        private void LegendaryControl()
+        {
+            foreach(var item in Items)
+            {
+                if(item.Type == "Legendary")
+                {
+                    LegendaryItems.Add(item);
+                }
+            }
         }
         private async void GetStartet()
         {
@@ -123,6 +146,42 @@ namespace GoAndFind
         {
             SpawnAll(nav.PlayerPosition);
             Navigator.Refreshlists(All);
+        }
+        public List<LegendaryItemHint> LegendaryItemHints;
+        public void CreateLegendaryHint(Player player)
+        {
+            var rnd = new Random();
+            if (LegendaryItemHints.Count == 0)
+            {
+                LegendaryItemHints.Add(new LegendaryItemHint(Map, LegendaryItems,LegendaryItemHints));
+                //player.Inventory.Remove("Piece of map");
+            }
+            else
+            {
+                foreach (var hint in LegendaryItemHints)
+                {
+                    if (hint.CloserCircle(Map) && rnd.Next(0, 100) > 50)
+                    {
+                        return;
+                        //player.Inventory.Remove("Piece of map");
+                    }
+                    else if (LegendaryItemHints.Count < LegendaryItems.Count)
+                    {
+                        var newHint = new LegendaryItemHint(Map, LegendaryItems, LegendaryItemHints);
+                        if (newHint.LegendaryHintExist)
+                        {
+                            LegendaryItemHints.Add(newHint);
+                            //player.Inventory.Remove("Piece of map");
+                            return;
+                        }
+                        else 
+                        {
+                            SpawnLegendaryItem();
+                            return;
+                        }                    
+                    }
+                }
+            }
         }
         public async void Ambush(Item item)
         {
@@ -199,25 +258,18 @@ namespace GoAndFind
                 if (action == "Hopefull stick of gloominess")
                 {
                     SpawnNewItems(Navigator);
-                    Player.Inventory.Remove(action);
-                    if (hint.HintExist)
-                    {
-                        hint.CreateHint(Items, Map, Navigator.PlayerPosition);
-                    }
+
                 }
                 if (action == "Dead man's macaroni")
                 {
                     Player.Heal(action, Player.MaxHealth - Player.Health);
-                    Player.Inventory.Remove(action);
+                    
                 }
                 if (action == "piece of map")
                 {
-
-                    //Player.Inventory.Remove(action);
-                    hint.CreateHint(Items, Map, Navigator.PlayerPosition);
+                    CreateLegendaryHint(Player);
                 }
             }
         }
-        
     } 
 }

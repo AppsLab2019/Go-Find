@@ -1,6 +1,6 @@
 ﻿using Android.Content.Res;
 using Android.Views;
-using GoAndFind.ViewModel;
+using GoAndFind.hint;
 using System;
 using System.Collections.Generic;
 using System.Text;

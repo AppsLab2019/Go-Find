@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="GoAndFind.MainPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-             xmlns:vm="clr-namespace:GoAndFind.ViewModel">
+             xmlns:vm="clr-namespace:GoAndFind.hint">
 
     <Grid>
         <maps:Map x:Name="Map"/>

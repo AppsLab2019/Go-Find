@@ -6,7 +6,7 @@ using Plugin.Geolocator;
 using Xamarin.Forms.GoogleMaps;
 using System.Timers;
 
-namespace GoAndFind.ViewModel
+namespace GoAndFind.hint
 {
     public class Player
     {

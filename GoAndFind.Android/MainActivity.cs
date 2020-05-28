@@ -53,8 +53,5 @@ namespace GoAndFind.Droid
                 }
             }
         }
-        public void OnMapReady(GoogleMap map)
-        {
-        }
     }
 }
