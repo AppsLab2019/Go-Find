@@ -12,13 +12,7 @@ namespace GoAndFind.hint
     public class Hint
     {
         protected int Span { get; set; }
-        protected Circle CurrentCircle;
-        public delegate void LegendarySpawn();
-        public event LegendarySpawn NoLegendaryItem;
-        public void SpawnNewLegendaryItem()
-        {
-            NoLegendaryItem();
-        }
+        public Circle CurrentCircle;
         public Position CreateCenterPosition(Item item)
         {
             var rnd = new Random();

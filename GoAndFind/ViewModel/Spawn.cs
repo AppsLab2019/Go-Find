@@ -14,9 +14,9 @@ namespace GoAndFind.NewFolder
         {
 
             var rnd = new Random();
-            double rlon = rnd.Next(-150, 150);
+            double rlon = rnd.Next(-250, 250);
             double lon = rlon / 40000;
-            double rlat = rnd.Next(-150, 150);
+            double rlat = rnd.Next(-250, 250);
             double lat = rlat / 40000;
             return new Position(playerposition.Latitude + lat, playerposition.Longitude + lon);
         }
@@ -55,34 +55,42 @@ namespace GoAndFind.NewFolder
                         }
                         else
                         {
-                            items.Add(new Item(h, "Bandit", "veteran Bandit", rnd.Next(1, 3)));
+                            items.Add(new Item(h, "Bandit", "Veteran Bandit", rnd.Next(1, 3)));
                             break;
                         }
                     }
                     //Frndzalica
                     else if (Chance(20))
                     {
-                        items.Add(new Item(h, "Healing", "liquor", rnd.Next(1, 2)));
+                        items.Add(new Item(h, "Healing", "Liquor", rnd.Next(1, 2)));
                         break;
                     }
                     //Ňuchač
-                    else if (Chance(30))
+                    else if (Chance(20))
                     {
-                        items.Add(new Item(h, "Hint", "piece of map", 1));
+                        items.Add(new Item(h, "Hint", "Piece of map", 1));
                         break;
                     }
                     //armour
                     else if (Chance(30))
                     {
-                        items.Add(new Item(h, "Upgrade", "armour", 1));
+                        items.Add(new Item(h, "Upgrade", "Armour", 1));
                         break;
                     }
                     else if (Chance(15))
                     {
                         items.Add(new Item(h, "Changer", "Hopefull stick of gloominess", 1));
                     }
+                    else if (Chance(20))
+                    {
+                        items.Add(new Item(h, "Bait", "JustKidding", 1));
+                    }
+                    else if (Chance(20))
+                    {
+                        items.Add(new Item(h, "Hint", "Bandit letter",1));
+                    }
                     //Legendary
-                    else if (Chance(80))
+                    else if (Chance(10))
                     {
                         items.Add(SpawnLegendaryItem(h));
                         break;
