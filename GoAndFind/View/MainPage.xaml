@@ -38,7 +38,7 @@
                 BorderColor="Transparent"
                 BackgroundColor="Transparent"
                 Clicked="InventoryClicked"
-                HorizontalOptions="Start"
+                HorizontalOptions="End"
                 VerticalOptions ="End"
                 WidthRequest="100"
                 HeightRequest="100"

@@ -1,10 +1,9 @@
 [
   {
-    "featureType": "administrative",
-    "elementType": "geometry",
+    "featureType": "administrative.country",
     "stylers": [
       {
-        "visibility": "off"
+        "weight": 3.5
       }
     ]
   },
@@ -12,10 +11,46 @@
     "featureType": "landscape.man_made",
     "stylers": [
       {
+        "weight": 6
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "lightness": 75
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
         "saturation": 100
       },
       {
-        "weight": 6.5
+        "lightness": 5
+      },
+      {
+        "weight": 4
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.natural",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#7dfa00"
+      },
+      {
+        "lightness": 85
       }
     ]
   },
@@ -29,21 +64,68 @@
   },
   {
     "featureType": "road",
-    "stylers": [
-      {
-        "saturation": 70
-      },
-      {
-        "weight": 4
-      }
-    ]
-  },
-  {
-    "featureType": "road",
     "elementType": "labels.icon",
     "stylers": [
       {
         "visibility": "off"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#ff0000"
+      },
+      {
+        "lightness": 65
+      },
+      {
+        "weight": 1.5
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "stylers": [
+      {
+        "visibility": "on"
+      },
+      {
+        "weight": 1.5
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "saturation": 100
+      },
+      {
+        "lightness": 80
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "stylers": [
+      {
+        "lightness": -5
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "color": "#f5f901"
+      },
+      {
+        "lightness": 80
       }
     ]
   },
