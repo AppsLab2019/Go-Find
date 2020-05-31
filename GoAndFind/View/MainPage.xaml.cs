@@ -336,35 +336,39 @@ namespace GoAndFind
         {
             string action = await DisplayActionSheet("Inventory", "Cancel", null, Player.ShowInventory(Player));
             Debug.WriteLine("Action: " + action);
-            if (action != "Cancel")
+
+            if (action != "Cancel" && action != null)
             {
                 action = action.Remove(0, 2);
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
-                if (action == "liquor" && answer)
+                if (answer)
                 {
-                    Player.Heal(action, 1);
-                }
-                if (action == "armour")
-                {
-                    Player.PlayerUpgrade(action);
-                }
-                if (action == "Hopefull stick of gloominess")
-                {
-                    SpawnNewItems(Navigator);
+                    if (action == "liquor" && answer)
+                    {
+                        Player.Heal(action, 1);
+                    }
+                    if (action == "armour")
+                    {
+                        Player.PlayerUpgrade(action);
+                    }
+                    if (action == "Hopefull stick of gloominess")
+                    {
+                        SpawnNewItems(Navigator);
 
-                }
-                if (action == "Dead man's macaroni")
-                {
-                    Player.Heal(action, Player.MaxHealth - Player.Health);
-                    
-                }
-                if (action == "piece of map")
-                {
-                    CreateLegendaryHint(Player);
-                }            
-                if(action == "Bandit letter")
-                {
-                    CreateBanditHint(Player);
+                    }
+                    if (action == "Dead man's macaroni")
+                    {
+                        Player.Heal(action, Player.MaxHealth - Player.Health);
+
+                    }
+                    if (action == "piece of map")
+                    {
+                        CreateLegendaryHint(Player);
+                    }
+                    if (action == "Bandit letter")
+                    {
+                        CreateBanditHint(Player);
+                    }
                 }
             }
         }
