@@ -14,9 +14,9 @@ namespace GoAndFind.NewFolder
         {
 
             var rnd = new Random();
-            double rlon = rnd.Next(-250, 250);
+            double rlon = rnd.Next(-160, 160);
             double lon = rlon / 40000;
-            double rlat = rnd.Next(-250, 250);
+            double rlat = rnd.Next(-160, 160);
             double lat = rlat / 40000;
             return new Position(playerposition.Latitude + lat, playerposition.Longitude + lon);
         }
@@ -25,15 +25,12 @@ namespace GoAndFind.NewFolder
         {
             var loot = new Position();
             var itemlist = new List<Position>();
-            for (int i = 0; i <= 1; i++)
-            {
                 loot = (new Position(playerposition.Latitude, playerposition.Longitude));
-                for (int c = 0; c <= count; c++)
-                {
-                    var lastitem = new Position(PositionSpawn(loot).Latitude,PositionSpawn(loot).Longitude);
-                    itemlist.Add(lastitem);
-                    loot = lastitem;
-                }             
+            for (int c = 0; c <= count; c++)
+            {
+                var lastitem = new Position(PositionSpawn(loot).Latitude, PositionSpawn(loot).Longitude);
+                itemlist.Add(lastitem);
+                loot = lastitem;
             }
             return itemlist;
         }
@@ -72,7 +69,7 @@ namespace GoAndFind.NewFolder
                         break;
                     }
                     //armour
-                    else if (Chance(30))
+                    else if (Chance(10))
                     {
                         items.Add(new Item(h, "Upgrade", "Armour", 1));
                         break;

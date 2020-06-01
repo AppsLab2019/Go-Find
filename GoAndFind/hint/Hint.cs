@@ -39,14 +39,6 @@ namespace GoAndFind.hint
             };
             CurrentCircle = Circle;
             map.Circles.Add(Circle);
-
-            var pin = new Pin
-            {
-                Type = PinType.Place,
-                Position = new Position(Item.Position.Latitude, Item.Position.Longitude),
-                Label = "HintItem"
-            };
-            map.Pins.Add(pin);
         }
     }
 }

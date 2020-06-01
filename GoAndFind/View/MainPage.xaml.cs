@@ -168,18 +168,23 @@ namespace GoAndFind
         public void CreateLegendaryHint(Player player)
         {
             var rnd = new Random();
+            var hintscount = LegendaryItemHints.Count;
             if (LegendaryItemHints.Count == 0)
             {
-                LegendaryItemHints.Add(new LegendaryItemHint(Map, LegendaryItems,LegendaryItemHints));
+                var hint = new LegendaryItemHint(Map, LegendaryItems, LegendaryItemHints);
+                if (!hint.LegendaryHintExist)
+                    SpawnLegendaryItem();
+                else
+                    LegendaryItemHints.Add(hint); 
                 //player.Inventory.Remove("Piece of map");        
             }
             else
             {
                 foreach (var hint in LegendaryItemHints)
                 {
-                    if (hint.CloserCircle(Map) && rnd.Next(0, 100) > 50)
+                    if (hint.CloserCircle(Map))
                     {
-                        return;
+                        break;
                         //player.Inventory.Remove("Piece of map");
                     }
                     else if (LegendaryItemHints.Count < LegendaryItems.Count)
@@ -189,16 +194,20 @@ namespace GoAndFind
                         {
                             LegendaryItemHints.Add(newHint);
                             //player.Inventory.Remove("Piece of map");
-                            return;
+                            break;
                         }
                         else 
                         {
                             SpawnLegendaryItem();
-                            return;
+                            break;
                         }                    
                     }
                 }
             }
+            if (hintscount == LegendaryItemHints.Count)
+                DisplayAlert(null, "Nothing usefull here", "ok");
+            //else
+                //DisplayAlert(null, "You found something about " + hint.LegendaryItem.Name + " location", "ok");
         }
         public void MarkItems()
         {
@@ -231,12 +240,12 @@ namespace GoAndFind
         public void CreateBanditHint(Player player)
         {
             var rnd = new Random();
-            if(BanditHints.Count == 0)
-                BanditHints.Add( new BanditHint(Map, Bandits, BanditHints));
             int hintsCount = BanditHints.Count;
+            if (BanditHints.Count == 0)
+                BanditHints.Add( new BanditHint(Map, Bandits, BanditHints));
             foreach (var bandit in Bandits)
             {
-                if (rnd.Next(0, 100) < 20)
+                if (rnd.Next(0, 100) < 10)
                 {
                     if (BanditHints.Count < Bandits.Count)
                     {
@@ -295,6 +304,7 @@ namespace GoAndFind
             }
             else
                 Player.Inventory.Remove("liquor");
+            RemoveBanditHint(BanditHints, item);
         }
         public Item ItemIs(Position position, List<Item> items)
         {
@@ -343,11 +353,11 @@ namespace GoAndFind
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
                 if (answer)
                 {
-                    if (action == "liquor" && answer)
+                    if (action == "Liquor" && answer)
                     {
                         Player.Heal(action, 1);
                     }
-                    if (action == "armour")
+                    if (action == "Armour")
                     {
                         Player.PlayerUpgrade(action);
                     }
@@ -361,7 +371,7 @@ namespace GoAndFind
                         Player.Heal(action, Player.MaxHealth - Player.Health);
 
                     }
-                    if (action == "piece of map")
+                    if (action == "Piece of map")
                     {
                         CreateLegendaryHint(Player);
                     }
