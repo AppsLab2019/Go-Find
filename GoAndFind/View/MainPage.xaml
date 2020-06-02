@@ -24,16 +24,25 @@
               TextColor="Black"
               Margin="50, 0, 0, 0">
         </Label>
-        <Button x:Name="button"
-            BackgroundColor="{Binding Color}" Text=""
+        <Image 
+            Source="lamp.png"
+            BackgroundColor="Transparent"
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            WidthRequest="150"
+            HeightRequest="150"
+            Margin ="0">
+        </Image>
+        <ImageButton Source="{Binding Image}"
+               x:Name="button"
+            BackgroundColor="Transparent"
             HorizontalOptions="Center"
             Clicked="ButtonOnClicked"
             VerticalOptions="End"
-            WidthRequest="80"
-            HeightRequest="80"
-            CornerRadius="40">
-        </Button>
-       
+            WidthRequest="150"
+            HeightRequest="150"
+            Margin ="0">
+        </ImageButton>
         <ImageButton x:Name ="inventory"
                      Source="Inventory_icon"
                 BorderColor="Transparent"

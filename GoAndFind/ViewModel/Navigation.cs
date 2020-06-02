@@ -21,16 +21,16 @@ namespace GoAndFind.hint
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Color _color;
-        public Color Color
+        private string _image;
+        public string Image
         {
-            get => _color;
+            get => _image;
             set
             {
-                if (value == _color)
+                if (value == _image)
                     return;
 
-                _color = value;
+                _image = value;
                 OnPropertyChanged();
             }
         }
@@ -120,12 +120,12 @@ namespace GoAndFind.hint
         private void Blink(Object source, ElapsedEventArgs e)
         {
             if (ItemIsClose)
-                Color = Color.Gold;
+                Image = "lampYellow.png";
             else
             {
-                Color = Color.Gold;
-                System.Threading.Thread.Sleep(200);
-                Color = Color.White;
+                Image = "lampYellow.png";
+                System.Threading.Thread.Sleep(400);
+                Image = "lampOff.png";
             }
         }
 
@@ -134,7 +134,7 @@ namespace GoAndFind.hint
             Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
             {
-                Blinktime *= 1400000;
+                Blinktime *= 1800000;
                 Blinktime += Blinktime;
             }
             aTimer.Interval = Blinktime;
@@ -142,7 +142,7 @@ namespace GoAndFind.hint
         }
         private void ItemControl()
         {
-            if (Blinktime < 200)
+            if (Blinktime < 400)
                 ItemIsClose = true;
             else
                 ItemIsClose = false;
