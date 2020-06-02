@@ -23,7 +23,6 @@ namespace GoAndFind
         private List<Item> Items { get; set; }
         private List<Item> LegendaryItems { get; set; }
         private List<Position> All { get; set; }
-        private Hint hint = new Hint();
 
         public MainPage()
         {
@@ -38,7 +37,6 @@ namespace GoAndFind
             BanditHints = new List<BanditHint>();
             LegendaryItemHints = new List<LegendaryItemHint>();
             Player = new Player(3);
-            hint = new Hint();
             Healthammount.Text = Player.Health.ToString();
             BindingContext = Navigator;
             ChangeHealthammount(Player);
