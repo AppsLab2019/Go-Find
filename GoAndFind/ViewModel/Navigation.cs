@@ -128,13 +128,16 @@ namespace GoAndFind.hint
                 Image = "lampOff.png";
             }
         }
-
+        public double DistanceBetween(Position first,Position second)
+        {
+            return Math.Abs((Math.Abs(first.Latitude) - Math.Abs(second.Latitude)) + (Math.Abs(second.Longitude) - Math.Abs(first.Longitude)));
+        }
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            Blinktime = Math.Abs((Math.Abs(ClosestItem.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(ClosestItem.Longitude)));
+            Blinktime = DistanceBetween(ClosestItem, PlayerPosition);
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
             {
-                Blinktime *= 1800000;
+                Blinktime *= 2200000;
                 Blinktime += Blinktime;
             }
             aTimer.Interval = Blinktime;

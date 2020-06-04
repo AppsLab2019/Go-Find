@@ -42,14 +42,13 @@ namespace GoAndFind
             ChangeHealthammount(Player);
             SetMap();
 
-            Player.Inventory.Add("liquor");
-            Player.Inventory.Add("liquor");
-            Player.Inventory.Add("liquor");
             Player.Inventory.Add("Dead man's macaroni");
             Player.Inventory.Add("Erasing wand");
             Player.Inventory.Add("Hopefull stick of gloominess");
-            Player.Inventory.Add("piece of map");
+            Player.Inventory.Add("Piece of map");
             Player.Inventory.Add("Bandit letter");
+            Player.Inventory.Add("Marker");
+            Player.Inventory.Add("Armour");
 
             GetStartet();
         }
@@ -68,7 +67,7 @@ namespace GoAndFind
             var json = reader.ReadToEnd();
             Map.MapStyle = MapStyle.FromJson(json);
 
-           
+
         }
         /*public void SaveInventory()
         {
@@ -104,7 +103,7 @@ namespace GoAndFind
                 Items.Add(item);
             SpawnLegendaryItem();
             LegendaryControl();
-            MarkItems();
+            BanditCondtrol();
         }
         public void SpawnLegendaryItem()
         {
@@ -113,14 +112,13 @@ namespace GoAndFind
             var legendaryItem = spawn.SpawnLegendaryItem(position);
             Items.Add(legendaryItem);
             All.Add(legendaryItem.Position);
-            LegendaryControl();
-            BanditCondtrol();
+            LegendaryItems.Add(legendaryItem);
         }
         private void LegendaryControl()
         {
-            foreach(var item in Items)
+            foreach (var item in Items)
             {
-                if(item.Type == "Legendary")
+                if (item.Type == "Legendary")
                 {
                     LegendaryItems.Add(item);
                 }
@@ -128,7 +126,7 @@ namespace GoAndFind
         }
         private void BanditCondtrol()
         {
-            foreach(var item in Items)
+            foreach (var item in Items)
             {
                 if (item.Type == "Bandit")
                 {
@@ -147,7 +145,7 @@ namespace GoAndFind
 
             SpawnAll(new Position(location.Latitude, location.Longitude));
             SpawnAll(new Position(location.Latitude, location.Longitude));
-            
+
 
             Navigator.Refreshlists(All);
             Navigator.Find();
@@ -163,49 +161,45 @@ namespace GoAndFind
             Navigator.Refreshlists(All);
         }
         public List<LegendaryItemHint> LegendaryItemHints;
+        public List<Item> CloseLegendaryItems;
+        public void FindCloseLegendaryItems()
+        {
+            CloseLegendaryItems = new List<Item>();
+            foreach(var item in LegendaryItems)
+            {
+                if (Navigator.DistanceBetween(item.Position, Navigator.PlayerPosition) < 0.01)
+                    CloseLegendaryItems.Add(item);
+            }
+        }
         public void CreateLegendaryHint(Player player)
         {
+            FindCloseLegendaryItems();
             var rnd = new Random();
             var hintscount = LegendaryItemHints.Count;
-            if (LegendaryItemHints.Count == 0)
-            {
-                var hint = new LegendaryItemHint(Map, LegendaryItems, LegendaryItemHints);
-                if (!hint.LegendaryHintExist)
-                    SpawnLegendaryItem();
-                else
-                    LegendaryItemHints.Add(hint); 
-                //player.Inventory.Remove("Piece of map");        
-            }
-            else
+            if (LegendaryItemHints.Count != 0)
             {
                 foreach (var hint in LegendaryItemHints)
                 {
-                    if (hint.CloserCircle(Map))
+                    if (rnd.Next(0, 100) > 10 && Navigator.DistanceBetween(hint.LegendaryItem.Position,Navigator.PlayerPosition) < 0.01)
                     {
-                        break;
-                        //player.Inventory.Remove("Piece of map");
-                    }
-                    else if (LegendaryItemHints.Count < LegendaryItems.Count)
-                    {
-                        var newHint = new LegendaryItemHint(Map, LegendaryItems, LegendaryItemHints);
-                        if (newHint.LegendaryHintExist)
+                        if (hint.CloserCircle(Map))
                         {
-                            LegendaryItemHints.Add(newHint);
+                            DisplayAlert(null, "You found something more about " + hint.LegendaryItem.Name + " location", "ok");
                             //player.Inventory.Remove("Piece of map");
-                            break;
+                            return;
                         }
-                        else 
-                        {
-                            SpawnLegendaryItem();
-                            break;
-                        }                    
                     }
                 }
             }
-            if (hintscount == LegendaryItemHints.Count)
+            var lhint = new LegendaryItemHint(Map, CloseLegendaryItems, LegendaryItemHints);
+            if (lhint.LegendaryHintExist)
+                LegendaryItemHints.Add(lhint);
+            else if (hintscount == LegendaryItemHints.Count)
+            {
                 DisplayAlert(null, "Nothing usefull here", "ok");
-            //else
-                //DisplayAlert(null, "You found something about " + hint.LegendaryItem.Name + " location", "ok");
+                SpawnLegendaryItem();
+            }
+            
         }
         public void MarkItems()
         {
@@ -231,6 +225,7 @@ namespace GoAndFind
                         Map.Circles.Remove(hint.CurrentCircle);
                     }
                 }
+                LegendaryItems.Remove(collectedItem);
             }
         }
         public List<BanditHint> BanditHints;
@@ -241,6 +236,7 @@ namespace GoAndFind
             int hintsCount = BanditHints.Count;
             if (BanditHints.Count == 0)
                 BanditHints.Add( new BanditHint(Map, Bandits, BanditHints));
+                
             foreach (var bandit in Bandits)
             {
                 if (rnd.Next(0, 100) < 10)
@@ -326,13 +322,22 @@ namespace GoAndFind
                 }
                 else if (item.Type.Contains("Bait"))
                 {
-                    await DisplayAlert("You have been kidnaped", null, "OK");
+                    await DisplayAlert("Nothing here", null, "OK");
                 }
                 else
                 {
                     await DisplayAlert("Alert", "You collected " + item.Ammount + " " + item.Name, "OK");
-                    for (int a = 0; a < item.Ammount; a++)
+                    for (int a = 0; a < item.Ammount; a++) 
+                    {
                         Player.Inventory.Add(item.Name);
+                        if(Player.Inventory.Contains("Dead man's sword"))
+                        {
+                            var rand = new Random();  
+                            if (rand.Next(1, 3) == 3)
+                                Player.Inventory.Add(item.Name);
+
+                        }
+                    }                       
                     RemoveLegendaryHint(LegendaryItemHints, item);
                 }
                 All.Remove(Navigator.ClosestItem);
@@ -376,6 +381,14 @@ namespace GoAndFind
                     if (action == "Bandit letter")
                     {
                         CreateBanditHint(Player);
+                    }
+                    if(action == "Marker")
+                    {
+                        MarkItems();
+                    }
+                    if(action == "Dead man's sword")
+                    { 
+
                     }
                 }
             }

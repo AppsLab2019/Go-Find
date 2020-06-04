@@ -68,6 +68,11 @@ namespace GoAndFind.NewFolder
                         items.Add(new Item(h, "Hint", "Piece of map", 1));
                         break;
                     }
+                    else if (Chance(20))
+                    {
+                        items.Add(new Item(h, "Hint", "Bandit letter", 1));
+                        break;
+                    }
                     //armour
                     else if (Chance(10))
                     {
@@ -80,11 +85,8 @@ namespace GoAndFind.NewFolder
                     }
                     else if (Chance(20))
                     {
-                        items.Add(new Item(h, "Bait", "JustKidding", 1));
-                    }
-                    else if (Chance(20))
-                    {
-                        items.Add(new Item(h, "Hint", "Bandit letter",1));
+                        items.Add(new Item(h, "Bait", "Bait", 1));
+                        break;
                     }
                     //Legendary
                     else if (Chance(10))

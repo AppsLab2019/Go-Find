@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="GoAndFind.MainPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-             xmlns:ff="clr-namespace:FFImageLoading;assembly=FFImageLoading">
+             xmlns:ff="clr-namespace:FFImageLoading.Cache;assembly=FFImageLoading">
 
     <Grid>
         <maps:Map x:Name="Map"/>

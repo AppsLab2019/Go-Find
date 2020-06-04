@@ -26,8 +26,10 @@ namespace GoAndFind
                 bool decision = await page.DisplayAlert(null, "You can remove this bandit by using Erasing wand", "Remove Bandit", "Fight");
                 if (decision)
                 {
+                    Win = true;
                     ErasingWandUsed = true;
                     return ErasingWandUsed;
+                    
                 }
             } 
             int b = 1;
