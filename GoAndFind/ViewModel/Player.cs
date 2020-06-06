@@ -27,7 +27,7 @@ namespace GoAndFind.hint
                 if (Inventory.Contains("Dead man's macaroni"))
                 {
                     App.Current.MainPage.DisplayAlert(null, "You are going to die, but there's a light of hope, you can use Dead man's macaroni to stay alive.", "use it");
-                    Health = MaxHealth;
+                    HealthChange(MaxHealth, true);
                     Inventory.Remove("Dead man's macaroni");
                 }
                 else
@@ -39,15 +39,12 @@ namespace GoAndFind.hint
         }
         public void Heal(string item, int ammount)
         {
-            if (item == "liquor")
+            if (Health >= MaxHealth)
+                Health = MaxHealth;
+            else
             {
-                if (Health >= MaxHealth)
-                    Health = MaxHealth;
-                else
-                {
-                    HealthChange(ammount, true);
-                    Inventory.Remove(item);
-                }
+                HealthChange(ammount, true);
+                Inventory.Remove(item);
             }
         }
 

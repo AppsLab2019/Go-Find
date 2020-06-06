@@ -137,7 +137,7 @@ namespace GoAndFind.hint
             Blinktime = DistanceBetween(ClosestItem, PlayerPosition);
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
             {
-                Blinktime *= 2200000;
+                Blinktime *= 2500000;
                 Blinktime += Blinktime;
             }
             aTimer.Interval = Blinktime;

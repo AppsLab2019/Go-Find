@@ -312,6 +312,8 @@ namespace GoAndFind
         }
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
+
+            //Ambush(new Item(Navigator.PlayerPosition, "Bandit", "Causual Bandit", 3));
             Item item;
             if (Navigator.ItemIsClose)
             {
