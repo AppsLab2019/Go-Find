@@ -64,7 +64,7 @@ namespace GoAndFind.hint
 
         public void PlayerUpgrade(string item)
         {
-            if (item == "Armour")
+            if (item == "armour")
             {
                 MaxHealth++;
                 HealthChange(1, true);

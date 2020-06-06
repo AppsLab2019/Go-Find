@@ -5,8 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GoAndFind.MainPage"
-             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-             xmlns:ff="clr-namespace:FFImageLoading.Cache;assembly=FFImageLoading">
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
     <Grid>
         <maps:Map x:Name="Map"/>
@@ -28,6 +27,13 @@
             Source="lamp.png"
             BackgroundColor="Transparent"
             HorizontalOptions="Center"
+            VerticalOptions="End"
+            WidthRequest="150"
+            HeightRequest="150"
+            Margin ="0">
+        </Image>
+        <Image IsAnimationPlaying="True"
+               Source="frf.gif"
             VerticalOptions="End"
             WidthRequest="150"
             HeightRequest="150"

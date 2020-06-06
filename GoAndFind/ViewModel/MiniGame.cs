@@ -19,8 +19,6 @@ namespace GoAndFind
             Win = false;
             var rand = new Random();
             var RockETC = new List<string> { "sword", "shield", "net" };
-            string BanditAction = RockETC[rand.Next(1, RockETC.Count)];
-
             if (player.Inventory.Contains("Erasing wand"))
             {
                 bool decision = await page.DisplayAlert(null, "You can remove this bandit by using Erasing wand", "Remove Bandit", "Fight");
@@ -35,6 +33,7 @@ namespace GoAndFind
             int b = 1;
             for (int a = 0; a < b; a++)
             {
+                string BanditAction = RockETC[rand.Next(0, RockETC.Count)];
                 var PLayerAction = await page.DisplayActionSheet("Choose ", null, null, "sword", "shield", "net");
                 await page.DisplayAlert(null, "Bandit used " + BanditAction, "ok");
                 if (BanditAction == PLayerAction)

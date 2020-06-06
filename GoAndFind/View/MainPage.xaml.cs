@@ -386,10 +386,6 @@ namespace GoAndFind
                     {
                         MarkItems();
                     }
-                    if(action == "Dead man's sword")
-                    { 
-
-                    }
                 }
             }
         }
