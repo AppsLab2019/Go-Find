@@ -53,7 +53,7 @@ namespace GoAndFind.hint
             Position closest = Items[1];
             foreach (var item in Items)
             {
-                if (Math.Abs((Math.Abs(closest.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(closest.Longitude))) > Math.Abs((Math.Abs(item.Latitude) - Math.Abs(PlayerPosition.Latitude)) + (Math.Abs(PlayerPosition.Longitude) - Math.Abs(item.Longitude))))
+                if (DistanceBetween(closest,PlayerPosition) > DistanceBetween(item,PlayerPosition))
                     closest = item;
             }
             ClosestItem = closest;
@@ -156,7 +156,7 @@ namespace GoAndFind.hint
         public event SpawnNewEventHandler Spawnew;
         public void New()
         {
-            if (Blinktime > 2800 || Items.Count < 4)
+            if (DistanceBetween(PlayerPosition,ClosestItem) > 0.005 || Items.Count < 4)
             {
                 Spawnew();
             }

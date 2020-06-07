@@ -154,6 +154,7 @@ namespace GoAndFind
         public void AutoSpawn(Navigation nav)
         {
             nav.Spawnew += () => SpawnNewItems(nav);
+            DisplayAlert("spawn", "new items spawned", "ok");
         }
         public void SpawnNewItems(Navigation nav)
         {
@@ -234,25 +235,30 @@ namespace GoAndFind
         {
             var rnd = new Random();
             int hintsCount = BanditHints.Count;
-            if (BanditHints.Count == 0)
+            bool closerhint = false;
+            if (BanditHints.Count == 0 && Bandits.Count > 0)
                 BanditHints.Add( new BanditHint(Map, Bandits, BanditHints));
-                
             foreach (var bandit in Bandits)
             {
                 if (rnd.Next(0, 100) < 10)
                 {
                     if (BanditHints.Count < Bandits.Count)
                     {
-                        BanditHints.Add(new BanditHint(Map, Bandits, BanditHints));
+                        var bantitHint = new BanditHint(Map, Bandits, BanditHints);
+                        if (bantitHint.BanditHintExist)
+                            BanditHints.Add(bantitHint);
                     }
                     foreach (var hint in BanditHints)
                     {
                         if (rnd.Next(0, 100) < 40)
+                        {
                             hint.CloserCircle(Map);
+                            closerhint = true;
+                        }
                     }
                 }
             }
-            if(hintsCount == BanditHints.Count)
+            if(hintsCount == BanditHints.Count && !closerhint)
             {
                 DisplayAlert(null, "Nothing usefull here", "ok");
             }
