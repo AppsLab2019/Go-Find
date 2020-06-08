@@ -47,8 +47,12 @@ namespace GoAndFind
             Player.Inventory.Add("Hopefull stick of gloominess");
             Player.Inventory.Add("Piece of map");
             Player.Inventory.Add("Bandit letter");
-            Player.Inventory.Add("Marker");
+            //Player.Inventory.Add("Marker");
             Player.Inventory.Add("Armour");
+            Player.Inventory.Add("Ambush me");
+            Player.Inventory.Add("Liquor");
+            Player.Inventory.Add("Liquor");
+            Player.Inventory.Add("Liquor");
 
             GetStartet();
         }
@@ -282,12 +286,28 @@ namespace GoAndFind
         }
         public async void Ambush(Item item)
         {
+            var rnd = new Random();
             bool friend = false;
+            bool gift = false;
             var fight = new MiniGame();
             await DisplayAlert("Watchout!", "You are ambushed by " + item.Ammount + " " + item.Name, "OK");
-            if (Player.Inventory.Contains("liquor") && item.Name.Contains("Causual"))
+            if (Player.Inventory.Contains("Liquor") && item.Name.Contains("Causual"))
             {
-                friend = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer liquor", "Fight");
+                gift = await DisplayAlert("Question?", "Those bandits look friendly, we may be friends", "Offer liquor", "Fight");
+                if (gift)
+                {
+                    Player.Inventory.Remove("Liquor");
+                    if (rnd.Next(0, 100) < 30)
+                    {
+                        friend = true;
+                        await DisplayAlert(null, "Looks like your gift was accepted", "ok");
+                    }
+                    else
+                    {
+                        await DisplayAlert(null, "Your liquor was accepted but you are being attacked anyway... ","My liquor!");
+                    }
+                }
+
             }
             if (!friend)
             {
@@ -299,6 +319,12 @@ namespace GoAndFind
                     if (!fight.Win)
                     {
                         Player.Hurt(1);
+                    }
+                    else if (gift && rnd.Next(0, 100) < 40)
+                    {
+                        Player.Inventory.Add("Liquor");
+                        gift = false;
+                        await DisplayAlert("Liquor","As a bandit was running away , he dropped your liquor ","Hope he will remember this");
                     }
                 }
             }
@@ -319,7 +345,7 @@ namespace GoAndFind
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
 
-            //Ambush(new Item(Navigator.PlayerPosition, "Bandit", "Causual Bandit", 3));
+            
             Item item;
             if (Navigator.ItemIsClose)
             {
@@ -393,6 +419,10 @@ namespace GoAndFind
                     if(action == "Marker")
                     {
                         MarkItems();
+                    }
+                    if(action == "Ambush me")
+                    {
+                        Ambush(new Item(Navigator.PlayerPosition, "Bandit", "Causual Bandit", 2));
                     }
                 }
             }

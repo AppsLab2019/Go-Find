@@ -61,12 +61,11 @@ namespace GoAndFind.hint
 
         public void PlayerUpgrade(string item)
         {
-            if (item == "armour")
-            {
-                MaxHealth++;
-                HealthChange(1, true);
-                Inventory.Remove(item);
-            }
+
+            MaxHealth++;
+            HealthChange(1, true);
+            Inventory.Remove(item);
+        
         }
         public string[] ShowInventory(Player player)
         {

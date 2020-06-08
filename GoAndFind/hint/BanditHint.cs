@@ -11,7 +11,7 @@ namespace GoAndFind.hint
         public Item Bandit;
         public BanditHint(Map map, List<Item> items, List<BanditHint> CurrentHints)
         {
-            Span = 60;
+            Span = 30;
             if (BanditExist(items, CurrentHints))
             {
                 CreateHint(map, Bandit, "#88FF0000", "#88FFC0CB", false);
@@ -38,7 +38,7 @@ namespace GoAndFind.hint
         }
         public bool CloserCircle(Map map)
         {
-            if (Span > 30)
+            if (Span > 20)
             {
                 Span = Span - 25;
                 CreateHint(map, Bandit, "#88FF0000", "#88FFC0CB", true);

@@ -36,6 +36,11 @@ namespace GoAndFind
                 string BanditAction = RockETC[rand.Next(0, RockETC.Count)];
                 var PLayerAction = await page.DisplayActionSheet("Choose ", null, null, "sword", "shield", "net");
                 await page.DisplayAlert(null, "Bandit used " + BanditAction, "ok");
+                if (PLayerAction == null)
+                {
+                    b++;
+                    break;
+                }
                 if (BanditAction == PLayerAction)
                 {
                     b++;
