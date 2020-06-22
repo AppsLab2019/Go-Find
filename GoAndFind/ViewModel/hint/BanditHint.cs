@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms.GoogleMaps;
 
-namespace GoAndFind.hint
+namespace GoAndFind.viewModel
 {
     public class BanditHint : Hint
     {

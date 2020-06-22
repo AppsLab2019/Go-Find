@@ -10,7 +10,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
-namespace GoAndFind.hint
+namespace GoAndFind.viewModel
 {
 
     public class Navigation : INotifyPropertyChanged
@@ -35,10 +35,10 @@ namespace GoAndFind.hint
             }
         }
 
-        public void Find()
+        public async void Find()
         {
+            await GetPlayerPositon();
             PositionRefresh();
-            System.Threading.Thread.Sleep(4000);
             FindClosest();
             Blinktime = 0.000001;
             StartBlinking();
@@ -120,7 +120,7 @@ namespace GoAndFind.hint
         private void Blink(Object source, ElapsedEventArgs e)
         {
             if (ItemIsClose)
-                Image = "lampYellow.png";
+                Image = "lampg.png";
             else
             {
                 Image = "lampYellow.png";

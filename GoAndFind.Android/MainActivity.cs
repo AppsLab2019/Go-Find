@@ -5,6 +5,7 @@ using Android.Runtime;
 using Android.OS;
 using Android;
 using Android.Gms.Maps;
+using Xamarin.Essentials;
 
 namespace GoAndFind.Droid
 {
@@ -37,12 +38,23 @@ namespace GoAndFind.Droid
              Manifest.Permission.AccessCoarseLocation,
              Manifest.Permission.AccessFineLocation
         };
-        protected override void OnStart()
+        protected override async void OnStart()
         {
             base.OnStart();
 
+
             if ((int)Build.VERSION.SdkInt >= 23)
             {
+                if (await Permissions.CheckStatusAsync<Permissions.StorageRead>() != PermissionStatus.Granted)
+                {
+                    await Permissions.RequestAsync<Permissions.StorageRead>();
+                }
+
+                if(await Permissions.CheckStatusAsync<Permissions.StorageWrite>() != PermissionStatus.Granted)
+                {
+                    await Permissions.RequestAsync<Permissions.StorageWrite>();
+                }   
+
                 if (CheckSelfPermission(Manifest.Permission.AccessFineLocation) != Permission.Granted)
                 {
                     RequestPermissions(LocationPermissions, RequestLocationId);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GoAndFind.hint;
+using GoAndFind.viewModel;
 using Plugin.Geolocator;
 using Xamarin.Forms.GoogleMaps;
 
@@ -59,8 +59,14 @@ namespace GoAndFind.NewFolder
                     //Frndzalica
                     else if (Chance(20))
                     {
-                        items.Add(new Item(h, "Healing", "Liquor", rnd.Next(1, 2)));
-                        break;
+                        if (Chance(30))
+                        {
+                            items.Add(new Item(h, "Healing", "Liquor", rnd.Next(1, 2)));
+                        }
+                        else
+                        {
+                            items.Add(new Item(h, "Healing", "Stolen dinner",rnd.Next(1,2)));
+                        }
                     }
                     //Ňuchač
                     else if (Chance(20))
@@ -110,7 +116,8 @@ namespace GoAndFind.NewFolder
             Legendary.Add("Dead man's macaroni");
             Legendary.Add("Erasing wand");
             Legendary.Add("Dead man's Sword");
-            return new Item(position,"Legendary",Legendary[(rand.Next(0, Legendary.Count))],1);
+            Legendary.Add("Sleepy Heroic firefly");
+            return new Item(position,"Legendary",Legendary[rand.Next(0, Legendary.Count)],1);
         }
     }
 }

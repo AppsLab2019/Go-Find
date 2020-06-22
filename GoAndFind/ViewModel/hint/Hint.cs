@@ -7,7 +7,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Color = Xamarin.Forms.Color;
 
-namespace GoAndFind.hint
+namespace GoAndFind.viewModel
 {
     public class Hint
     {
@@ -46,5 +46,6 @@ namespace GoAndFind.hint
             };
             map.Pins.Add(Pin);
         }
+
     }
 }

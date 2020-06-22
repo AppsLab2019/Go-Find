@@ -5,19 +5,23 @@ using System.Threading.Tasks;
 using Plugin.Geolocator;
 using Xamarin.Forms.GoogleMaps;
 using System.Timers;
+using Xamarin.Forms;
 
-namespace GoAndFind.hint
+namespace GoAndFind.viewModel
 {
     public class Player
     {
         public int MaxHealth { get; set; }
         public int Health { get; set; }
         public List<string> Inventory { get; set; }
-        public Player(int health)
+        public Player()
         {
             Inventory = new List<string>();
-            Health = health;
-            MaxHealth = health;
+        }
+        public void SetHeealth()
+        {
+            Health = 3;
+            MaxHealth = 3;
         }
         public void Hurt(int damage)
         {
@@ -45,6 +49,25 @@ namespace GoAndFind.hint
             {
                 HealthChange(ammount, true);
                 Inventory.Remove(item);
+            }
+        }
+        public void SlowlyHeal(string item)
+        {
+            if (Health >= MaxHealth)
+                return;
+            Device.StartTimer(TimeSpan.FromMinutes(10), () =>
+            {
+                HealthChange(1, true);
+                Inventory.Remove(item);
+                return false; // True = Repeat again, False = Stop the timer
+            });
+        }
+        public void ControlLegendaryItems()
+        {
+            if (Inventory.Contains("Dead man's macaroni") && Inventory.Contains("Sleepy Heroic firefly") && Inventory.Contains("Erasing wand") && Inventory.Contains("Dead man's Sword"))
+            {
+                Inventory.Remove("Sleepy Heroic firefly");
+                Inventory.Add("Heroic firefly");
             }
         }
 
