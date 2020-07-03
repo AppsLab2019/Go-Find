@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using Xamarin.Essentials;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Android.SE.Omapi;
 
 namespace GoAndFind
 {
@@ -22,10 +24,13 @@ namespace GoAndFind
 
         public void SavePlayer(Player player)
         {
-            using (var fileStream = File.Open(Player, FileMode.Create, FileAccess.Write))
+            File.Delete(Player);
             {
-                var serializer = new XmlSerializer(typeof(Player));
-                serializer.Serialize(fileStream, player);
+                using (StreamWriter reader = new StreamWriter(Player))
+                {
+                    var jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+                    jsonSerializer.Serialize(reader, player);
+                }
             }
         }
         public Player LoadPlayer()
@@ -34,11 +39,11 @@ namespace GoAndFind
             {
                 using (var reader = new StreamReader(Player))
                 {
-                    var serializer = new XmlSerializer(typeof(Player));
-                    return (Player)serializer.Deserialize(reader);
+                    var jsonString = File.ReadAllText(Player);
+                    return JsonConvert.DeserializeObject<Player>(jsonString);
                 }
             }
-            return new Player();
+            return new Player(3,3);
         }
 
 

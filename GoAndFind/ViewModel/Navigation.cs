@@ -137,7 +137,7 @@ namespace GoAndFind.viewModel
             Blinktime = DistanceBetween(ClosestItem, PlayerPosition);
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
             {
-                Blinktime *= 2500000;
+                Blinktime *= 2000000;
                 Blinktime += Blinktime;
             }
             aTimer.Interval = Blinktime;

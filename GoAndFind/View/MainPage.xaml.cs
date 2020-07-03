@@ -35,13 +35,6 @@ namespace GoAndFind
             LegendaryItemHints = Saving.LoadLegendaryItemHints();
             BanditHints = Saving.LoadBanditHints();
 
-            if (Player.Health <= 0)
-                Player.SetHeealth();
-            Player_Change();
-            foreach(var item in Items)
-            {
-                Debug.WriteLine(item.Position.Latitude + item.Position.Latitude);
-            }
 
             Navigator = new Navigation();
             All = new List<Position>();
@@ -322,7 +315,9 @@ namespace GoAndFind
                 item = ItemIs(Navigator.ClosestItem, Items);
                 if (item.Type.Contains("Bandit"))
                 {
-                    new MiniGame().Ambush(item,Player);
+                    var mg = new MiniGame();
+                    Player = await mg.Ambush(item, Player);
+                    
                 }
                 else if (item.Type.Contains("Bait"))
                 {

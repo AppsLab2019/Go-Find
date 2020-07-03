@@ -14,14 +14,11 @@ namespace GoAndFind.viewModel
         public int MaxHealth { get; set; }
         public int Health { get; set; }
         public List<string> Inventory { get; set; }
-        public Player()
+        public Player(int health,int maxHealth)
         {
             Inventory = new List<string>();
-        }
-        public void SetHeealth()
-        {
-            Health = 3;
-            MaxHealth = 3;
+            Health = health;
+            MaxHealth = maxHealth;
         }
         public void Hurt(int damage)
         {
@@ -38,6 +35,9 @@ namespace GoAndFind.viewModel
                 {
                     App.Current.MainPage.DisplayAlert(null, "You died, your inventory is now clear, good luck next time", "ok");
                     Inventory.Clear();
+                    Health = 3;
+                    MaxHealth = 3;
+                    Change();
                 }
             }
         }

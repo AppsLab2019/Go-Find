@@ -86,7 +86,7 @@ namespace GoAndFind
             }
             return Win;
         }
-        public async void Ambush(Item item,Player player)
+        public async Task<Player>Ambush(Item item,Player player)
         {
             var rnd = new Random();
             bool friend = false;
@@ -130,6 +130,7 @@ namespace GoAndFind
             }
             else
                 player.Inventory.Remove("liquor");
+            return player;
         }
     }
 }
