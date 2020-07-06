@@ -156,7 +156,7 @@ namespace GoAndFind.viewModel
         public event SpawnNewEventHandler Spawnew;
         public void New()
         {
-            if (DistanceBetween(PlayerPosition,ClosestItem) > 0.005 || Items.Count < 4)
+            if (DistanceBetween(PlayerPosition,ClosestItem) > 0.003 || Items.Count < 4)
             {
                 Spawnew();
             }

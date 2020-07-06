@@ -48,13 +48,16 @@ namespace GoAndFind
 
 
 
-        public void SaveItems(List<Item> Items)
+        public void SaveItems(List<Item> items)
         {
-           /* using (var filestream = File.Open(Saving.Items, FileMode.Create, FileAccess.Write))
+            File.Delete(Items);
             {
-                var serializer = new XmlSerializer(typeof(List<Item>));
-                serializer.Serialize(filestream, Items);
-            }*/
+                using (StreamWriter reader = new StreamWriter(Items))
+                {
+                    var jsonSerializer = new JsonSerializer();
+                    jsonSerializer.Serialize(reader, items);
+                }
+            }
         }
         public List<Item> LoadItems()
         {
@@ -62,9 +65,8 @@ namespace GoAndFind
             {
                 using (var reader = new StreamReader(Items))
                 {
-                    var serializer = new XmlSerializer(typeof(List<Item>));
-  
-                    //return (List<Item>)serializer.Deserialize(reader);
+                    var jsonString = File.ReadAllText(Items);
+                    return JsonConvert.DeserializeObject<List<Item>>(jsonString);
                 }
             }
             return new List<Item>();

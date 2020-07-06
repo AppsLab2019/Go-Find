@@ -48,8 +48,8 @@ namespace GoAndFind
             ChangeHealthammount(Player);
             SetMap();
 
-            Player.Inventory.Add("Marker");
-            Player.Inventory.Add("Ambush me");
+            //Player.Inventory.Add("Marker");
+            //Player.Inventory.Add("Ambush me");
 
             GetStartet();
         }
@@ -119,6 +119,7 @@ namespace GoAndFind
             Items.Add(legendaryItem);
             All.Add(legendaryItem.Position);
             LegendaryItems.Add(legendaryItem);
+
             Saving.SaveItems(Items);
         }
         private void LegendaryControl()
