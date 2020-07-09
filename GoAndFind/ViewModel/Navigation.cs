@@ -87,6 +87,8 @@ namespace GoAndFind.viewModel
             // Hook up the Elapsed event for the timer. 
             bTimer.Elapsed += OnBTime;
             bTimer.Elapsed += CloseRef;
+            if(Blinktime > 20000)
+                bTimer.Elapsed += OnTimedEvent;
 
             // Have the timer fire repeated events (true is the default)
             bTimer.AutoReset = true;
@@ -136,7 +138,8 @@ namespace GoAndFind.viewModel
         {
             Blinktime = DistanceBetween(ClosestItem, PlayerPosition);
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
-            {
+            
+           {
                 Blinktime *= 2000000;
                 Blinktime += Blinktime;
             }
