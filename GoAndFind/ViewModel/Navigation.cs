@@ -40,7 +40,7 @@ namespace GoAndFind.viewModel
             await GetPlayerPositon();
             PositionRefresh();
             FindClosest();
-            Blinktime = 0.000001;
+            Blinktime = 1000;
             StartBlinking();
         }
         public void Refreshlists(List<Position> positions)
@@ -139,7 +139,7 @@ namespace GoAndFind.viewModel
             Blinktime = DistanceBetween(ClosestItem, PlayerPosition);
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
             
-           {
+            {
                 Blinktime *= 2000000;
                 Blinktime += Blinktime;
             }
@@ -157,10 +157,11 @@ namespace GoAndFind.viewModel
         public delegate void SpawnNewEventHandler();
 
         public event SpawnNewEventHandler Spawnew;
-        public void New()
+        public async void New()
         {
             if (DistanceBetween(PlayerPosition,ClosestItem) > 0.003 || Items.Count < 4)
             {
+                await GetPlayerPositon();
                 Spawnew();
             }
         } 

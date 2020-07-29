@@ -116,7 +116,7 @@ namespace GoAndFind.NewFolder
             Legendary.Add("Dead man's macaroni");
             Legendary.Add("Erasing wand");
             Legendary.Add("Dead man's Sword");
-            Legendary.Add("Sleepy Heroic firefly");
+            Legendary.Add("Sleepy heroic firefly");
             return new Item(position,"Legendary",Legendary[rand.Next(0, Legendary.Count)],1);
         }
     }

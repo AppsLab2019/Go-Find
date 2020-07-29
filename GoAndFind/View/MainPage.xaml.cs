@@ -48,9 +48,9 @@ namespace GoAndFind
             ChangeHealthammount(Player);
             SetMap();
 
-            //Player.Inventory.Add("Marker");
-            //Player.Inventory.Add("Ambush me");
-
+            Player.Inventory.Add("Marker");
+            Player.Inventory.Add("Ambush me");
+            Player.Inventory.Add("Piece of map");
             GetStartet();
         }
 
@@ -158,7 +158,6 @@ namespace GoAndFind
 
             Navigator.Refreshlists(All);
             Navigator.Find();
-            AutoSpawn(Navigator);
         }
         public void AutoSpawn(Navigation nav)
         {
@@ -343,7 +342,11 @@ namespace GoAndFind
                 All.Remove(Navigator.ClosestItem);
                 Navigator.Refreshlists(All);
                 Navigator.FindClosest();
+
                 Saving.SavePlayer(Player);
+                Saving.SaveItems(Items);
+                Saving.SaveLegendaryHints(LegendaryItemHints);
+                Saving.SaveBanditHints(BanditHints);
             }
         }
         public async void InventoryClicked(object sender, EventArgs e)

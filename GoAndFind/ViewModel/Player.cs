@@ -64,7 +64,7 @@ namespace GoAndFind.viewModel
         }
         public void ControlLegendaryItems()
         {
-            if (Inventory.Contains("Dead man's macaroni") && Inventory.Contains("Sleepy Heroic firefly") && Inventory.Contains("Erasing wand") && Inventory.Contains("Dead man's Sword"))
+            if (Inventory.Contains("Dead man's macaroni") && Inventory.Contains("Sleepy heroic firefly") && Inventory.Contains("Erasing wand") && Inventory.Contains("Dead man's Sword"))
             {
                 Inventory.Remove("Sleepy Heroic firefly");
                 Inventory.Add("Heroic firefly");

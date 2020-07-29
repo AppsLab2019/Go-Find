@@ -1,4 +1,5 @@
-﻿using GoAndFind.viewModel;
+﻿ 
+    using GoAndFind.viewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -75,21 +76,24 @@ namespace GoAndFind
 
         public void SaveLegendaryHints(List<LegendaryItemHint> hints)
         {
-            /*using (var filestream = File.Open(LegendaryHints, FileMode.Create, FileAccess.Write))
+            //File.Delete(LegendaryHints);
             {
-                var serializer = new XmlSerializer(typeof(List<LegendaryItemHint>));
-                serializer.Serialize(filestream, hints);
-            }*/
+                /*using (StreamWriter reader = new StreamWriter(LegendaryHints))
+                {
+                    var jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+                    jsonSerializer.Serialize(reader, hints);
+                }*/
+            }
         }
         public List<LegendaryItemHint> LoadLegendaryItemHints()
         {
-            if (File.Exists(LegendaryHints))
+           if (File.Exists(LegendaryHints))
             {
-                using (var reader = new StreamReader(LegendaryHints))
+                /*using (var reader = new StreamReader(LegendaryHints))
                 {
-                    var serializer = new XmlSerializer(typeof(List<LegendaryItemHint>));
-                    //return (List<LegendaryItemHint>)serializer.Deserialize(reader);
-                }
+                    var jsonString = File.ReadAllText(LegendaryHints);
+                    return JsonConvert.DeserializeObject<List<LegendaryItemHint>>(jsonString);
+                }*/
             }
             return new List<LegendaryItemHint>();
         }
@@ -98,23 +102,25 @@ namespace GoAndFind
 
         public void SaveBanditHints(List<BanditHint> hints)
         {
-            /*
-            using (var filestream = File.Open(BanditHints, FileMode.Create, FileAccess.Write))
+            /*File.Delete(BanditHints);
             {
-                var serializer = new XmlSerializer(typeof(List<BanditHint>));
-                serializer.Serialize(filestream, hints);
+                using (StreamWriter reader = new StreamWriter(BanditHints))
+                {
+                    var jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+                    jsonSerializer.Serialize(reader, hints);
+                }
             }*/
         }
         public List<BanditHint> LoadBanditHints()
         {
-            if (File.Exists(BanditHints))
+            /*if (File.Exists(BanditHints))
             {
                 using (var reader = new StreamReader(BanditHints))
                 {
-                    var serializer = new XmlSerializer(typeof(List<BanditHint>));
-                    //return (List<BanditHint>)serializer.Deserialize(reader);
+                    var jsonString = File.ReadAllText(BanditHints);
+                    return JsonConvert.DeserializeObject<List<BanditHint>>(jsonString);
                 }
-            }
+            }*/
             return new List<BanditHint>();
         }
     }
