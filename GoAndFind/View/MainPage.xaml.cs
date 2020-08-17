@@ -51,6 +51,7 @@ namespace GoAndFind
             Player.Inventory.Add("Marker");
             Player.Inventory.Add("Ambush me");
             Player.Inventory.Add("Piece of map");
+            Player.Inventory.Add("spawntest");
             GetStartet();
         }
 
@@ -308,7 +309,7 @@ namespace GoAndFind
         }
         public async void ButtonOnClicked(object sender, EventArgs e)
         {
-
+            
             Item item;
             if (Navigator.ItemIsClose)
             {
@@ -340,8 +341,10 @@ namespace GoAndFind
                     RemoveLegendaryHint(LegendaryItemHints, item);
                 }
                 All.Remove(Navigator.ClosestItem);
+                Items.Remove(item);
                 Navigator.Refreshlists(All);
                 Navigator.FindClosest();
+                Navigator.ItemIsClose = false;
 
                 Saving.SavePlayer(Player);
                 Saving.SaveItems(Items);
@@ -360,54 +363,59 @@ namespace GoAndFind
                 bool answer = await DisplayAlert("Question?", "Are you sure to use the " + action, "Yes", "No");
                 if (answer)
                 {
-                    if (action == "Liquor" && answer)
+                    if (action.Contains("Liquor"))
                     {
                         Player.Heal(action, 1);
 
                     }
-                    if  (action.ToLower() == "stolen dinner")
+                    if  (action.Contains("stolen dinner"))
                     {
                         Player.SlowlyHeal(action);
 
                     }
-                    if (action == "Armour")
+                    if (action.Contains("Armour"))
                     {
                         Player.PlayerUpgrade(action);
 
                     }
-                    if (action == "Hopefull stick of gloominess")
+                    if (action.Contains("Hopefull stick of gloominess"))
                     {
                         SpawnNewItems(Navigator);
 
                     }
-                    if (action == "Dead man's macaroni")
+                    if (action.Contains("Dead man's macaroni"))
                     {
                         Player.Heal(action, Player.MaxHealth - Player.Health);
 
                     }
-                    if (action == "Piece of map")
+                    if (action.Contains("Piece of map"))
                     {
                         CreateLegendaryHint();
 
                     }
-                    if (action == "Bandit letter")
+                    if (action.Contains("Bandit letter"))
                     {
                         CreateBanditHint(Player);
 
                     }
-                    if  (action == "Marker")
+                    if  (action.Contains("Marker"))
                     {
                         MarkItems();
 
                     }
-                    if  (action == "Ambush me")
+                    if  (action.Contains("Ambush me"))
                     {
                         new MiniGame().Ambush(new Item(Navigator.PlayerPosition, "Bandit", "Causual Bandit", 2) , Player);
 
                     }
-                    if (action == "Sleepy Heroic firefly") 
+                    if (action.Contains("Sleepy Heroic firefly")) 
                     {
                         await DisplayAlert("firefly", "The firefly is sleeping, It'll wake up when it's time comes up.", "Ok");
+                    }
+                    if (action.Contains("spawntest"))
+                    {
+                        Items.Add(new Item(Navigator.PlayerPosition, "Legendary", "Sleepy Heroic firefly", 1));
+                        ControAll();
                     }
                 }
                 Saving.SavePlayer(Player);
