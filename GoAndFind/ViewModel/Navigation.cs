@@ -37,7 +37,7 @@ namespace GoAndFind.viewModel
 
         public async void Find()
         {
-            await GetPlayerPositon();
+            PlayerPosition = await GetPlayerPositon();
             PositionRefresh();
             FindClosest();
             Blinktime = 1000;
@@ -161,7 +161,7 @@ namespace GoAndFind.viewModel
         {
             if (DistanceBetween(PlayerPosition,ClosestItem) > 0.003 || Items.Count < 4)
             {
-                await GetPlayerPositon();
+                PlayerPosition = await GetPlayerPositon();
                 Spawnew();
             }
         } 
