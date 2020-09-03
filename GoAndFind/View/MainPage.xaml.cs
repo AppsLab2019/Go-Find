@@ -48,10 +48,10 @@ namespace GoAndFind
             ChangeHealthammount(Player);
             SetMap();
 
-            Player.Inventory.Add("Marker");
-            Player.Inventory.Add("Ambush me");
-            Player.Inventory.Add("Piece of map");
-            Player.Inventory.Add("spawntest");
+           // Player.Inventory.Add("Marker");
+           // Player.Inventory.Add("Ambush me");
+           // Player.Inventory.Add("Piece of map");
+            //Player.Inventory.Add("spawntest");
             GetStartet();
         }
 
