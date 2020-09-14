@@ -48,9 +48,9 @@ namespace GoAndFind
             ChangeHealthammount(Player);
             SetMap();
 
-           // Player.Inventory.Add("Marker");
-           // Player.Inventory.Add("Ambush me");
-           // Player.Inventory.Add("Piece of map");
+            // Player.Inventory.Add("Marker");
+            // Player.Inventory.Add("Ambush me");
+            // Player.Inventory.Add("Piece of map");
             //Player.Inventory.Add("spawntest");
             GetStartet();
         }
@@ -162,13 +162,14 @@ namespace GoAndFind
         }
         public void AutoSpawn(Navigation nav)
         {
-            nav.Spawnew += () => SpawnNewItems(nav);
-            DisplayAlert("spawn", "new items spawned", "ok");
+            nav.Spawnew += () => SpawnNewItems();
+           // DisplayAlert("spawn", "new items spawned", "ok");
         }
-        public void SpawnNewItems(Navigation nav)
+        public void SpawnNewItems()
         {
-            SpawnAll(nav.PlayerPosition);
+            SpawnAll(Navigator.PlayerPosition);
             Navigator.Refreshlists(All);
+            DisplayAlert("spawn", "new items spawned", "ok");
         }
         public List<LegendaryItemHint> LegendaryItemHints;
         public List<Item> CloseLegendaryItems;
@@ -380,7 +381,7 @@ namespace GoAndFind
                     }
                     if (action.Contains("Hopefull stick of gloominess"))
                     {
-                        SpawnNewItems(Navigator);
+                        SpawnNewItems();
 
                     }
                     if (action.Contains("Dead man's macaroni"))

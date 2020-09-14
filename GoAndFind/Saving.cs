@@ -87,7 +87,7 @@ namespace GoAndFind
         }
         public List<LegendaryItemHint> LoadLegendaryItemHints()
         {
-           if (File.Exists(LegendaryHints))
+           //if (File.Exists(LegendaryHints))
             {
                 /*using (var reader = new StreamReader(LegendaryHints))
                 {

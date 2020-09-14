@@ -40,8 +40,11 @@ namespace GoAndFind.viewModel
             PlayerPosition = await GetPlayerPositon();
             PositionRefresh();
             FindClosest();
-            Blinktime = 1000;
+            if (ClosestItem == null)
+                New();
+            CalculateBlibkTime();
             StartBlinking();
+            BlinkLamp();
         }
         public void Refreshlists(List<Position> positions)
         {
@@ -87,8 +90,6 @@ namespace GoAndFind.viewModel
             // Hook up the Elapsed event for the timer. 
             bTimer.Elapsed += OnBTime;
             bTimer.Elapsed += CloseRef;
-            if(Blinktime > 20000)
-                bTimer.Elapsed += OnTimedEvent;
 
             // Have the timer fire repeated events (true is the default)
             bTimer.AutoReset = true;
@@ -100,9 +101,9 @@ namespace GoAndFind.viewModel
         {
             FindClosest();
         }
-        private void OnBTime(Object source, ElapsedEventArgs e)
+        private async void OnBTime(Object source, ElapsedEventArgs e)
         {
-            PlayerPosition = new Position(GetPlayerPositon().Result.Latitude, GetPlayerPositon().Result.Longitude);
+            PlayerPosition = await GetPlayerPositon();
         }
         private static Timer aTimer;
         public void StartBlinking()
@@ -121,6 +122,10 @@ namespace GoAndFind.viewModel
         }
         private void Blink(Object source, ElapsedEventArgs e)
         {
+            BlinkLamp();
+        }
+        private void BlinkLamp()
+        {
             if (ItemIsClose)
                 Image = "lampg.png";
             else
@@ -136,15 +141,26 @@ namespace GoAndFind.viewModel
         }
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
+            CalculateBlibkTime();
+            aTimer.Interval = Blinktime;
+        }
+        private void CalculateBlibkTime()
+        {
+            FindClosest();
             Blinktime = DistanceBetween(ClosestItem, PlayerPosition);
             if (PlayerPosition.Latitude != 0 && PlayerPosition.Longitude != 0)
-            
             {
                 Blinktime *= 2000000;
                 Blinktime += Blinktime;
             }
-            aTimer.Interval = Blinktime;
             ItemControl();
+            if(Blinktime > 20000)
+            {
+                FindClosest();
+                CalculateBlibkTime();
+                ItemControl();
+            }
+
         }
         private void ItemControl()
         {
